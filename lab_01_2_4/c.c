@@ -1,14 +1,14 @@
-/* Программа вычисляет площадь трапеции,
-исходя из величины ее оснований и угла */
 #include <stdio.h>
 #include <math.h>
 
-int main() {
+int main()
+{
     int s;
-    int m;
+    int c, m;
     puts("Please enter seconds: ");
     scanf("%d", &s);
-    m = s/60;
+    c = s / 3600;
+    m = (s % 3600) / 60;
     s %= 60;
-    printf("%d %d", m, s);
+    printf("%d %d %d", c, m, s);
 }
