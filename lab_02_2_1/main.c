@@ -6,7 +6,6 @@ int main()
     int ch;
     int n, f0 = 0, f1 = 1, c = 2;
     int x;
-    puts("Please enter n: ");
     ch = scanf("%d", &n);
     if ((ch != 1) || (n < 0))
     {
@@ -17,11 +16,10 @@ int main()
     {
         if (n == 1)
         {
-            printf("0");
-            
+            printf("1");
         }
-        if (n >= 2) printf("0 1 ");
-        while (c < n)
+        if (n >= 2)printf("1 ");
+        while (c <= n)
         {
             c++;
             x = (f0 + f1);
