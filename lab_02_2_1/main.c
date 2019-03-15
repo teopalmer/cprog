@@ -12,7 +12,7 @@ int main()
         puts("Input error");
         return 11;
     }
-    if (n < 0)
+    if ((n < 0) || (n > 50))
     {
         puts("Input error");
         return 22;
