@@ -13,11 +13,22 @@ int main()
         printf("Input error");
         return 11;
     }
+    if ((x1 == x2) && (y1 == y2))
+    {
+        printf("Input error");
+        return 22;
+    }
     else
     {
         k = (x1 - xa) * (y2 - y1) - (x2 - x1) * (y1 - ya);
-        if (k > 0)res = 0;
-        if (k < 0)res = 2;
+        if (k > 0)
+        {
+            res = 0;
+        }
+        if (k < 0)
+        {
+            res = 2;
+        }
         printf("%d", res);
         return 0;
     }
