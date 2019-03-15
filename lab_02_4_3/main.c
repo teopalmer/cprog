@@ -13,7 +13,7 @@ int main()
         puts("Input Error");
         return 11;
     }
-    if (fabs(x) >= 1)
+    if (fabs(x) >= 1 || eps >= 1 || eps < 0)
     {
         puts("Input Error");
         return 22;

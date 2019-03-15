@@ -23,7 +23,7 @@ int main()
         {
             printf("0");
         }
-        if (n == 1)
+        else if (n == 1)
         {
             printf("1");
         }
