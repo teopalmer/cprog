@@ -65,4 +65,5 @@ int main()
         return 4;
     }
     output(out);
+    return 0;
 }
