@@ -13,7 +13,7 @@ int input()
         return n;
 }
 
-float array(n)
+float array(int n)
 {
     int x[N];
     int ch, c = 0;
