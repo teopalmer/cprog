@@ -5,7 +5,7 @@ int input()
 {
     int n, ch;
     ch = scanf("%d", &n);
-    if (ch != 1)
+    if ((ch != 1) || (n <= 0))
     {
         return -1;
     }
