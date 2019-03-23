@@ -33,7 +33,7 @@ float array(n)
             c++;
         }
     }
-    if (ar > 0)
+    if (c > 0)
     {
         ar = sum / c;
     }
