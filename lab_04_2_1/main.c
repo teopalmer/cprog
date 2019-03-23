@@ -1,43 +1,68 @@
 #include <stdio.h>
-#include <math.h>
+#define N 10
 
-int main()
+int input()
 {
-    int ch;
-    int n, f0 = 0, f1 = 1, c = 2;
-    int x;
+    int n, ch;
     ch = scanf("%d", &n);
     if (ch != 1)
     {
-        puts("Input error");
-        return 11;
+        return -1;
     }
-    if ((n < 0) || (n > 50))
+    else
+        return n;
+}
+
+float array(n)
+{
+    int x[N];
+    int ch, c = 0;
+    float sum = 0;
+    float ar = 0;
+    
+    for (int i = 0; i < n; i++)
     {
-        puts("Input error");
-        return 22;
+        ch = scanf("%d", &x[i]);
+        if (ch != 1)
+        {
+            return 100;
+        }
+        if (x[i] < 0)
+        {
+            sum += x[i];
+            c++;
+        }
+    }
+    if (ar > 0)
+    {
+        ar = sum / c;
     }
     else
     {
-        if (n == 0)
-        {
-            printf("0");
-        }
-        else if (n == 1)
-        {
-            printf("1");
-        }
-        else
-        {
-            while (c <= n)
-            {
-                c++;
-                x = (f0 + f1);
-                f0 = f1;
-                f1 = x;
-            }
-            printf("%d", x);
-        }
-        return 0;
+        ar = 0;
     }
+    return ar;
+}
+
+void output(float ar)
+{
+    printf("%.6f", ar);
+}
+
+int main()
+{
+    int n = input();
+    if (n == -1)
+    {
+        printf("Input Error");
+        return 4;
+    }
+    
+    float out = array(n);
+    if (out == 100)
+    {
+        printf("Input Error");
+        return 4;
+    }
+    output(out);
 }
