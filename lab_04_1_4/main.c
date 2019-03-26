@@ -13,12 +13,27 @@ int input()
         return n;
 }
 
+void InsertionSort(int n, int a[])
+{
+    int new, l;
+    
+    for (int i = 1; i < n; i++)
+    {
+        new = a[i];
+        l = i - 1;
+        while(l >= 0 && a[l] > new)
+        {
+            a[l+1] = a[l];
+            l = l - 1;
+        }
+        a[l+1] = new;
+    }
+}
+
 float array(int n)
 {
     int x[N];
-    int ch, c = 0;
-    float sum = 0;
-    float ar = 0;
+    int ch;
     
     for (int i = 0; i < n; i++)
     {
@@ -27,32 +42,13 @@ float array(int n)
         {
             return 100;
         }
-        else
-        {
-            sum += x[i];
-        }
-        
     }
-    if (n > 0)
-    {
-        ar = sum / n;
-    }
-    else
-    {
-        ar = 0;
-    }
+    InsertionSort(n, x);
     for (int i = 0; i < n; i++)
     {
-        if (x[i] > ar)
-        {
-            printf("%d ", x[i]);
-        }
+        printf("%d ", x[i]);
     }
-}
-
-void output(float ar)
-{
-    printf("%.6f", ar);
+    return 0;
 }
 
 int main()
@@ -65,5 +61,5 @@ int main()
     }
     
     array(n);
+    return 0;
 }
-
