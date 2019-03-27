@@ -23,7 +23,7 @@ void insertionsort(int n, int a[])
         l = i - 1;
         while (l >= 0 && a[l] > new)
         {
-            a[l+1] = a[l];
+            a[l + 1] = a[l];
             l = l - 1;
         }
         a[l + 1] = new;

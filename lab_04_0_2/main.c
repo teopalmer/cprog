@@ -16,7 +16,7 @@ int input()
 float array(int n)
 {
     int x[N];
-    int ch, c = 0;
+    int ch;
     float sum = 0;
     float ar = 0;
     
@@ -47,6 +47,7 @@ float array(int n)
             printf("%d ", x[i]);
         }
     }
+    return 0;
 }
 
 int main()
