@@ -31,7 +31,6 @@ float array(int n)
         {
             sum += x[i];
         }
-        
     }
     if (n > 0)
     {
@@ -48,11 +47,6 @@ float array(int n)
             printf("%d ", x[i]);
         }
     }
-}
-
-void output(float ar)
-{
-    printf("%.6f", ar);
 }
 
 int main()

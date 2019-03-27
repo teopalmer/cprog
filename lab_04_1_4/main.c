@@ -5,7 +5,7 @@ int input()
 {
     int n, ch;
     ch = scanf("%d", &n);
-    if ((ch != 1) || (n <= 0) || (n >= 10))
+    if ((ch != 1) || (n <= 0) || (n > 10))
     {
         return -1;
     }
@@ -13,7 +13,7 @@ int input()
         return n;
 }
 
-void InsertionSort(int n, int a[])
+void insertionsort(int n, int a[])
 {
     int new, l;
     
@@ -21,12 +21,12 @@ void InsertionSort(int n, int a[])
     {
         new = a[i];
         l = i - 1;
-        while(l >= 0 && a[l] > new)
+        while (l >= 0 && a[l] > new)
         {
             a[l+1] = a[l];
             l = l - 1;
         }
-        a[l+1] = new;
+        a[l + 1] = new;
     }
 }
 
@@ -43,7 +43,7 @@ float array(int n)
             return 100;
         }
     }
-    InsertionSort(n, x);
+    insertionsort(n, x);
     for (int i = 0; i < n; i++)
     {
         printf("%d ", x[i]);
@@ -60,6 +60,11 @@ int main()
         return 4;
     }
     
-    array(n);
+    if (array(n) == 100)
+    {
+        printf("Input Error");
+        return 4;
+    }
+    
     return 0;
 }
