@@ -64,5 +64,4 @@ int main()
         printf("Input Error");
         return 4;
     }
-
 }
