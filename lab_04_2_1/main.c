@@ -59,7 +59,7 @@ int main()
     }
     
     float out = array(n);
-    if (out == 100)
+    if (out == 100 || out == 0)
     {
         printf("Input Error");
         return 4;

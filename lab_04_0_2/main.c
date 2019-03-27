@@ -59,7 +59,7 @@ int main()
         return 4;
     }
     
-    if (array(n) == 100)
+    if (array(n) == 100 || array(n) == 0)
     {
         printf("Input Error");
         return 4;
