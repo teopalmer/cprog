@@ -5,7 +5,7 @@ int input()
 {
     int n, ch;
     ch = scanf("%d", &n);
-    if ((ch != 1) || (n <= 0) || (n >= 10))
+    if ((ch != 1) || (n <= 0) || (n > 10))
     {
         return -1;
     }
@@ -16,7 +16,7 @@ int input()
 float array(int n)
 {
     int x[N];
-    int ch;
+    int ch, f = 0;
     float sum = 0;
     float ar = 0;
     
@@ -32,21 +32,20 @@ float array(int n)
             sum += x[i];
         }
     }
-    if (n > 0)
-    {
-        ar = sum / n;
-    }
-    else
-    {
-        ar = 0;
-        return 100;
-    }
+    
+    ar = sum / n;
+    
     for (int i = 0; i < n; i++)
     {
         if (x[i] > ar)
         {
+            f = 1;
             printf("%d ", x[i]);
         }
+    }
+    if (f == 0)
+    {
+        return 100;
     }
     return 0;
 }
@@ -65,8 +64,4 @@ int main()
         printf("Input Error");
         return 4;
     }
-    else
-    {
-        array(n);
-    }
-}
+
