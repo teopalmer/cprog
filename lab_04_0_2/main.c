@@ -39,6 +39,7 @@ float array(int n)
     else
     {
         ar = 0;
+        return 100;
     }
     for (int i = 0; i < n; i++)
     {
