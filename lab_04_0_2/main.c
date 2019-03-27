@@ -59,6 +59,13 @@ int main()
         return 4;
     }
     
-    array(n);
+    if (array(n) == 100)
+    {
+        printf("Input Error");
+        return 4;
+    }
+    else
+    {
+        array(n);
+    }
 }
-
