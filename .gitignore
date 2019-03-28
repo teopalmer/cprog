@@ -4,3 +4,5 @@
 *.pch
 *.gch
 .DS_Store
+CMakeLists.txt
+.idea/
