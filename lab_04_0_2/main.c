@@ -5,7 +5,7 @@ int input(int *x, int *n)
 {
     int ch;
     ch = scanf("%d", n);
-    if ((ch != 1) || (n <= 0) || (*n > 10))
+    if ((ch != 1) || (*n <= 0) || (*n > 10))
     {
         return -1;
     }
@@ -23,7 +23,7 @@ int input(int *x, int *n)
 
 float array(int *x, int n)
 {
-    int ch, f = 0;
+    int f = 0;
     float sum = 0;
     float ar = 0;
     

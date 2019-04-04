@@ -23,7 +23,7 @@ int input(int *x, int *n)
 
 float array(int *x, int n)
 {
-    int ch, c = 0;
+    int c = 0;
     float sum = 0;
     float ar = 0;
     
