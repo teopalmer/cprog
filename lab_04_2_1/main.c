@@ -1,32 +1,34 @@
 #include <stdio.h>
 #define N 100
 
-int input()
+int input(int *x, int *n)
 {
-    int n, ch;
-    ch = scanf("%d", &n);
-    if ((ch != 1) || (n <= 0) || (n > 10))
+    int ch;
+    ch = scanf("%d", n);
+    if ((ch != 1) || (*n <= 0) || (*n > 10))
     {
         return -1;
     }
     else
-        return n;
+        for (int i = 0; i < *n; i++)
+        {
+            ch = scanf("%d", &x[i]);
+            if (ch != 1)
+            {
+                return -1;
+            }
+        }
+    return 0;
 }
 
-float array(int n)
+float array(int *x, int n)
 {
-    int x[N];
     int ch, c = 0;
     float sum = 0;
     float ar = 0;
     
     for (int i = 0; i < n; i++)
     {
-        ch = scanf("%d", &x[i]);
-        if (ch != 1)
-        {
-            return 100;
-        }
         if (x[i] < 0)
         {
             sum += x[i];
@@ -39,7 +41,7 @@ float array(int n)
     }
     else
     {
-        ar = 0;
+        return 100;
     }
     return ar;
 }
@@ -51,19 +53,16 @@ void output(float ar)
 
 int main()
 {
-    int n = input();
-    if (n == -1)
+    int x[N];
+    int n = 0;
+    int p = input(x, &n);
+    
+    if (p == -1 || array(x, n) == 100)
     {
         printf("Input Error");
         return 4;
     }
     
-    float out = array(n);
-    if (out == 100 || out == 0)
-    {
-        printf("Input Error");
-        return 4;
-    }
-    output(out);
+    output(array(x, n));
     return 0;
 }
