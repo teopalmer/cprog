@@ -52,15 +52,11 @@ float array(int *x, int n)
 int main()
 {
     int n, x[N];
-    input(x, &n);
-    if (n == -1)
+    if (!(input(x, &n)) && !(array(x, n)))
+        return 0;
+    else
     {
-        printf("Input Error");
-        return 4;
-    }
-    if (array(x, n) == -1)
-    {
-        printf("Input Error");
-        return 4;
+        puts("Input Error");
+        return -1;
     }
 }
