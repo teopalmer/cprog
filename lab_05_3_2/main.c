@@ -58,8 +58,8 @@ int col_remover(int x[N][N], int n, int *m, int k)
     }
     
     if (fm == *m || *m == 0)
-    return 1;
-    return 0;
+        return VALUE_ERROR;
+    return OK;
 }
 
 void output(int x[N][N], int n, int m)
