@@ -48,7 +48,7 @@ int input_array(int x[N * N], int n, int m)
 int is_ord(int x[N * N], int n, int m, int k)
 {
     int num = k % m;
-    for (int j = num; j < m; j+=num)
+    for (int j = num; j < m; j += num)
     {
         if (x[j + num] - x[j] > 0)
             return VALUE_ERROR;
@@ -66,7 +66,6 @@ int main()
         for (int i = 0; i < n * m; i++)
             printf("%d ", x[i]);
     }
-    
     else
         return VALUE_ERROR;
 }

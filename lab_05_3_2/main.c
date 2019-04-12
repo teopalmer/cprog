@@ -21,15 +21,15 @@ int input(int x[N][N], int *n, int *m, int *k)
     }
     
     for (int i = 0; i < *n; i++)
-    for (int j = 0; j < *m; j++)
-    {
-        ch = scanf("%d", &x[i][j]);
-        if (ch != 1)
+        for (int j = 0; j < *m; j++)
         {
-            puts("Incorrect symbol");
-            return VALUE_ERROR;
+            ch = scanf("%d", &x[i][j]);
+            if (ch != 1)
+            {
+                puts("Incorrect symbol");
+                return VALUE_ERROR;
+            }
         }
-    }
     
     ch = scanf("%d", k);
     if (ch != 1)
@@ -44,18 +44,18 @@ int col_remover(int x[N][N], int n, int *m, int k)
 {
     int fm = *m;
     for (int i = 0; i < n; i++)
-    for (int j = 0; j < *m; j++)
-    {
-        if (x[i][j] == k)
+        for (int j = 0; j < *m; j++)
         {
-            for (int l = 0; l < n; l++)
-            for (int p = j; p < *m; p++)
+            if (x[i][j] == k)
             {
-                x[l][p] = x[l][p+1];
+                for (int l = 0; l < n; l++)
+                for (int p = j; p < *m; p++)
+                {
+                    x[l][p] = x[l][p+1];
+                }
+                (*m)--;
             }
-            (*m)--;
         }
-    }
     
     if (fm == *m || *m == 0)
         return VALUE_ERROR;
@@ -67,7 +67,7 @@ void output(int x[N][N], int n, int m)
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
-        printf("%d ", x[i][j]);
+            printf("%d ", x[i][j]);
         puts("");
     }
 }
