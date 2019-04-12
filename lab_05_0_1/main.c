@@ -51,9 +51,9 @@ int is_ord(int x[N * N], int n, int m, int k)
     for (int j = num; j < m; j+=num)
     {
         if (x[j + num] - x[j] > 0)
-            return 1;
+            return VALUE_ERROR;
     }
-    return 0;
+    return OK;
 }
 
 int main()
