@@ -1,19 +1,27 @@
 #include <stdio.h>
 #define N 100
 
-int input()
+int input(int *x, int *n)
 {
-    int n, ch;
-    ch = scanf("%d", &n);
-    if ((ch != 1) || (n <= 0) || (n > 10))
+    int ch;
+    ch = scanf("%d", n);
+    if ((ch != 1) || (*n <= 0) || (*n > 10))
     {
         return -1;
     }
     else
-        return n;
+        for (int i = 0; i < *n; i++)
+        {
+            ch = scanf("%d", &x[i]);
+            if (ch != 1)
+            {
+                return -1;
+            }
+        }
+    return 0;
 }
 
-void insertionsort(int n, int a[])
+void insertionsort(int n, int *a)
 {
     int new, l;
     
@@ -30,41 +38,22 @@ void insertionsort(int n, int a[])
     }
 }
 
-float array(int n)
+int main()
 {
     int x[N];
-    int ch;
+    int n = 0;
+    int p = input(x, &n);
     
-    for (int i = 0; i < n; i++)
+    if (p == -1)
     {
-        ch = scanf("%d", &x[i]);
-        if (ch != 1)
-        {
-            return 100;
-        }
+        printf("Input Error");
+        return 4;
     }
+    
     insertionsort(n, x);
     for (int i = 0; i < n; i++)
     {
         printf("%d ", x[i]);
     }
-    return 0;
-}
-
-int main()
-{
-    int n = input();
-    if (n == -1)
-    {
-        printf("Input Error");
-        return 4;
-    }
-    
-    if (array(n) == 100)
-    {
-        printf("Input Error");
-        return 4;
-    }
-    
     return 0;
 }

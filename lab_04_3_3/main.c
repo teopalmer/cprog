@@ -1,16 +1,24 @@
 #include <stdio.h>
 #define N 100
 
-int input()
+int input(int *x, int *n)
 {
-    int n, ch;
-    ch = scanf("%d", &n);
-    if ((ch != 1) || (n <= 0) || (n >= 10))
+    int ch;
+    ch = scanf("%d", n);
+    if ((ch != 1) || (*n <= 0) || (*n > 10))
     {
         return -1;
     }
     else
-        return n;
+        for (int i = 0; i < *n; i++)
+        {
+            ch = scanf("%d", &x[i]);
+            if (ch != 1)
+            {
+                return -1;
+            }
+        }
+    return 0;
 }
 
 int reverse(int n)
@@ -25,26 +33,14 @@ int reverse(int n)
     return r2;
 }
 
-int array(int n)
+int array(int *x, int *n)
 {
-    int x[N];
-    int ch;
-    
-    for (int i = 0; i < n; i++)
-    {
-        ch = scanf("%d", &x[i]);
-        
-        if (ch != 1)
-        {
-            return 100;
-        }
-    }
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < *n; i++)
     {
         if (x[i] > 0)
         {
-            n++;
-            for (int j = n - 1; j > i; j--)
+            (*n)++;
+            for (int j = *n - 1; j > i; j--)
             {
                 x[j] = x[j - 1];
             }
@@ -52,7 +48,7 @@ int array(int n)
             i++;
         }
     }
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < *n; i++)
     {
         printf("%d ", x[i]);
     }
@@ -62,19 +58,15 @@ int array(int n)
 
 int main()
 {
-    int n = input();
-    if (n == -1)
+    int n, x[N];
+    if (!(input(x, &n)))
     {
-        printf("Input Error");
-        return 4;
+        array(x, &n);
+        return 0;
     }
-    
-    float out = array(n);
-    if (out == 100)
+    else
     {
-        printf("Input Error");
-        return 4;
+        printf("Input error");
+        return -1;
     }
-    return 0;
 }
-

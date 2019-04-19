@@ -1,0 +1,17 @@
+Test format:
+
+Input
+Output
+
+5 -1 -2 -3 -4 -5
+-3
+
+0
+Input error
+
+5 0 0 0 0 0
+Input error
+
+5 -1 -1 -1 -1 -1
+Input error
+
