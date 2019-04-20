@@ -21,6 +21,7 @@ int input(int x[N][N], int *n, int *m)
     }
     
     for (int i = 0; i < *n; i++)
+    {
         for (int j = 0; j < *m; j++)
         {
             ch = scanf("%d", &x[i][j]);
@@ -30,7 +31,8 @@ int input(int x[N][N], int *n, int *m)
                 return VALUE_ERROR;
             }
         }
-        return 0;
+    }
+    return 0;
 }
 
 int max_find(int x[N][N], int k, int m)
@@ -58,11 +60,13 @@ void switcher(int x[N][N], int m, int i, int k)
 void sort_m(int x[N][N], int n, int m)
 {
     for (int i = 1; i < n; i++)
+    {
         for (int j = 1; j < n; j++)
         {
             if (max_find(x, j, m) > max_find(x, j - 1, m))
-            switcher(x, m, j, j - 1);
+                switcher(x, m, j, j - 1);
         }
+    }
 }
 
 void output(int x[N][N], int n, int m)
