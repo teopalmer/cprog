@@ -1,85 +1,64 @@
 #include <stdio.h>
 #define N 10
-#define VALUE_ERROR 4
-#define OK 0
+#define 0 OK
+#define 1 VALUE_ERROR
 
-int input(int *n, int *m, int x[N * N], int *k)
+int arr_input(int array[N][N], int n, int m)
 {
-    int ch;
-    ch = scanf("%d", n);
-    if (ch != 1 || *n <= 0 || *n > 10)
-    {
-        puts("Incorrect row number");
-        return VALUE_ERROR;
-    }
-    
-    ch = scanf("%d", m);
-    if (ch != 1 || *m <= 0 || *m > 10)
-    {
-        puts("Incorrect column number");
-        return VALUE_ERROR;
-    }
-    
-    for (int i = 0; i < *n; i++)
-    for (int j = 0; j < *m; j++)
-    {
-        int num = i * *m + j;
-        ch = scanf("%d", &x[num]);
-        if (ch != 1)
+    int i, j, rs;
+    for (i = 0; i < n; i++)
+        for (j = 0; j < m; j++)
         {
-            puts("Incorrect symbol");
-            return VALUE_ERROR;
+            rs = scanf("%d", &array[i][j]);
+            if (rs != 1)
+                return -1;
         }
-    }
-    
-    ch = scanf("%d", k);
-    if (ch != 1 || *k > (*n * *m))
+    return 0;
+}
+
+void arr_check(int array[N][N], int arr1[N], int n, int m)
+{
+    int i, j, ok;
+    for (i = 0; i < m; i++)
     {
-        puts("Incorrect number");
+        ok = 1;
+        for (j = 0; j < n - 1; j++)
+            if (array[j][i] <= array[j + 1][i])
+                ok = 0;
+        if (array[0][i] <= array[n - 1][i])
+            ok = 0;
+        if (ok == 1 && n > 1)
+            arr1[i] = 1;
+        else
+            arr1[i] = 0;
+    }
+    return;
+}
+
+void arr_print(int arr1[], int m)
+{
+    for (int i = 0; i < m; i++)
+        printf("%d ", arr1[i]);
+    return;
+}
+
+int main(void)
+{
+    int n, m, rs;
+    rs = scanf("%d %d", &n, &m);
+    if (rs != 2 || n > 10 || m > 10 || n <= 0 || m <= 0)
+    {
+        printf("Incorrect input");
         return VALUE_ERROR;
     }
+    int array[N][N];
+    if (arr_input(array, n, m) == -1)
+    {
+        printf("Incorrect input");
+        return VALUE_ERROR;
+    }
+    int arr1[N];
+    arr_check(array, arr1, n, m);
+    arr_print(arr1, m);
     return OK;
-}
-
-/*int input_array(int x[N * N], int n, int m)
- {
- int ch;
- for (int i = 0; i < n; i++)
- for (int j = 0; j < m; j++)
- {
- int num = i * m + j;
- ch = scanf("%d", &x[num]);
- if (ch != 1)
- {
- puts("Incorrect symbol");
- return VALUE_ERROR;
- }
- }
- return OK;
- }*/
-
-int is_ord(int x[N * N], int n, int m, int k)
-{
-    int num = k % m;
-    for (int j = num; j < m; j += num)
-    {
-        if (x[j + num] - x[j] > 0)
-        return 0;
-    }
-    return 1;
-}
-
-int main()
-{
-    int x[N * N];
-    int n, m, k;
-    if (!input(&n, &m, x, &k))
-    {
-        puts("*");
-        x[k] = is_ord(x, n, m, k);
-        for (int i = 0; i < n * m; i++)
-        printf("%d ", x[i]);
-    }
-    else
-    return VALUE_ERROR;
 }
