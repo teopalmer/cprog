@@ -1,7 +1,7 @@
 #include <stdio.h>
 #define N 10
-#define 0 OK
-#define 1 VALUE_ERROR
+#define OK 0
+#define VALUE_ERROR 1
 
 int arr_input(int array[N][N], int n, int m)
 {
