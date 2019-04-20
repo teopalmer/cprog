@@ -3,7 +3,7 @@
 #define VALUE_ERROR 4
 #define OK 0
 
-int input(int *n, int *m, int *k)
+int input(int *n, int *m, int x[N * N], int *k)
 {
     int ch;
     ch = scanf("%d", n);
@@ -19,6 +19,19 @@ int input(int *n, int *m, int *k)
         puts("Incorrect column number");
         return VALUE_ERROR;
     }
+    
+    for (int i = 0; i < *n; i++)
+    for (int j = 0; j < *m; j++)
+    {
+        int num = i * *m + j;
+        ch = scanf("%d", &x[num]);
+        if (ch != 1)
+        {
+            puts("Incorrect symbol");
+            return VALUE_ERROR;
+        }
+    }
+    
     ch = scanf("%d", k);
     if (ch != 1 || *k > (*n * *m))
     {
@@ -28,22 +41,22 @@ int input(int *n, int *m, int *k)
     return OK;
 }
 
-int input_array(int x[N * N], int n, int m)
-{
-    int ch;
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < m; j++)
-        {
-            int num = i * m + j;
-            ch = scanf("%d", &x[num]);
-            if (ch != 1)
-            {
-                puts("Incorrect symbol");
-                return VALUE_ERROR;
-            }
-        }
-    return OK;
-}
+/*int input_array(int x[N * N], int n, int m)
+ {
+ int ch;
+ for (int i = 0; i < n; i++)
+ for (int j = 0; j < m; j++)
+ {
+ int num = i * m + j;
+ ch = scanf("%d", &x[num]);
+ if (ch != 1)
+ {
+ puts("Incorrect symbol");
+ return VALUE_ERROR;
+ }
+ }
+ return OK;
+ }*/
 
 int is_ord(int x[N * N], int n, int m, int k)
 {
@@ -51,21 +64,22 @@ int is_ord(int x[N * N], int n, int m, int k)
     for (int j = num; j < m; j += num)
     {
         if (x[j + num] - x[j] > 0)
-            return VALUE_ERROR;
+        return 0;
     }
-    return OK;
+    return 1;
 }
 
 int main()
 {
     int x[N * N];
     int n, m, k;
-    if (!input(&n, &m, &k) && !input_array(x, n, m))
+    if (!input(&n, &m, x, &k))
     {
+        puts("*");
         x[k] = is_ord(x, n, m, k);
         for (int i = 0; i < n * m; i++)
-            printf("%d ", x[i]);
+        printf("%d ", x[i]);
     }
     else
-        return VALUE_ERROR;
+    return VALUE_ERROR;
 }

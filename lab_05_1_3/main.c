@@ -73,7 +73,6 @@ void output(int x[N][N], int n, int m)
         {
             printf("%d ", x[i][j]);
         }
-        puts("");
     }
 }
 
