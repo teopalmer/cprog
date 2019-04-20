@@ -1,5 +1,0 @@
-Test format:
-
-Input
-Output
-
