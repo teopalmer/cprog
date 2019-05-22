@@ -21,13 +21,15 @@ int input(int x[N][N], int *n, int *m)
     }
     
     for (int i = 0; i < *n; i++)
-    for (int j = 0; j < *m; j++)
     {
-        ch = scanf("%d", &x[i][j]);
-        if (ch != 1)
+        for (int j = 0; j < *m; j++)
         {
-            puts("Incorrect symbol");
-            return VALUE_ERROR;
+            ch = scanf("%d", &x[i][j]);
+            if (ch != 1)
+            {
+                puts("Incorrect symbol");
+                return VALUE_ERROR;
+            }
         }
     }
     return 0;
@@ -39,7 +41,7 @@ int max_find(int x[N][N], int k, int m)
     for (int j = 0; j < m; j++)
     {
         if (x[k][j] > min)
-        min = x[k][j];
+            min = x[k][j];
     }
     return min;
 }
@@ -58,10 +60,12 @@ void switcher(int x[N][N], int m, int i, int k)
 void sort_m(int x[N][N], int n, int m)
 {
     for (int i = 1; i < n; i++)
-    for (int j = 1; j < n; j++)
     {
-        if (max_find(x, j, m) > max_find(x, j - 1, m))
-        switcher(x, m, j, j - 1);
+        for (int j = 1; j < n; j++)
+        {
+            if (max_find(x, j, m) > max_find(x, j - 1, m))
+                switcher(x, m, j, j - 1);
+        }
     }
 }
 
@@ -70,15 +74,16 @@ void output(int x[N][N], int n, int m)
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
-        printf("%d ", x[i][j]);
-        puts("");
+        {
+            printf("%d ", x[i][j]);
+        }
     }
 }
 
 int main()
 {
     int x[N][N];
-    int n, m, k;
+    int n, m;
     if (!input(x, &n, &m))
     {
         sort_m(x, n, m);
@@ -86,6 +91,6 @@ int main()
         return OK;
     }
     else
-    return VALUE_ERROR;
+        return VALUE_ERROR;
 }
 
