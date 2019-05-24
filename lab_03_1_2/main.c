@@ -46,13 +46,12 @@ int main(int argc, char *argv[])
     int q = 0;
     int check;
     FILE *f;
-    /*if (argc != 2)
-     return WRONG_ARG;*/
+    if (argc != 2)
+     return WRONG_ARG;
     f = fopen(argv[1], "r");
     if (f == NULL)
         return EMPTY_FILE;
     check = min_max(f, &min_num, &max_num);
-    
     if (check)
     {
         return WRONG_ARG;
