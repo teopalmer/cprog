@@ -91,6 +91,10 @@ char *my_strchr(char a[], int sym)
 char *my_strrchr(char a[], int sym)
 {
     int len_a = strlen(a);
+    if (sym == '\0')
+    {
+        return a + len_a;
+    }
     char *ans = NULL;
     int cou = len_a - 1;
     while (cou >= 0 && a[cou] != sym)
