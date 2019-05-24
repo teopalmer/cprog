@@ -1,20 +1,24 @@
 #include <stdio.h>
+#define N 100
 #define OK 0
 #define WRONG_ARG 2
 #define EMPTY_FILE 3
 #define FILE_ERROR 4
 
-int search(FILE *f, float avg, int *q)
+int search(FILE *f, float avg, int *c)
 {
     float t;
     rewind(f);
     while (fscanf(f, "%f", &t) == 1)
     {
         if (t > avg)
-            (*q)++;
+            (*c)++;
     }
-    if (q == 0)
+    if (c == 0)
+    {
+        puts("No numbers here");
         return WRONG_ARG;
+    }
     return OK;
 }
 
@@ -39,39 +43,46 @@ int min_max(FILE *f, float *min_num, float *max_num)
             return WRONG_ARG;
     }
     else
+    {
+        puts("Numbers only policy");
         return WRONG_ARG;
+    }
     return OK;
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[N])
 {
-    float min_num, max_num;
-    int q = 0;
-    int check;
-    FILE *f;
-    
     if (argc != 2)
         return WRONG_ARG;
+    
+    float minn, maxn;
+    int c = 0;
+    int ch;
+    float avg = 0;
+    FILE *f;
     
     f = fopen(argv[1], "r");
     
     if (f == NULL)
-        return EMPTY_FILE;
-    check = min_max(f, &min_num, &max_num);
-    
-    if (check)
     {
+        puts("File doesn't exist");
+        return EMPTY_FILE;
+    }
+    if (min_max(f, &min_num, &max_num))
+    {
+        puts("Something went really wrong..");
         return WRONG_ARG;
     }
-    
     else
     {
-        float avg = (min_num + max_num) / 2;
-        check = search(f, avg, &q);
-        if (check)
-            return FILE_ERROR;
+        avg = (minn + maxn) / 2;
+        if (search(f, avg, &c))
+        {
+            puts("File doesn't exist");
+            return WRONG_ARG;
+        }
         else
-            printf("%d ", q);
+            printf("%d ", c);
     }
     fclose(f);
 }
