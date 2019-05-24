@@ -21,7 +21,7 @@ void output(str_t word, str_t tag)
 {
     str_t wordn = "";
     if (word[strlen(word) - 1] == '\n')
-        for (int i = 0; i < strlen(word) -1; i++)
+        for (int i = 0; i < strlen(word) - 1; i++)
             wordn[i] = word[i];
     else
         strcpy(wordn, word);
