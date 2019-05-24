@@ -57,7 +57,6 @@ int main(int argc, char *argv[N])
     
     float minn, maxn;
     int c = 0;
-    int ch;
     float avg = 0;
     FILE *f;
     

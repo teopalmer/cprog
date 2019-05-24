@@ -167,22 +167,28 @@ int main(int argc, char **argv)
             gen_file(file);
             fclose(file);
         }
-        if (!strcmp(argv[i], "s"))
-        {
-            if (sort_file(argv[i + 1]) != 0)
-                return WRONG_ARG;
-        }
-        if (!strcmp(argv[i], "p"))
-        {
-            file = fopen(argv[i + 1], "rb");
-            if (!file || get_size(file) == 0)
-                return WRONG_ARG;
-            print_file(file);
-            fclose(file);
-        }
         else
         {
-            return WRONG_ARG;
+            if (!strcmp(argv[i], "s"))
+            {
+                if (sort_file(argv[i + 1]) != 0)
+                    return WRONG_ARG;
+            }
+            else
+            {
+                if (!strcmp(argv[i], "p"))
+                {
+                    file = fopen(argv[i + 1], "rb");
+                    if (!file || get_size(file) == 0)
+                        return WRONG_ARG;
+                    print_file(file);
+                    fclose(file);
+                }
+                else
+                {
+                    return WRONG_ARG;
+                }
+            }
         }
     }
     return OK;
