@@ -71,13 +71,17 @@ size_t my_strcspn(char a[], char b[])
 char *my_strchr(char a[], int sym)
 {
     int len_a = strlen(a);
+    if (sym == '\0')
+    {
+        return a + len_a;
+    }
     char *ans = NULL;
     int cou = 0;
     while (cou < len_a && a[cou] != sym)
     {
         ++cou;
     }
-    if (cou < len_a && (cou < ans - a))
+    if (cou < len_a && (!ans || cou < ans - a))
     {
         ans = a + cou;
     }

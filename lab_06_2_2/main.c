@@ -7,9 +7,9 @@ typedef char str_t[N];
 int input(str_t s1, str_t s2)
 {
     puts("Please enter two strings:");
-    gets(s1);
-    gets(s2);
-    if (s1[0]=='\0' || s2[0]=='\0')
+    fgets(s1, N, stdin);
+    fgets(s2, N, stdin);
+    if (s1[0] == '\0' || s2[0] == '\0')
     {
         puts("The input is empty, YEET");
         return VALUE_ERROR;
@@ -19,7 +19,13 @@ int input(str_t s1, str_t s2)
 
 void output(str_t word, str_t tag)
 {
-    printf("%s %s", word, tag);
+    str_t wordn = "";
+    if (word[strlen(word)-1] == '\n')
+        for (int i = 0; i < strlen(word)-1; i++)
+            wordn[i] = word[i];
+    else
+        strcpy(wordn, word);
+    printf("%s %s", wordn, tag);
 }
 
 void split_words(str_t s1, str_t s2)
@@ -27,8 +33,7 @@ void split_words(str_t s1, str_t s2)
     str_t new_word;
     str_t prev_words;
     char *t;
-    char * pch = strtok(s1," ,.-");
-    
+    char *pch = strtok(s1, " ,.-");
     while (pch != NULL)
     {
         strcpy(new_word, pch);
@@ -44,14 +49,14 @@ void split_words(str_t s1, str_t s2)
         {
             output(new_word, "no\n");
         }
-        pch = strtok (NULL, " ,.-");
+        pch = strtok(NULL, " ,.-");
     }
 }
 
 int main()
 {
     str_t s1, s2;
-    if (!input(s1,s2))
+    if (!input(s1, s2))
     {
         puts("Result:");
         split_words(s1, s2);
@@ -59,4 +64,3 @@ int main()
     }
     return VALUE_ERROR;
 }
-
