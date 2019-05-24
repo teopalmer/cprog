@@ -20,8 +20,8 @@ int input(str_t s1, str_t s2)
 void output(str_t word, str_t tag)
 {
     str_t wordn = "";
-    if (word[strlen(word)-1] == '\n')
-        for (int i = 0; i < strlen(word)-1; i++)
+    if (word[strlen(word) - 1] == '\n')
+        for (int i = 0; i < strlen(word) -1; i++)
             wordn[i] = word[i];
     else
         strcpy(wordn, word);
