@@ -29,8 +29,8 @@ int get_size_by_name(char filename[N])
 
 void gen_file(FILE *f)
 {
-    srand(time(NULL));
     int n;
+    srand(time(NULL));
     for (int i = 0; i < SIZE; i++)
     {
         n = rand() % 1000;
@@ -52,21 +52,21 @@ void print_file(FILE *f)
 
 int get_number_by_pos(char filename[N], int n)
 {
-    FILE *f = fopen(filename, "rb");
+    int tmp = 0;
     size_t read;
+    FILE *f = fopen(filename, "rb");
     if (!f)
     {
-        fclose(f);
+        puts("File is empty tho..");
         return EMPTY_FILE;
     }
-    int tmp = 0;
     for (int i = 0; i < n; i++)
     {
         read = fread(&tmp, sizeof(int), 1, f);
         if (read != 1)
         {
-            fclose(f);
-            return EMPTY_FILE;
+            puts("File is empty  tho..");
+            return WRONG_ARG;
         }
     }
     fclose(f);
@@ -79,51 +79,30 @@ int put_number_by_pos(char filename[N], int n, int tmp)
     size_t wr;
     if (!f)
     {
-        fclose(f);
+        puts("file is still impty tho..");
         return EMPTY_FILE;
     }
     fseek(f, sizeof(int) * (n - 1), 0);
     wr = fwrite(&tmp, sizeof(int), 1, f);
     if (wr != 1)
     {
-        fclose(f);
+        puts("file is still impty tho..");
         return WRONG_ARG;
     }
     fclose(f);
     return OK;
 }
 
-void quick_sort(int *numbers, int left, int right)
+void insertsort (double *a, int n)
 {
-    int pivot;
-    int l_hold = left;
-    int r_hold = right;
-    pivot = numbers[left];
-    while (left < right)
+    double x; int i, j;
+    for (i=0; i < n; i++)
     {
-        while ((numbers[right] >= pivot) && (left < right))
-            right--;
-        if (left != right)
-        {
-            numbers[left] = numbers[right];
-            left++;
-        }
-        while ((numbers[left] <= pivot) && (left < right))
-            left++;
-        if (left != right)
-        {
-            numbers[right] = numbers[left];
-            right--;
-        }
+        x = a[i];
+        for (j=i-1; j>=0 && a[j]>x; j--)
+            a[j+1] = a[j];
+        a[j+1] = x;
     }
-    numbers[left] = pivot;
-    pivot = left;
-    left = l_hold;
-    right = r_hold;
-    if (left < pivot)
-        quick_sort(numbers, left, pivot - 1);
-    if (right > pivot)
-        quick_sort(numbers, pivot + 1, right);
 }
 
 int sort_file(char filename[N])
@@ -139,7 +118,7 @@ int sort_file(char filename[N])
             return WRONG_ARG;
     }
     
-    quick_sort(mas, 0, size - 1);
+    insertsort(mas, size - 1);
     
     for (int i = 1; i <= size; i++)
     {
@@ -167,28 +146,22 @@ int main(int argc, char **argv)
             gen_file(file);
             fclose(file);
         }
+        if (!strcmp(argv[i], "s"))
+        {
+            if (sort_file(argv[i + 1]) != 0)
+                return WRONG_ARG;
+        }
+        if (!strcmp(argv[i], "p"))
+        {
+            file = fopen(argv[i + 1], "rb");
+            if (!file || get_size(file) == 0)
+                return WRONG_ARG;
+            print_file(file);
+            fclose(file);
+        }
         else
         {
-            if (!strcmp(argv[i], "s"))
-            {
-                if (sort_file(argv[i + 1]) != 0)
-                    return WRONG_ARG;
-            }
-            else
-            {
-                if (!strcmp(argv[i], "p"))
-                {
-                    file = fopen(argv[i + 1], "rb");
-                    if (!file || get_size(file) == 0)
-                        return WRONG_ARG;
-                    print_file(file);
-                    fclose(file);
-                }
-                else
-                {
-                    return WRONG_ARG;
-                }
-            }
+            return WRONG_ARG;
         }
     }
     return OK;
