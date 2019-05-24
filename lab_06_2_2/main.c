@@ -17,6 +17,13 @@ int input(str_t s1, str_t s2)
     return 0;
 }
 
+int strcheck(str_t s, str_t m)
+{
+    if (strstr(m, s))
+        return 0;
+    return 1;
+}
+
 void output(str_t word, str_t tag)
 {
     str_t wordn = "";
@@ -31,7 +38,7 @@ void output(str_t word, str_t tag)
 void split_words(str_t s1, str_t s2)
 {
     str_t new_word;
-    str_t prev_words;
+    str_t prev_words = "0 ";
     char *t;
     char *pch = strtok(s1, " ,.-");
     while (pch != NULL)
@@ -41,15 +48,26 @@ void split_words(str_t s1, str_t s2)
         
         if (t != NULL)
         {
-            output(new_word, "yes\n");
-            strcpy(prev_words, new_word);
-            strcpy(prev_words, " ");
+            if (strstr(prev_words, new_word)==NULL)
+            {
+                //printf("%s\n", (strstr(new_word, prev_words)));
+                output(new_word, "yes");
+            }
+            //printf("^ %s\n", (strstr(new_word, prev_words)));
+            strcat(prev_words, new_word);
+            strcat(prev_words, " ");
+            //printf("^1 %s / %s\n", new_word, prev_words);
         }
         else
         {
-            output(new_word, "no\n");
+            if (strstr(prev_words, new_word)==NULL)
+                output(new_word, "no");
+            strcat(prev_words, new_word);
+            strcat(prev_words, " ");
         }
         pch = strtok(NULL, " ,.-");
+        if (pch != NULL)
+            puts("");
     }
 }
 
@@ -64,3 +82,4 @@ int main()
     }
     return VALUE_ERROR;
 }
+
