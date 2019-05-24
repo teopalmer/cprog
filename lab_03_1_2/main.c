@@ -24,11 +24,14 @@ int min_max(FILE *f, float *min_num, float *max_num)
     int flag = 0;
     if (fscanf(f, "%f", min_num) == 1)
     {
-        if (fscanf(f, "%f", &t) == 1)
+        *max_num = *min_num;
+        while (fscanf(f, "%f", &t) == 1)
         {
             flag = 1;
+            
             if (t > *max_num)
                 *max_num = t;
+            
             if (t < *min_num)
                 *min_num = t;
         }
@@ -46,16 +49,21 @@ int main(int argc, char *argv[])
     int q = 0;
     int check;
     FILE *f;
+    
     if (argc != 2)
-     return WRONG_ARG;
+        return WRONG_ARG;
+    
     f = fopen(argv[1], "r");
+    
     if (f == NULL)
         return EMPTY_FILE;
     check = min_max(f, &min_num, &max_num);
+    
     if (check)
     {
         return WRONG_ARG;
     }
+    
     else
     {
         float avg = (min_num + max_num) / 2;

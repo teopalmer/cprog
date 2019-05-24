@@ -33,7 +33,7 @@ int find_max(FILE *f, int *max)
             if (fscanf(f, "%d", &xnext) == 1)
             {
                 if (xnow < 0 && xnext >= 0 && xnext > cur_m)
-                    cur_m = xnow;
+                    cur_m = xnext;
                 xprev = xnow;
                 xnow = xnext;
             }
@@ -54,8 +54,8 @@ int find_max(FILE *f, int *max)
 
 int main()
 {
-    int max_count = 0;
-    if (find_max(stdin, &max_count) == OK)
+    int max_count = -1;
+    if (!find_max(stdin, &max_count) && max_count != -1)
     {
         printf("%d", max_count);
         return OK;
