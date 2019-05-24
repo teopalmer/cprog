@@ -12,10 +12,13 @@
 
 #define SIZE 20
 #define N 100
+#define OK 0
+#define WRONG_ARG 2
+#define EMPTY_FILE 3
+#define FILE_ERROR 4
 
 int get_size(FILE *f)
 {
-	//FILE *f = fopen(filename, "rb");
 	fseek(f, 0, SEEK_END);
 	int rez = ftell(f);
 	fseek(f, 0, SEEK_SET);
@@ -53,25 +56,28 @@ void print_file(FILE *f)
     puts("");
 }
 
-int get_number_by_pos(char filename[N], int n)
+int get_number_by_pos(FILE *f, char filename[N], int n)
 {
     FILE *f = fopen(filename, "rb");
     size_t read;
+    int tmp = 0;
+    
     if (!f)
     {
         fclose(f);
-        return -1;
+        return FILE_ERROR;
     }
-    int tmp = 0;
+    
     for (int i = 0; i < n; i++)
     {
         read = fread(&tmp, sizeof(int), 1, f);
         if (read != 1)
         {
             fclose(f);
-            return -1;
+            return EMPTY_FILE;
         }
     }
+    
     fclose(f);
     return tmp;
 }
@@ -83,17 +89,17 @@ int put_number_by_pos(char filename[N], int n, int tmp)
     if (!f)
     {
         fclose(f);
-        return -1;
+        return WRONG_ARG;
     }
     fseek(f, sizeof(int) * (n - 1), 0);
     wrote = fwrite(&tmp, sizeof(int), 1, f);
     if (wrote != 1)
     {
         fclose(f);
-        return -1;
+        return WRONG_ARG;
     }
     fclose(f);
-    return 0;
+    return OK;
 }
 
 void quick_sort(int *numbers, int left, int right)
@@ -133,13 +139,13 @@ int sort_file(char filename[N])
 {
 	int size = get_size_by_name(filename);
 	if (size == 0)
-		return -1;
+		return WRONG_ARG;
 	int mas[N];
 	for (int i = 1; i <= size; i++)
     {
         mas[i - 1] = get_number_by_pos(filename, i);
         if (mas[i - 1] == -1)
-            return -1;
+            return WRONG_ARG;
     }
 
 	quick_sort(mas, 0, size - 1);
@@ -147,10 +153,10 @@ int sort_file(char filename[N])
 	for (int i = 1; i <= size; i++)
     {
         if (put_number_by_pos(filename, i, mas[i - 1]) != 0)
-            return -1;
+            return WRONG_ARG;
     }
 
-    return 0;
+    return OK;
 }
 
 int main(int argc, char **argv)
@@ -166,7 +172,7 @@ int main(int argc, char **argv)
 		{
 			file = fopen(argv[i + 1], "wb");
 			if (!file)
-				return -1;
+				return FILE_ERROR;
 			generate_file(file);
 			fclose(file);
 		}
@@ -175,7 +181,7 @@ int main(int argc, char **argv)
 			if (!strcmp(argv[i], "s"))
 			{
 				if (sort_file(argv[i + 1]) != 0)
-					return -1;
+					return WRONG_ARG;
 			}
 			else
 			{
@@ -189,11 +195,11 @@ int main(int argc, char **argv)
 				}
 				else
 				{
-					return -1;
+					return WRONG_ARG;
 				}
 			}
 		}
 	}
 
-    return 0;
+    return OK;
 }
