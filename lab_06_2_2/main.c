@@ -9,7 +9,7 @@ int input(str_t s1, str_t s2)
     puts("Please enter two strings:");
     gets(s1);
     gets(s2);
-    if (!s1 || !s2)
+    if (s1[0]=='\0' || s2[0]=='\0')
     {
         puts("The input is empty, YEET");
         return VALUE_ERROR;
@@ -36,7 +36,6 @@ void split_words(str_t s1, str_t s2)
         
         if (t != NULL)
         {
-            //if (!strfind(new_word, prev_words))
             output(new_word, "yes\n");
             strcpy(prev_words, new_word);
             strcpy(prev_words, " ");
@@ -52,7 +51,6 @@ void split_words(str_t s1, str_t s2)
 int main()
 {
     str_t s1, s2;
-    //printf("^%d\n", strfind(s1, s2));
     if (!input(s1,s2))
     {
         puts("Result:");

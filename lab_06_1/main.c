@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
-char* my_strpbrk(char a[], char b[])
+char *my_strpbrk(char a[], char b[])
 {
-    char* ans = NULL;
+    char *ans = NULL;
     int len_b = strlen(b);
     int len_a = strlen(a);
     for (int i = 0; i < len_b; ++i)
@@ -68,26 +68,26 @@ size_t my_strcspn(char a[], char b[])
     return ans;
 }
 
-char* my_strchr(char a[], int sym)
+char *my_strchr(char a[], int sym)
 {
     int len_a = strlen(a);
-    char* ans = NULL;
+    char *ans = NULL;
     int cou = 0;
     while (cou < len_a && a[cou] != sym)
     {
         ++cou;
     }
-    if (cou < len_a && (!ans || cou < ans - a))
+    if (cou < len_a && (cou < ans - a))
     {
         ans = a + cou;
     }
     return ans;
 }
 
-char* my_strrchr(char a[], int sym)
+char *my_strrchr(char a[], int sym)
 {
     int len_a = strlen(a);
-    char* ans = NULL;
+    char *ans = NULL;
     int cou = len_a - 1;
     while (cou >= 0 && a[cou] != sym)
     {
