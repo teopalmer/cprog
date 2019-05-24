@@ -68,7 +68,7 @@ int main(int argc, char *argv[N])
         puts("File doesn't exist");
         return EMPTY_FILE;
     }
-    if (min_max(f, &min_num, &max_num))
+    if (min_max(f, &minn, &maxn))
     {
         puts("Something went really wrong..");
         return WRONG_ARG;
