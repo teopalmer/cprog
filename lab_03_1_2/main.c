@@ -57,7 +57,6 @@ int main(int argc, char *argv[])
     {
         return WRONG_ARG;
     }
-    
     else
     {
         float avg = (min_num + max_num) / 2;
