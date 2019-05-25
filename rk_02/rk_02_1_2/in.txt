@@ -1,0 +1,10 @@
+Moscow
+10
+100
+Yek
+20
+200
+Saint Petersburg
+30
+300
+
