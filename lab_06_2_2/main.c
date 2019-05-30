@@ -179,8 +179,8 @@ int main(void)
     int len_str2 = 0;
     int *pointer_len = &len_str1;
     
-    char lexem_matrix1[N][N] = {{0}};
-    char lexem_matrix2[N][N] = {{0}};
+    char lexem_matrix1[N][N] = { { 0 } };
+    char lexem_matrix2[N][N] = { { 0 } };
     const int str1_check = readstring(str1);
     const int str2_check = readstring(str2);
     
