@@ -15,7 +15,7 @@
 #define SEP_SIZE 8
 #define N 256
 
-/*int my_strcmp(const char string1, const char string2)
+int my_strcmp(const char *const string1, const char *const string2)
 {
     int i = 0;
     while (string1[i])
@@ -32,13 +32,13 @@
     }
     
     return TRUE;
-}*/
+}
 
-int check_duplicate(char matrix[][N], int len, const char string, int index)
+int check_duplicate(char matrix[][N], const int len, const char *const string, const int index)
 {
     for (int i = 0; i < len; i++)
     {
-        if (strcmp(string, matrix[i]))
+        if (my_strcmp(string, matrix[i]))
         {
             if (index == i)
             {
@@ -54,7 +54,7 @@ int check_duplicate(char matrix[][N], int len, const char string, int index)
     return TRUE;
 }
 
-void lexem_repeat_search(char matrix1[][N], int len_matrix1, char matrix2[][N], int len_matrix2)
+void lexem_repeat_search(char matrix1[][N], const int len_matrix1, char matrix2[][N], const int len_matrix2)
 {
     puts("Result: ");
     for (int i = 0; i < len_matrix1; i++)
@@ -81,7 +81,7 @@ void lexem_repeat_search(char matrix1[][N], int len_matrix1, char matrix2[][N], 
     }
 }
 
-int symb_check_separators(char symbol)
+int symb_check_separators(const char symbol)
 {
     char separators[SEP_SIZE] = { ' ', ',', ';', ':', '.', '-', '!', '?' };
     for (int i = 0; i < SEP_SIZE; i++)
@@ -95,7 +95,7 @@ int symb_check_separators(char symbol)
     return FALSE;
 }
 
-int my_split(const char string, char matrix_split[][N], int count_lexem)
+int my_split(const char *const string, char matrix_split[][N], int *const count_lexem)
 {
     int i = 0, k = 0;
     while (string[i + 1])
@@ -142,7 +142,7 @@ int my_split(const char string, char matrix_split[][N], int count_lexem)
     return OK;
 }
 
-int readstring(char array)
+int readstring(char *const array)
 {
     int i = 0;
     puts("Enter string: ");
@@ -179,35 +179,35 @@ int main(void)
     int len_str2 = 0;
     int *pointer_len = &len_str1;
     
-    char lexem_matrix1[N][N] = { 0 };
-    char lexem_matrix2[N][N] = { 0 };
+    char lexem_matrix1[N][N];
+    char lexem_matrix2[N][N];
     const int str1_check = readstring(str1);
     const int str2_check = readstring(str2);
     
     if (str1_check != OK)
     {
-        puts("Something is wrong with your first srting??");
+        puts("Incorrect entered string1 :(");
         return str1_check;
     }
     
     if (str2_check != OK)
     {
-        puts("Something is wrong with your second srting??");
+        puts("Incorrect entered string2 :(");
         return str2_check;
     }
     
-    int len_words_check1 = my_split(str1, lexem_matrix1, pointer_len);
+    const int len_words_check1 = my_split(str1, lexem_matrix1, pointer_len);
     pointer_len = &len_str2;
-    int len_words_check2 = my_split(str2, lexem_matrix2, pointer_len);
+    const int len_words_check2 = my_split(str2, lexem_matrix2, pointer_len);
     
     if (len_words_check1 != OK || len_words_check2 != OK)
     {
-        puts("Oh no, one of them is way too long!");
+        puts("One of the words is more than 16 symbols :(((");
         return ERROR_WORD_SIZE;
     }
     if (0 == len_str1 || 0 == len_str2)
     {
-        puts("The string is empty, dude..");
+        puts("One of the string have no words :(((");
         return NO_WORDS;
     }
     lexem_repeat_search(lexem_matrix1, len_str1, lexem_matrix2, len_str2);
