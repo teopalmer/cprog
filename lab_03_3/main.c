@@ -118,12 +118,14 @@ int main(int argc, char **argv)
     setbuf(stdout, NULL);
     
     if (argc != 3)
-    return TOO_FEW_CL_ARGS_ERROR;
+    {
+        puts("Smth with arguments is hella wrong..");
+        return TOO_FEW_CL_ARGS_ERROR;
+    }
     
     if (!strcmp(argv[1], "c"))
     {
         create_file(f, argv[2]);
-        
         return OK;
     }
     
@@ -132,7 +134,10 @@ int main(int argc, char **argv)
         f = fopen(argv[2], "rb");
         
         if (check_file(f) != OK)
-        return FILE_ERROR;
+        {
+            puts("Your file is corrupted :((");
+            return FILE_ERROR;
+        }
         
         print_file(f);
         
@@ -144,7 +149,10 @@ int main(int argc, char **argv)
         f = fopen(argv[2], "rb+");
         
         if (check_file(f) != OK)
-        return FILE_ERROR;
+        {
+            puts("Your file is corrupted :((");
+            return FILE_ERROR;
+        }
         
         sort_file(f);
         
