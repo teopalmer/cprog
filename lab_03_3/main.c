@@ -1,195 +1,155 @@
 #include <stdio.h>
-#include <math.h>
 #include <string.h>
-#include <stdlib.h>
-#include <time.h>
 #define OK 0
-#define WRONG_ARG 2
-#define EMPTY_FILE 3
-#define FILE_ERROR 4
-#define EXECUTION_ERROR 5
-#define SIZE 20
-#define N 100
+#define GOT_ARG 1
+#define WRONG_ARG -1
+#define EMPTY_FILE -2
+#define FILE_ERROR -3
+#define FILE_NOT_EXIST_ERROR -4
+#define EXECUTION_ERROR -5
+#define TOO_FEW_CL_ARGS_ERROR -6
+#define FILENAME_LEN 256
 
-int get_size(FILE *f)
+int create_file(FILE *f, char filename[FILENAME_LEN])
 {
+    int magic_number = -47;
+    
+    f = fopen(filename, "wb");
+    
+    if (!f)
+    return FILE_ERROR;
+    
+    for (int i = 0; i < 47; ++i)
+    {
+        magic_number -= 1;
+        fwrite(&magic_number, sizeof(int), 1, f);
+    }
+    
+    fclose(f);
+    
+    return OK;
+}
+
+int get_file_size(FILE *f)
+{
+    int size = 0;
     fseek(f, 0, SEEK_END);
-    int rez = ftell(f);
+    size = ftell(f) / sizeof(int);
     fseek(f, 0, SEEK_SET);
-    return (rez / sizeof(int));
+    
+    return size;
 }
 
-int get_size_by_name(char filename[N])
+int check_file(FILE *const f)
 {
-    FILE *f = fopen(filename, "rb");
-    int rez = get_size(f);
-    fclose(f);
-    return rez;
-}
-
-void gen_file(FILE *f)
-{
-    srand(time(NULL));
-    int n;
-    for (int i = 0; i < SIZE; i++)
-    {
-        n = rand() % 1000;
-        fwrite(&n, sizeof(int), 1, f);
-    }
-}
-
-void print_file(FILE *f)
-{
-    int n;
-    int size = get_size(f);
-    for (int i = 0; i < size; i++)
-    {
-        fread(&n, sizeof(int), 1, f);
-        printf("%d ", n);
-    }
-    puts("");
-}
-
-int get_number_by_pos(char filename[N], int n)
-{
-    FILE *f = fopen(filename, "rb");
-    size_t read;
+    int cur_num = 0;
+    
     if (!f)
-    {
-        fclose(f);
-        return EMPTY_FILE;
-    }
-    int tmp = 0;
-    for (int i = 0; i < n; i++)
-    {
-        read = fread(&tmp, sizeof(int), 1, f);
-        if (read != 1)
-        {
-            fclose(f);
-            return EMPTY_FILE;
-        }
-    }
-    fclose(f);
-    return tmp;
-}
-
-int put_number_by_pos(char filename[N], int n, int tmp)
-{
-    FILE *f = fopen(filename, "rb+");
-    size_t wr;
-    if (!f)
-    {
-        fclose(f);
-        return EMPTY_FILE;
-    }
-    fseek(f, sizeof(int) * (n - 1), 0);
-    wr = fwrite(&tmp, sizeof(int), 1, f);
-    if (wr != 1)
-    {
-        fclose(f);
-        return WRONG_ARG;
-    }
-    fclose(f);
-    return OK;
-}
-
-void quick_sort(int *numbers, int left, int right)
-{
-    int pivot;
-    int l_hold = left;
-    int r_hold = right;
-    pivot = numbers[left];
-    while (left < right)
-    {
-        while ((numbers[right] >= pivot) && (left < right))
-            right--;
-        if (left != right)
-        {
-            numbers[left] = numbers[right];
-            left++;
-        }
-        while ((numbers[left] <= pivot) && (left < right))
-            left++;
-        if (left != right)
-        {
-            numbers[right] = numbers[left];
-            right--;
-        }
-    }
-    numbers[left] = pivot;
-    pivot = left;
-    left = l_hold;
-    right = r_hold;
-    if (left < pivot)
-        quick_sort(numbers, left, pivot - 1);
-    if (right > pivot)
-        quick_sort(numbers, pivot + 1, right);
-}
-
-int sort_file(char filename[N])
-{
-    int size = get_size_by_name(filename);
+    return FILE_NOT_EXIST_ERROR;
+    
+    int size = get_file_size(f);
+    
     if (size == 0)
-        return WRONG_ARG;
-    int mas[N];
-    for (int i = 1; i <= size; i++)
+    return EMPTY_FILE;
+    
+    for (int i = 0; i < size; ++i)
     {
-        mas[i - 1] = get_number_by_pos(filename, i);
-        if (mas[i - 1] == WRONG_ARG)
+        if (fread(&cur_num, sizeof(int), 1, f) != GOT_ARG)
+        {
+            fseek(f, 0, SEEK_SET);
+            
             return WRONG_ARG;
+        }
     }
     
-    quick_sort(mas, 0, size - 1);
-    
-    for (int i = 1; i <= size; i++)
-    {
-        if (put_number_by_pos(filename, i, mas[i - 1]) != 0)
-            return WRONG_ARG;
-    }
+    fseek(f, 0, SEEK_SET);
     
     return OK;
+}
+
+void get_number_by_pos(FILE *const f, const int pos, int *const get_num)
+{
+    fseek(f, pos * sizeof(int), SEEK_SET);
+    fread(get_num, sizeof(int), 1, f);
+}
+
+void put_number_by_pos(FILE *const f, const int pos, const int number)
+{
+    fseek(f, pos * sizeof(int), SEEK_SET);
+    fwrite(&number, sizeof(int), 1, f);
+}
+
+void print_file(FILE *const f)
+{
+    int cur_num, size = get_file_size(f);
+    
+    for (int i = 0; i < size; ++i)
+    {
+        fread(&cur_num, sizeof(int), 1, f);
+        printf("%d ", cur_num);
+    }
+}
+
+void sort_file(FILE *f)
+{
+    int size = get_file_size(f);
+    int f_num = 0, s_num = 0;
+    
+    for (int i = 0; i < size - 1; ++i)
+    {
+        for (int j = i + 1; j < size; ++j)
+        {
+            get_number_by_pos(f, i, &f_num);
+            get_number_by_pos(f, j, &s_num);
+            
+            if (f_num > s_num)
+            {
+                put_number_by_pos(f, i, s_num);
+                put_number_by_pos(f, j, f_num);
+            }
+        }
+    }
 }
 
 int main(int argc, char **argv)
 {
-    FILE *file;
+    FILE *f = NULL;
+    
+    setbuf(stdout, NULL);
     
     if (argc != 3)
-        return WRONG_ARG;
+    return TOO_FEW_CL_ARGS_ERROR;
     
-    for (int i = 1; i < argc; i += 2)
+    if (!strcmp(argv[1], "c"))
     {
-        if (!strcmp(argv[i], "g"))
-        {
-            file = fopen(argv[i + 1], "wb");
-            if (!file)
-                return WRONG_ARG;
-            gen_file(file);
-            fclose(file);
-        }
-        else
-        {
-            if (!strcmp(argv[i], "s"))
-            {
-                if (sort_file(argv[i + 1]) != 0)
-                    return WRONG_ARG;
-            }
-            else
-            {
-                if (!strcmp(argv[i], "p"))
-                {
-                    file = fopen(argv[i + 1], "rb");
-                    if (!file || get_size(file) == 0)
-                        return WRONG_ARG;
-                    print_file(file);
-                    fclose(file);
-                }
-                else
-                {
-                    return WRONG_ARG;
-                }
-            }
-        }
+        create_file(f, argv[2]);
+        
+        return OK;
     }
-    return OK;
+    
+    if (!strcmp(argv[1], "p"))
+    {
+        f = fopen(argv[2], "rb");
+        
+        if (check_file(f) != OK)
+        return FILE_ERROR;
+        
+        print_file(f);
+        
+        return OK;
+    }
+    
+    if (!strcmp(argv[1], "s"))
+    {
+        f = fopen(argv[2], "rb+");
+        
+        if (check_file(f) != OK)
+        return FILE_ERROR;
+        
+        sort_file(f);
+        
+        return OK;
+    }
+    
+    return EXECUTION_ERROR;
 }
