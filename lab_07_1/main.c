@@ -6,16 +6,17 @@
 #define ARGUMENTS_ERROR 53
 #define FILE_ERROR 5
 #define N 256
-#define eps 0.001
+#define EPS 0.001
 typedef char str_t[N];
 
-typedef struct {
+typedef struct
+{
     char surname[25];
     char name[10];
     unsigned int marks[4];
-}Student;
+} student;
 
-int read_student(FILE *f, Student *stud)
+int read_student(FILE *f, student *stud)
 {
     int ch1, ch2, ch3;
     ch1 = fscanf(f, "%s", stud->surname);
@@ -23,7 +24,7 @@ int read_student(FILE *f, Student *stud)
     for (int i = 0; i < 4; i++)
     {
         ch3 = fscanf(f, "%u", &stud->marks[i]);
-        if (ch1!=1 || ch2 != 1 || ch3 != 1)
+        if (ch1 != 1 || ch2 != 1 || ch3 != 1)
         return VALUE_ERROR;
     }
     return OK;
@@ -40,7 +41,7 @@ int check_arguments(int argc)
     return OK;
 }
 
-void sort_students(Student class[N], int n)
+void sort_students(student class[N], int n)
 {
     for (int ik = 0; ik < n; ik++)
     {
@@ -48,7 +49,7 @@ void sort_students(Student class[N], int n)
         {
             if (class[i].surname[0] > class[i + 1].surname[0])
             {
-                Student tmp = class[i];
+                student tmp = class[i];
                 class[i] = class[i + 1];
                 class[i + 1] = tmp;
             }
@@ -62,7 +63,7 @@ void sort_students(Student class[N], int n)
             if (class[j].name[0] > class[j + 1].name[0] &&
                 class[j].surname[0] == class[j + 1].surname[0])
             {
-                Student tmp = class[j];
+                student tmp = class[j];
                 class[j] = class[j + 1];
                 class[j + 1] = tmp;
             }
@@ -84,44 +85,44 @@ int check_file(FILE *f)
 int sort_mode(str_t filename)
 {
     int n = 0;
-    Student class[N];
+    student class[N];
     FILE *f = fopen(filename, "r");
     
     if (check_file(f))
-    return FILE_ERROR;
+        return FILE_ERROR;
     
     while (!read_student(f, &class[n]))
-    n++;
+        n++;
     
     n--;
     
     sort_students(class, n);
     
     for (int i = 0; i < n; i++)
-    printf("%s\n%s\n%u %u %u %u\n", class[i].surname, class[i].name,
-           class[i].marks[0], class[i].marks[1],
-           class[i].marks[2], class[i].marks[3]);
+        printf("%s\n%s\n%u %u %u %u\n", class[i].surname, class[i].name,
+               class[i].marks[0], class[i].marks[1],
+               class[i].marks[2], class[i].marks[3]);
     
     return 0;
 }
 
 int substr_mode(str_t fname_in, str_t fname_out, str_t s)
 {
-    Student class[N];
+    student class[N];
     int n = 0;
     
     FILE *f_in = fopen(fname_in, "r");
     FILE *f_out = fopen(fname_out, "w");
     
     if (check_file(f_in) || check_file(f_out))
-    return FILE_ERROR;
+        return FILE_ERROR;
     
     while (!read_student(f_in, &class[n]))
     {
         if (strstr(class[n].surname, s) == class[n].surname)
-        fprintf(f_out, "%s\n%s\n%u %u %u %u\n", class[n].surname,
-                class[n].name, class[n].marks[0], class[n].marks[1],
-                class[n].marks[2], class[n].marks[3]);
+            fprintf(f_out, "%s\n%s\n%u %u %u %u\n", class[n].surname,
+                    class[n].name, class[n].marks[0], class[n].marks[1],
+                    class[n].marks[2], class[n].marks[3]);
         n++;
     }
     
@@ -130,7 +131,7 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
 
 int grade_mode(str_t filename)
 {
-    Student class[N];
+    student class[N];
     int n = 0;
     float av[N];
     float f_av = 0;
@@ -138,32 +139,31 @@ int grade_mode(str_t filename)
     FILE *f = fopen(filename, "r");
     
     if (check_file(f))
-    return FILE_ERROR;
+        return FILE_ERROR;
     
     while (!read_student(f, &class[n]))
     {
         for (int i = 0; i < 4; i++)
             av[n] += class[n].marks[i];
         av[n] /= 4;
-        printf(" avnow: %f ", av[n]);
+        //printf(" avnow: %f ", av[n]);
         n++;
     }
     
     for (int i = 0; i < n; i++)
         f_av += av[i];
     f_av /= n;
-    
-    printf(" avfnow: %f ", f_av);
+    //printf(" avfnow: %f ", f_av);
     
     fclose(f);
     f = fopen(filename, "w");
     
     for (int i = 0; i < n; i++)
     {
-        if (av[i] + eps >= f_av)
+        if (av[i] + EPS >= f_av)
             fprintf(f, "%s\n%s\n%u %u %u %u\n", class[i].surname,
-                class[i].name, class[i].marks[0], class[i].marks[1],
-                class[i].marks[2], class[i].marks[3]);
+                    class[i].name, class[i].marks[0], class[i].marks[1],
+                    class[i].marks[2], class[i].marks[3]);
     }
     fclose(f);
     return 0;
@@ -175,13 +175,13 @@ int check_regime(char *argv[])
     strcpy(mode, argv[1]);
     
     if (!strcmp(mode, "st"))
-    return (sort_mode(argv[2]));
+        return (sort_mode(argv[2]));
     
     else if (!strcmp(mode, "ft"))
-    return substr_mode(argv[2], argv[3], argv[4]);
+        return substr_mode(argv[2], argv[3], argv[4]);
     
     else if (!strcmp(mode, "dt"))
-    return grade_mode(argv[2]);
+        return grade_mode(argv[2]);
     
     else
     {
@@ -193,7 +193,7 @@ int check_regime(char *argv[])
 int main(int argc, char *argv[])
 {
     if (check_arguments(argc))
-    return ARGUMENTS_ERROR;
+        return ARGUMENTS_ERROR;
     
     return check_regime(argv);
 }
