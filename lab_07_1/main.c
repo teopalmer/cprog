@@ -79,6 +79,11 @@ int check_file(FILE *f)
         return FILE_ERROR;
     }
     
+    if (!getc(f))
+    {
+        puts("File is empty");
+        return FILE_ERROR;
+    }
     return OK;
 }
 
@@ -147,14 +152,12 @@ int grade_mode(str_t filename)
         for (int i = 0; i < 4; i++)
             av[n] += class[n].marks[i];
         av[n] /= 4;
-        //printf(" avnow: %f ", av[n]);
         n++;
     }
     
     for (int i = 0; i < n; i++)
         f_av += av[i];
     f_av /= n;
-    //printf(" avfnow: %f ", f_av);
     
     fclose(f);
     f = fopen(filename, "w");
@@ -185,7 +188,6 @@ int check_regime(char *argv[])
     else
         if (!strcmp(mode, "dt"))
             return grade_mode(argv[2]);
-    
     else
     {
         puts("Check yout arguments");
