@@ -78,12 +78,8 @@ int check_file(FILE *f)
         puts("File is not found");
         return FILE_ERROR;
     }
-    
-    if (!getc(f))
-    {
-        puts("File is empty");
+    if (f == NULL)
         return FILE_ERROR;
-    }
     return OK;
 }
 
@@ -107,6 +103,7 @@ int sort_mode(str_t filename)
         printf("%s\n%s\n%u %u %u %u\n", class[i].surname, class[i].name,
             class[i].marks[0], class[i].marks[1],
             class[i].marks[2], class[i].marks[3]);
+    fclose(f);
     
     return 0;
 }
