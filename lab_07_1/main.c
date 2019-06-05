@@ -125,7 +125,8 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
                     class[n].marks[2], class[n].marks[3]);
         n++;
     }
-    
+    fclose(f_in);
+    fclose(f_out);
     return 0;
 }
 
