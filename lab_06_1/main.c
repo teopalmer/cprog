@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#define ERROR -1
+#define OK 0
 
 char *my_strpbrk(char a[], char b[])
 {
@@ -117,56 +119,56 @@ int main()
     if (my_strpbrk(a, b) != strpbrk(a, b))
     {
         printf("Error!");
-        return -1;
+        return ERROR;
     }
     if (my_strspn(a, b) != strspn(a, b))
     {
         printf("Error!");
-        return -1;
+        return ERROR;
     }
     if (my_strcspn(a, b) != strcspn(a, b))
     {
         printf("Error!");
-        return -1;
+        return ERROR;
     }
     if (my_strchr(a, c) != strchr(a, c))
     {
         printf("Error!");
-        return -1;
+        return ERROR;
     }
     if (my_strrchr(a, c) != strrchr(a, c))
     {
         printf("Error!");
-        return -1;
+        return ERROR;
     }
-    char a1[] = "bbabbbababCcc";
+    char a1[] = "mmaaccbaBBBasc";
     char b1[] = "acbc";
     char c1 = 'd';
     if (my_strpbrk(a1, b1) != strpbrk(a1, b1))
     {
         printf("Error!");
-        return -1;
+        return ERROR;
     }
     if (my_strspn(a1, b1) != strspn(a1, b1))
     {
         printf("Error!");
-        return -1;
+        return ERROR;
     }
     if (my_strcspn(a1, b1) != strcspn(a1, b1))
     {
         printf("Error!");
-        return -1;
+        return ERROR;
     }
     if (my_strchr(a1, c1) != strchr(a1, c1))
     {
         printf("Error!");
-        return -1;
+        return ERROR;
     }
     if (my_strrchr(a1, c1) != strrchr(a1, c1))
     {
         printf("Error!");
-        return -1;
+        return ERROR;
     }
     printf("OK!");
-    return 0;
+    return OK;
 }
