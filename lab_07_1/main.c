@@ -100,8 +100,8 @@ int sort_mode(str_t filename)
     
     for (int i = 0; i < n; i++)
         printf("%s\n%s\n%u %u %u %u\n", class[i].surname, class[i].name,
-               class[i].marks[0], class[i].marks[1],
-               class[i].marks[2], class[i].marks[3]);
+            class[i].marks[0], class[i].marks[1],
+            class[i].marks[2], class[i].marks[3]);
     
     return 0;
 }
@@ -121,8 +121,8 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
     {
         if (strstr(class[n].surname, s) == class[n].surname)
             fprintf(f_out, "%s\n%s\n%u %u %u %u\n", class[n].surname,
-                    class[n].name, class[n].marks[0], class[n].marks[1],
-                    class[n].marks[2], class[n].marks[3]);
+                class[n].name, class[n].marks[0], class[n].marks[1],
+                class[n].marks[2], class[n].marks[3]);
         n++;
     }
     fclose(f_in);
@@ -163,8 +163,8 @@ int grade_mode(str_t filename)
     {
         if (av[i] + EPS >= f_av)
             fprintf(f, "%s\n%s\n%u %u %u %u\n", class[i].surname,
-                    class[i].name, class[i].marks[0], class[i].marks[1],
-                    class[i].marks[2], class[i].marks[3]);
+                class[i].name, class[i].marks[0], class[i].marks[1],
+                class[i].marks[2], class[i].marks[3]);
     }
     fclose(f);
     return 0;
@@ -178,11 +178,13 @@ int check_regime(char *argv[])
     if (!strcmp(mode, "st"))
         return (sort_mode(argv[2]));
     
-    else if (!strcmp(mode, "ft"))
-        return substr_mode(argv[2], argv[3], argv[4]);
+    else
+        if (!strcmp(mode, "ft"))
+            return substr_mode(argv[2], argv[3], argv[4]);
     
-    else if (!strcmp(mode, "dt"))
-        return grade_mode(argv[2]);
+    else
+        if (!strcmp(mode, "dt"))
+            return grade_mode(argv[2]);
     
     else
     {
