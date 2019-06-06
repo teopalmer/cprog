@@ -115,6 +115,7 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
 {
     student class[N];
     int n = 0;
+    int c = 0;
     
     FILE *f_in = fopen(fname_in, "r");
     FILE *f_out = fopen(fname_out, "w");
@@ -125,16 +126,20 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
     while (!read_student(f_in, &class[n]))
     {
         if (strstr(class[n].surname, s) == class[n].surname)
+        {
             fprintf(f_out, "%s\n%s\n%u %u %u %u\n", class[n].surname,
-                class[n].name, class[n].marks[0], class[n].marks[1],
-                class[n].marks[2], class[n].marks[3]);
+                    class[n].name, class[n].marks[0], class[n].marks[1],
+                    class[n].marks[2], class[n].marks[3]);
+            c++;
+        }
         n++;
     }
-    if (n == 0)
+    if (n == 0 || c == 0)
     {
         puts("File is empty tho..");
         return VALUE_ERROR;
     }
+    
     fclose(f_in);
     fclose(f_out);
     return 0;
