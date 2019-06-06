@@ -5,7 +5,7 @@
 #define VALUE_ERROR 4
 #define ARGUMENTS_ERROR 53
 #define FILE_ERROR 5
-#define N 256
+#define N 10
 #define EPS 0.001
 typedef char str_t[N];
 
@@ -78,8 +78,6 @@ int check_file(FILE *f)
         puts("File is not found");
         return FILE_ERROR;
     }
-    if (f == NULL)
-        return FILE_ERROR;
     return OK;
 }
 
@@ -94,6 +92,11 @@ int sort_mode(str_t filename)
     
     while (!read_student(f, &class[n]))
         n++;
+    if (n == 0)
+    {
+        puts("File is empty tho..");
+        return VALUE_ERROR;
+    }
     
     n--;
     
@@ -127,6 +130,11 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
                 class[n].marks[2], class[n].marks[3]);
         n++;
     }
+    if (n == 0)
+    {
+        puts("File is empty tho..");
+        return VALUE_ERROR;
+    }
     fclose(f_in);
     fclose(f_out);
     return 0;
@@ -150,6 +158,12 @@ int grade_mode(str_t filename)
             av[n] += class[n].marks[i];
         av[n] /= 4;
         n++;
+    }
+    
+    if (n == 0)
+    {
+        puts("File is empty tho..");
+        return VALUE_ERROR;
     }
     
     for (int i = 0; i < n; i++)
@@ -178,13 +192,11 @@ int check_regime(char *argv[])
     if (!strcmp(mode, "st"))
         return (sort_mode(argv[2]));
     
-    else
-        if (!strcmp(mode, "ft"))
-            return substr_mode(argv[2], argv[3], argv[4]);
+    if (!strcmp(mode, "ft"))
+        return substr_mode(argv[2], argv[3], argv[4]);
     
-    else
-        if (!strcmp(mode, "dt"))
-            return grade_mode(argv[2]);
+    if (!strcmp(mode, "dt"))
+        return grade_mode(argv[2]);
     else
     {
         puts("Check yout arguments");
