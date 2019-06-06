@@ -102,7 +102,7 @@ int sort_mode(str_t filename)
     
     sort_students(class, n);
     
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n+1; i++)
         printf("%s\n%s\n%u %u %u %u\n", class[i].surname, class[i].name,
             class[i].marks[0], class[i].marks[1],
             class[i].marks[2], class[i].marks[3]);
