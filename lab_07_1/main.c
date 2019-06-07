@@ -19,10 +19,6 @@ typedef struct
 int read_student(FILE *f, student *stud)
 {
     int ch1, ch2, ch3;
-    strcpy(stud->surname, "surname");
-    strcpy(stud->name, "name");
-    for (int i = 0; i < 4; i++)
-        stud->marks[i] = 0;
     ch1 = fscanf(f, "%s", stud->surname);
     ch2 = fscanf(f, "%s", stud->name);
     for (int i = 0; i < 4; i++)
