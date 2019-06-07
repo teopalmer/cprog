@@ -75,8 +75,9 @@ void sort_students(student class[N], int n)
     }
 }
 
-int check_file(FILE *f)
+int check_file(str_t filename)
 {
+    FILE *f = fopen(filename, "r");
     if (!f)
     {
         puts("File is not found");
@@ -88,6 +89,7 @@ int check_file(FILE *f)
     }
     else
         rewind(f);
+    fclose(f);
     return OK;
 }
 
@@ -95,10 +97,11 @@ int sort_mode(str_t filename)
 {
     int n = 0;
     student class[N];
-    FILE *f = fopen(filename, "r");
     
-    if (check_file(f))
+    if (check_file(filename))
         return FILE_ERROR;
+    
+    FILE *f = fopen(filename, "r");
     
     while (!read_student(f, &class[n]))
         n++;
@@ -112,7 +115,7 @@ int sort_mode(str_t filename)
     
     sort_students(class, n);
     
-    for (int i = 0; i < n+1; i++)
+    for (int i = 0; i < n + 1; i++)
         printf("%s\n%s\n%u %u %u %u\n", class[i].surname, class[i].name,
             class[i].marks[0], class[i].marks[1],
             class[i].marks[2], class[i].marks[3]);
@@ -127,19 +130,19 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
     int n = 0;
     int c = 0;
     
+    if (check_file(fname_in) || check_file(fname_out) == FILE_ERROR)
+        return FILE_ERROR;
+    
     FILE *f_in = fopen(fname_in, "r");
     FILE *f_out = fopen(fname_out, "w");
-    
-    if (check_file(f_in) || check_file(f_out) == FILE_ERROR)
-        return FILE_ERROR;
     
     while (!read_student(f_in, &class[n]))
     {
         if (strstr(class[n].surname, s) == class[n].surname)
         {
             fprintf(f_out, "%s\n%s\n%u %u %u %u\n", class[n].surname,
-                    class[n].name, class[n].marks[0], class[n].marks[1],
-                    class[n].marks[2], class[n].marks[3]);
+                class[n].name, class[n].marks[0], class[n].marks[1],
+                class[n].marks[2], class[n].marks[3]);
             c++;
         }
         n++;
@@ -162,10 +165,10 @@ int grade_mode(str_t filename)
     float av[N];
     float f_av = 0;
     
-    FILE *f = fopen(filename, "r");
-    
-    if (check_file(f))
+    if (check_file(filename))
         return FILE_ERROR;
+    
+    FILE *f = fopen(filename, "r");
     
     while (!read_student(f, &class[n]))
     {
