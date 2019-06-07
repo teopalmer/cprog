@@ -19,6 +19,10 @@ typedef struct
 int read_student(FILE *f, student *stud)
 {
     int ch1, ch2, ch3;
+    strcpy(stud->surname, "surname");
+    strcpy(stud->name, "name");
+    for (int i = 0; i < 4; i++)
+        stud->marks[i] = 0;
     ch1 = fscanf(f, "%s", stud->surname);
     ch2 = fscanf(f, "%s", stud->name);
     for (int i = 0; i < 4; i++)
@@ -78,6 +82,12 @@ int check_file(FILE *f)
         puts("File is not found");
         return FILE_ERROR;
     }
+    if (fgetc(f) == EOF)
+    {
+        return VALUE_ERROR;
+    }
+    else
+        rewind(f);
     return OK;
 }
 
@@ -120,7 +130,7 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
     FILE *f_in = fopen(fname_in, "r");
     FILE *f_out = fopen(fname_out, "w");
     
-    if (check_file(f_in) || check_file(f_out))
+    if (check_file(f_in) || check_file(f_out) == FILE_ERROR)
         return FILE_ERROR;
     
     while (!read_student(f_in, &class[n]))
