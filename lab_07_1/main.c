@@ -189,7 +189,7 @@ int grade_mode(str_t filename)
 {
     student class[N];
     int n = 0;
-    float av[N];
+    float av[N] = { 0 };
     float f_av = 0;
     
     if (check_file(filename))
@@ -233,7 +233,6 @@ int grade_mode(str_t filename)
             fprintf(f, "%s\n%s\n%u %u %u %u\n", class[i].surname,
                 class[i].name, class[i].marks[0], class[i].marks[1],
                 class[i].marks[2], class[i].marks[3]);
-            //printf("av[i] = %f", av[i]);
         }
     }
     fclose(f);
