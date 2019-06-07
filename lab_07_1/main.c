@@ -82,9 +82,8 @@ void sort_students(student class[N], int n)
     }
 }
 
-int check_file(str_t filename)
+int check_file(FILE *f)
 {
-    FILE *f = fopen(filename, "r");
     if (!f)
     {
         puts("File is not found");
@@ -95,7 +94,8 @@ int check_file(str_t filename)
         fclose(f);
         return VALUE_ERROR;
     }
-    fclose(f);
+    else
+        rewind(f);
     return OK;
 }
 
@@ -104,10 +104,11 @@ int sort_mode(str_t filename)
     int n = 0;
     student class[N];
     
-    if (check_file(filename))
+    FILE *f = fopen(filename, "r");
+    
+    if (check_file(f))
         return FILE_ERROR;
     
-    FILE *f = fopen(filename, "r");
     int rx = read_student(f, &class[n]);
     
     while (rx != STOP)
@@ -146,11 +147,11 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
     int n = 0;
     int c = 0;
     
-    if (check_file(fname_in) || check_file(fname_out) == FILE_ERROR)
-        return FILE_ERROR;
-    
     FILE *f_in = fopen(fname_in, "r");
     FILE *f_out = fopen(fname_out, "w");
+    
+    if (check_file(f_in) || !f_out)
+        return FILE_ERROR;
     
     int rx = read_student(f_in, &class[n]);
     
@@ -192,10 +193,10 @@ int grade_mode(str_t filename)
     float av[N] = { 0 };
     float f_av = 0;
     
-    if (check_file(filename))
-        return FILE_ERROR;
-    
     FILE *f = fopen(filename, "r");
+    
+    if (check_file(f))
+        return FILE_ERROR;
     int rx = read_student(f, &class[n]);
     
     while (rx != STOP)
