@@ -5,6 +5,7 @@
 #define VALUE_ERROR 4
 #define ARGUMENTS_ERROR 53
 #define FILE_ERROR 5
+#define STOP 8
 #define N 10
 #define EPS 0.001
 typedef char str_t[N];
@@ -19,14 +20,26 @@ typedef struct
 int read_student(FILE *f, student *stud)
 {
     int ch1, ch2, ch3;
-
+    
+    strcpy(stud->surname, "zname");
+    strcpy(stud->name, "zname");
+    for (int i = 0; i < 4; i++)
+    stud->marks[i] = 11;
+    
     ch1 = fscanf(f, "%s", stud->surname);
+    //printf("surname: %s\n", stud->surname);
     ch2 = fscanf(f, "%s", stud->name);
+    //printf("name: %s\n", stud->name);
     for (int i = 0; i < 4; i++)
     {
         ch3 = fscanf(f, "%u", &stud->marks[i]);
         if (ch1 != 1 || ch2 != 1 || ch3 != 1)
-        return VALUE_ERROR;
+        {
+            if (!strcmp(stud->surname, stud->name))
+                return STOP;
+            puts("something is wrong");
+            return VALUE_ERROR;
+        }
     }
     return OK;
 }
@@ -97,9 +110,15 @@ int sort_mode(str_t filename)
         return FILE_ERROR;
     
     FILE *f = fopen(filename, "r");
+    int rx = read_student(f, &class[n]);
     
-    while (!read_student(f, &class[n]))
+    while (rx != STOP)
+    {
+        if (rx == VALUE_ERROR)
+            return VALUE_ERROR;
         n++;
+        rx = read_student(f, &class[n]);
+    }
     if (n == 0)
     {
         puts("File is empty tho..");
@@ -131,8 +150,12 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
     FILE *f_in = fopen(fname_in, "r");
     FILE *f_out = fopen(fname_out, "w");
     
-    while (!read_student(f_in, &class[n]))
+    int rx = read_student(f_in, &class[n]);
+    
+    while (rx != STOP)
     {
+        if (rx == VALUE_ERROR)
+            return VALUE_ERROR;
         if (strstr(class[n].surname, s) == class[n].surname)
         {
             fprintf(f_out, "%s\n%s\n%u %u %u %u\n", class[n].surname,
@@ -141,6 +164,7 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
             c++;
         }
         n++;
+        rx = read_student(f_in, &class[n]);
     }
     if (n == 0 || c == 0)
     {
@@ -164,13 +188,17 @@ int grade_mode(str_t filename)
         return FILE_ERROR;
     
     FILE *f = fopen(filename, "r");
+    int rx = read_student(f, &class[n]);
     
-    while (!read_student(f, &class[n]))
+    while (rx != STOP)
     {
+        if (rx == VALUE_ERROR)
+            return VALUE_ERROR;
         for (int i = 0; i < 4; i++)
             av[n] += class[n].marks[i];
         av[n] /= 4;
         n++;
+        rx = read_student(f, &class[n]);
     }
     
     if (n == 0)
@@ -189,9 +217,12 @@ int grade_mode(str_t filename)
     for (int i = 0; i < n; i++)
     {
         if (av[i] + EPS >= f_av)
+        {
             fprintf(f, "%s\n%s\n%u %u %u %u\n", class[i].surname,
-                class[i].name, class[i].marks[0], class[i].marks[1],
-                class[i].marks[2], class[i].marks[3]);
+                    class[i].name, class[i].marks[0], class[i].marks[1],
+                    class[i].marks[2], class[i].marks[3]);
+            //printf("av[i] = %f", av[i]);
+        }
     }
     fclose(f);
     return 0;
