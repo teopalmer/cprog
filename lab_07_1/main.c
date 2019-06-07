@@ -19,6 +19,7 @@ typedef struct
 int read_student(FILE *f, student *stud)
 {
     int ch1, ch2, ch3;
+
     ch1 = fscanf(f, "%s", stud->surname);
     ch2 = fscanf(f, "%s", stud->name);
     for (int i = 0; i < 4; i++)
@@ -37,7 +38,6 @@ int check_arguments(int argc)
         puts("Recheck your arguments");
         return ARGUMENTS_ERROR;
     }
-    
     return OK;
 }
 
@@ -81,10 +81,9 @@ int check_file(str_t filename)
     }
     if (fgetc(f) == EOF)
     {
+        fclose(f);
         return VALUE_ERROR;
     }
-    else
-        rewind(f);
     fclose(f);
     return OK;
 }
@@ -198,18 +197,18 @@ int grade_mode(str_t filename)
     return 0;
 }
 
-int check_regime(char *argv[])
+int check_regime(char *argv[], int argc)
 {
     str_t mode;
     strcpy(mode, argv[1]);
     
-    if (!strcmp(mode, "st"))
+    if (!strcmp(mode, "st") && argc == 3)
         return (sort_mode(argv[2]));
     
-    if (!strcmp(mode, "ft"))
+    if (!strcmp(mode, "ft") && argc == 5)
         return substr_mode(argv[2], argv[3], argv[4]);
     
-    if (!strcmp(mode, "dt"))
+    if (!strcmp(mode, "dt") && argc == 3)
         return grade_mode(argv[2]);
     else
     {
@@ -223,5 +222,5 @@ int main(int argc, char *argv[])
     if (check_arguments(argc))
         return ARGUMENTS_ERROR;
     
-    return check_regime(argv);
+    return check_regime(argv, argc);
 }
