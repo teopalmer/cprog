@@ -24,12 +24,10 @@ int read_student(FILE *f, student *stud)
     strcpy(stud->surname, "zname");
     strcpy(stud->name, "zname");
     for (int i = 0; i < 4; i++)
-    stud->marks[i] = 11;
+        stud->marks[i] = 11;
     
     ch1 = fscanf(f, "%s", stud->surname);
-    //printf("surname: %s\n", stud->surname);
     ch2 = fscanf(f, "%s", stud->name);
-    //printf("name: %s\n", stud->name);
     for (int i = 0; i < 4; i++)
     {
         ch3 = fscanf(f, "%u", &stud->marks[i]);
@@ -115,13 +113,17 @@ int sort_mode(str_t filename)
     while (rx != STOP)
     {
         if (rx == VALUE_ERROR)
+        {
+            fclose(f);
             return VALUE_ERROR;
+        }
         n++;
         rx = read_student(f, &class[n]);
     }
     if (n == 0)
     {
         puts("File is empty tho..");
+        fclose(f);
         return VALUE_ERROR;
     }
     
@@ -155,7 +157,11 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
     while (rx != STOP)
     {
         if (rx == VALUE_ERROR)
+        {
+            fclose(f_in);
+            fclose(f_out);
             return VALUE_ERROR;
+        }
         if (strstr(class[n].surname, s) == class[n].surname)
         {
             fprintf(f_out, "%s\n%s\n%u %u %u %u\n", class[n].surname,
@@ -169,6 +175,8 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
     if (n == 0 || c == 0)
     {
         puts("File is empty tho..");
+        fclose(f_in);
+        fclose(f_out);
         return VALUE_ERROR;
     }
     
@@ -193,7 +201,10 @@ int grade_mode(str_t filename)
     while (rx != STOP)
     {
         if (rx == VALUE_ERROR)
+        {
+            fclose(f);
             return VALUE_ERROR;
+        }
         for (int i = 0; i < 4; i++)
             av[n] += class[n].marks[i];
         av[n] /= 4;
@@ -204,6 +215,7 @@ int grade_mode(str_t filename)
     if (n == 0)
     {
         puts("File is empty tho..");
+        fclose(f);
         return VALUE_ERROR;
     }
     
@@ -219,8 +231,8 @@ int grade_mode(str_t filename)
         if (av[i] + EPS >= f_av)
         {
             fprintf(f, "%s\n%s\n%u %u %u %u\n", class[i].surname,
-                    class[i].name, class[i].marks[0], class[i].marks[1],
-                    class[i].marks[2], class[i].marks[3]);
+                class[i].name, class[i].marks[0], class[i].marks[1],
+                class[i].marks[2], class[i].marks[3]);
             //printf("av[i] = %f", av[i]);
         }
     }
