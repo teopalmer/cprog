@@ -132,13 +132,9 @@ int sort_mode(str_t filename)
     sort_students(class, n);
     
     for (int i = 0; i < n + 1; i++)
-    {
-        if (i > 0)
-            puts("");
-        printf("%s\n%s\n%u %u %u %u", class[i].surname, class[i].name,
-               class[i].marks[0], class[i].marks[1],
-               class[i].marks[2], class[i].marks[3]);
-    }
+        printf("%s\n%s\n%u %u %u %u\n", class[i].surname, class[i].name,
+            class[i].marks[0], class[i].marks[1],
+            class[i].marks[2], class[i].marks[3]);
     fclose(f);
     
     return 0;
@@ -168,9 +164,7 @@ int substr_mode(str_t fname_in, str_t fname_out, str_t s)
         }
         if (strstr(class[n].surname, s) == class[n].surname)
         {
-            if (c > 0)
-                fprintf(f_out, "\n");
-            fprintf(f_out, "%s\n%s\n%u %u %u %u", class[n].surname,
+            fprintf(f_out, "%s\n%s\n%u %u %u %u\n", class[n].surname,
                 class[n].name, class[n].marks[0], class[n].marks[1],
                 class[n].marks[2], class[n].marks[3]);
             c++;
@@ -236,9 +230,7 @@ int grade_mode(str_t filename)
     {
         if (av[i] + EPS >= f_av)
         {
-            if (i > 0)
-                fprintf(f, "\n");
-            fprintf(f, "%s\n%s\n%u %u %u %u", class[i].surname,
+            fprintf(f, "%s\n%s\n%u %u %u %u\n", class[i].surname,
                 class[i].name, class[i].marks[0], class[i].marks[1],
                 class[i].marks[2], class[i].marks[3]);
         }
