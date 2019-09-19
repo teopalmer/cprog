@@ -28,8 +28,16 @@ int read_array (float **start, float **end, int *n)
 int read_p(int *p)
 {
     puts("Enter p:");
-    if (scanf("%d", p) != 1) return ERROR;
-    if (*p < 0) return ERROR;
+    if (scanf("%d", p) != 1)
+    {
+	puts("Input Error");
+        return ERROR;
+    }
+    if (*p < 0)
+    {
+	puts("Negative P");
+        return ERROR;
+    }
     return OK;
 }
 
@@ -39,7 +47,7 @@ int insert_p(float **start, float **end, int n, int p, int count)
     if (count <= 0) return ERROR;
     int difference = count - n + 3;
 
-    float* newstart = (float*)realloc(*start, sizeof(float)*(difference));
+    float* newstart = (float*) realloc(*start, sizeof(float) * (difference));
 
     if (newstart)
     {
@@ -49,11 +57,9 @@ int insert_p(float **start, float **end, int n, int p, int count)
     }
     else
     {
-        free(start);
         return ERROR;
     }
 
-    //(*end)++;
     float *pos = *start + p;
 
     for (float *c = *end; c > *start; c--)
@@ -87,8 +93,8 @@ double calculate_cubic(float *start, float *end)
 int delete_elements(float *start, float *end, double cubic)
 {
     int n = 0;
-    printf("end = %f", *(end-1));
-    puts("*");
+    //printf("end = %f", *(end-1));
+    //puts("*");
     //printf("%f", *end);
     for (float *p = start; p < end; p++)
     {
@@ -105,7 +111,7 @@ int delete_elements(float *start, float *end, double cubic)
 	    }
         }
     }
-    puts("*");
+    //puts("*");
     if (n == 0) return ERROR;
     return n;
 }
