@@ -24,7 +24,11 @@ int read_array(float **start, float **end, int *n)
 
     *start = (float*) malloc(sizeof(float)*(*n));
     if (!(*start)) 
+    {
+        free(start);
         return ERROR;
+    }
+        //return ERROR;
     *end = *start + *n;
 
     puts("Enter elements:");
