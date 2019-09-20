@@ -61,7 +61,7 @@ int read_p(int *p)
 
 int insert_p(float **start, float **end, int n, int p, int count, float cubic)
 {
-    if (count < p + 2)
+    if (count + 2 < p)
         return ERROR;
     if (count <= 0)
         return ERROR;
@@ -126,8 +126,6 @@ int delete_elements(float *start, float *end)
 {
     int n = 0;
     float cubic = calculate_cubic(start, end);
-    //printf("end = %f", *(end-1));
-    //puts("*");
     for (float *p = start; p < end - n; p++)
     {
         if ((fabsf(*p) + EPS) < cubic)
@@ -141,6 +139,5 @@ int delete_elements(float *start, float *end)
             n++;
         }
     }
-    //if (n == 0) return ERROR;
     return n;
 }
