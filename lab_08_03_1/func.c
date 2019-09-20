@@ -19,7 +19,7 @@ int read_array(float **start, float **end, int *n)
 
     if (scanf("%d", n) != 1) 
         return ERROR;
-    if (n <= 0)
+    if (*n <= 0)
         return ERROR;
 
     *start = (float*) malloc(sizeof(float)*(*n));
