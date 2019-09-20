@@ -17,7 +17,8 @@ int read_array(float **start, float **end, int *n)
 {
     puts("Enter number of elements:");
 
-    if (scanf("%d", n) != 1) return ERROR;
+    if (scanf("%d", n) != 1) 
+        return ERROR;
 
     *start = (float*) malloc(sizeof(float)*(*n));
     if (!(*start)) 
