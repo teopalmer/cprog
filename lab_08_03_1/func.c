@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
 #define OK 0
 #define ERROR 221
 
@@ -26,7 +25,11 @@ int read_array (float **start, float **end, int *n)
     puts("Enter elements:");
     for (float *p = *start; p < *end; p++)
     {
-        if (scanf("%f", p) != 1) return ERROR;
+        if (scanf("%f", p) != 1)
+	{
+	    free(*start);
+	    return ERROR;
+	}
     }
 
     if (*start == *end) return ERROR;
@@ -49,7 +52,7 @@ int read_p(int *p)
     return OK;
 }
 
-int insert_p(float **start, float **end, int n, int p, int count)
+int insert_p(float **start, float **end, int n, int p, int count, float cubic)
 {
     if (count < p + 2) return ERROR;
     if (count <= 0) return ERROR;
@@ -75,40 +78,50 @@ int insert_p(float **start, float **end, int n, int p, int count)
     {
         *c = *(c - 1);
     }
-    **start = (float)p;
+    **start = cubic;
 
     for (float *c = *end; c > pos; c--)
     {
         *c = *(c - 1);
     }
 
-    *(*start + p) = p;
-    *(*end - 1) = (float)p;
+    *(*start + p) = cubic;
+    *(*end - 1) = cubic;
     
     return OK;
 }
 
-double calculate_cubic(float *start, float *end)
+float find_min(float *start, float *end)
 {
-    double sum = 0;
+    float minx = *start;
+    for (float *p = start; p < end; p++)
+    {
+        if (*p < minx) minx = *p;
+    }
+    return minx;
+}
+
+float calculate_cubic(float *start, float *end)
+{
+    float sum = 0;
     int n = 0;
     for (float *p = start; p < end; p++)
     {
-        sum += fabs(*p * *p * *p);
+        sum += fabsf(*p * *p * *p);
         n++;
     }
-    return cbrt(sum/n);
+    return cbrtf(sum/n);
 }
 
-int delete_elements(float *start, float *end, double cubic)
+int delete_elements(float *start, float *end)
 {
     int n = 0;
+    float cubic = calculate_cubic(start, end);
     //printf("end = %f", *(end-1));
     //puts("*");
-    //printf("%f", *end);
     for (float *p = start; p < end - n; p++)
     {
-        if (fabs(*p) < cubic)
+        if (fabsf(*p) < cubic)
         {
             for (float *c = p+1; c < end - n; c++)
             {

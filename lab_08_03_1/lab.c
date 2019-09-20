@@ -11,25 +11,27 @@ int main()
     float *start;
     int del_count = 0;
     int count = 0;
+    float minx = 0;
     if (read_array(&start, &end, &count) != OK)
     {
 	puts("Input Error");
-	free(start);
+	//free(start);
         return ERROR;
     }
-    //print_array(start, end);
-    //printf("%d", count);
-    del_count = delete_elements(start, end, calculate_cubic(start, end));
+    minx = find_min(start, end);
+    del_count = delete_elements(start, end);
     //print_array(start, end);
     if (read_p(&p) != OK)
     {
 	puts("P Error");
+	free(start);
         return ERROR;
     }
-    if (insert_p(&start, &end, del_count, p, count) != OK)
+    minx = find_min(start, end-del_count);
+    if (insert_p(&start, &end, del_count, p, count, minx) != OK)
     {
 	puts("Input P Error");
-	//free(start);
+	free(start);
         return ERROR;
     }
     print_array(start, end);
