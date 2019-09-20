@@ -32,7 +32,11 @@ int read_array (float **start, float **end, int *n)
 	}
     }
 
-    if (*start == *end) return ERROR;
+    if (*start == *end)
+    {
+	    free(*start);
+	    return ERROR;
+    }
     return OK;
 }
 

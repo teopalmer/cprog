@@ -15,7 +15,6 @@ int main()
     if (read_array(&start, &end, &count) != OK)
     {
 	puts("Input Error");
-	//free(start);
         return ERROR;
     }
     minx = find_min(start, end);
