@@ -13,30 +13,31 @@ void print_array(float *start, float *end)
     }
 }
 
-int read_array (float **start, float **end, int *n)
+int read_array(float **start, float **end, int *n)
 {
     puts("Enter number of elements:");
 
     if (scanf("%d", n) != 1) return ERROR;
 
     *start = (float*) malloc(sizeof(float)*(*n));
-    if (!(*start)) return ERROR;
+    if (!(*start)) 
+        return ERROR;
     *end = *start + *n;
 
     puts("Enter elements:");
     for (float *p = *start; p < *end; p++)
     {
         if (scanf("%f", p) != 1)
-	{
-	    free(*start);
-	    return ERROR;
-	}
+        {
+            free(*start);
+            return ERROR;
+        }
     }
 
     if (*start == *end)
     {
-	    free(*start);
-	    return ERROR;
+        free(*start);
+        return ERROR;
     }
     return OK;
 }
@@ -46,12 +47,12 @@ int read_p(int *p)
     puts("Enter p:");
     if (scanf("%d", p) != 1)
     {
-	puts("Input Error");
+        puts("Input Error");
         return ERROR;
     }
-    if (*p <= 0)
+    if (*p < 0)
     {
-	puts("Negative P");
+        puts("Negative P");
         return ERROR;
     }
     return OK;
@@ -59,12 +60,13 @@ int read_p(int *p)
 
 int insert_p(float **start, float **end, int n, int p, int count, float cubic)
 {
-    if (count < p + 2) return ERROR;
-    if (count <= 0) return ERROR;
+    if (count < p + 2)
+        return ERROR;
+    if (count <= 0)
+        return ERROR;
     int difference = count - n + 3;
-    //printf("%d %d %d\n", difference, count, n);
 
-    float* newstart = (float*) realloc(*start, sizeof(newstart) * (difference));
+    float *newstart = (float*)realloc(*start, sizeof(newstart) * (difference));
 
     if (newstart)
     {
@@ -92,7 +94,7 @@ int insert_p(float **start, float **end, int n, int p, int count, float cubic)
 
     *(*start + p) = cubic;
     *(*end - 1) = cubic;
-    
+
     return OK;
 }
 
@@ -101,7 +103,8 @@ float find_min(float *start, float *end)
     float minx = *start;
     for (float *p = start; p < end; p++)
     {
-        if (*p < minx) minx = *p;
+        if (*p < minx)
+            minx = *p;
     }
     return minx;
 }
@@ -115,7 +118,7 @@ float calculate_cubic(float *start, float *end)
         sum += fabsf(*p * *p * *p);
         n++;
     }
-    return cbrtf(sum/n);
+    return cbrtf(sum / n);
 }
 
 int delete_elements(float *start, float *end)
@@ -128,11 +131,11 @@ int delete_elements(float *start, float *end)
     {
         if ((fabsf(*p) + EPS) < cubic)
         {
-            for (float *c = p+1; c < end - n; c++)
+            for (float *c = p + 1; c < end - n; c++)
             {
                 *(c - 1) = *c;
             }
-	    //if (p >= end - n) p++;
+            //if (p >= end - n) p++;
             p--;
             n++;
         }
@@ -140,4 +143,3 @@ int delete_elements(float *start, float *end)
     //if (n == 0) return ERROR;
     return n;
 }
-
