@@ -5,6 +5,14 @@
 #define OK 0
 #define ERROR 221
 
+void print_array(float *start, float *end)
+{
+    for (float *p = start; p < end; p++)
+    {
+        printf("%f ", *p);
+    }
+}
+
 int read_array (float **start, float **end, int *n)
 {
     puts("Enter number of elements:");
@@ -33,7 +41,7 @@ int read_p(int *p)
 	puts("Input Error");
         return ERROR;
     }
-    if (*p < 0)
+    if (*p <= 0)
     {
 	puts("Negative P");
         return ERROR;
@@ -43,11 +51,12 @@ int read_p(int *p)
 
 int insert_p(float **start, float **end, int n, int p, int count)
 {
-    if (count < p+2) return ERROR;
+    if (count < p + 2) return ERROR;
     if (count <= 0) return ERROR;
     int difference = count - n + 3;
+    //printf("%d %d %d\n", difference, count, n);
 
-    float* newstart = (float*) realloc(*start, sizeof(float) * (difference));
+    float* newstart = (float*) realloc(*start, sizeof(newstart) * (difference));
 
     if (newstart)
     {
@@ -72,7 +81,8 @@ int insert_p(float **start, float **end, int n, int p, int count)
     {
         *c = *(c - 1);
     }
-    *(*start+p+1) = p;
+
+    *(*start + p) = p;
     *(*end - 1) = (float)p;
     
     return OK;
@@ -96,30 +106,20 @@ int delete_elements(float *start, float *end, double cubic)
     //printf("end = %f", *(end-1));
     //puts("*");
     //printf("%f", *end);
-    for (float *p = start; p < end; p++)
+    for (float *p = start; p < end - n; p++)
     {
         if (fabs(*p) < cubic)
         {
-            for (float *c = p; c < end-1; c++)
+            for (float *c = p+1; c < end - n; c++)
             {
-                *c = *(c+1);
+                *(c - 1) = *c;
             }
-            if (*p != *(end-1)) 
-	    {
-		p--;
-		n++;
-	    }
+	    //if (p >= end - n) p++;
+            p--;
+            n++;
         }
     }
-    //puts("*");
-    if (n == 0) return ERROR;
+    //if (n == 0) return ERROR;
     return n;
 }
 
-void print_array(float *start, float *end)
-{
-    for (float *p = start; p < end; p++)
-    {
-        printf("%f ", *p);
-    }
-}

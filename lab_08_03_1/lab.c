@@ -20,12 +20,6 @@ int main()
     //print_array(start, end);
     //printf("%d", count);
     del_count = delete_elements(start, end, calculate_cubic(start, end));
-    if (del_count == 0 || del_count >= count)
-    {
-	puts("Element Deletion Error");
-        free(start);
-        return ERROR;
-    }
     //print_array(start, end);
     if (read_p(&p) != OK)
     {
