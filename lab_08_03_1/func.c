@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #define OK 0
+#define EPS 1e-6
 #define ERROR 221
 
 void print_array(float *start, float *end)
@@ -18,7 +19,7 @@ int read_array (float **start, float **end, int *n)
 
     if (scanf("%d", n) != 1) return ERROR;
 
-    *start = (float*)malloc(sizeof(float)*(*n));
+    *start = (float*) malloc(sizeof(float)*(*n));
     if (!(*start)) return ERROR;
     *end = *start + *n;
 
@@ -125,7 +126,7 @@ int delete_elements(float *start, float *end)
     //puts("*");
     for (float *p = start; p < end - n; p++)
     {
-        if (fabsf(*p) < cubic)
+        if ((fabsf(*p) + EPS) < cubic)
         {
             for (float *c = p+1; c < end - n; c++)
             {
