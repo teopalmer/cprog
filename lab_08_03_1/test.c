@@ -169,6 +169,30 @@ int test_deletion_neg(float **start, float **end)
     return YES;
 }
 
+int test_find_min_ord(float **start, float **end)
+{
+    fill_test_array(start, end, 5, 1);
+    if (1 - EPS < find_min(*start, *end) < 1 + EPS)
+        return YES;
+    return NO;
+}
+
+int test_find_min_same(float **start, float **end)
+{
+    fill_test_array(start, end, 5, 2);
+    if (1 - EPS < find_min(*start, *end) < 1 + EPS)
+        return YES;
+    return NO;
+}
+
+int test_find_min_neg(float **start, float **end)
+{
+    fill_test_array(start, end, 5, 3);
+    if (-5 - EPS < find_min(*start, *end) < -5 + EPS)
+        return YES;
+    return YES;
+}
+
 int main()
 {
     float *start, *end;
@@ -188,6 +212,13 @@ int main()
     result += test_deletion_neg(&start, &end);
     free(start);
 
-    printf("Result: %d of 6", result);
+    result += test_find_min_ord(&start, &end);
+    free(start);
+    result += test_find_min_same(&start, &end);
+    free(start);
+    result += test_find_min_neg(&start, &end);
+    free(start);
+
+    printf("Result: %d of 9", result);
     return OK;
 }
