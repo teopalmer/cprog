@@ -85,7 +85,6 @@ int test_calc_cubic_ord(float **start, float **end)
     fill_test_array(start, end, 5, 1);
     if (3.556893 - EPS < calculate_cubic(*start, *end) < 3.556893 + EPS)
         return YES;
-    free(*start);
     return NO;
 }
 
@@ -94,7 +93,6 @@ int test_calc_cubic_same(float **start, float **end)
     fill_test_array(start, end, 5, 2);
     if (1.0 - EPS < calculate_cubic(*start, *end) < 1.0 + EPS)
         return YES;
-    free(*start);
     return NO;
 }
 
@@ -103,7 +101,6 @@ int test_calc_cubic_neg(float **start, float **end)
     fill_test_array(start, end, 5, 3);
     if (-3.556893 - EPS < calculate_cubic(*start, *end) < -3.556893 + EPS)
         return YES;
-    free(*start);
     return YES;
 }
 
@@ -115,14 +112,12 @@ int test_deletion_ord(float **start, float **end)
     delete_elements(*start, *end);
     if (*end - *start != 5)
     {
-        free(*start);
         free(startres);
         return NO;
     }
 
     if (compare_arrays(*start, startres) != YES)
     {
-        free(*start);
         free(startres);
         return NO;
     }
@@ -139,14 +134,12 @@ int test_deletion_same(float **start, float **end)
     delete_elements(*start, *end);
     if (*end - *start != 5)
     {
-        free(*start);
         free(startres);
         return NO;
     }
 
     if (compare_arrays(*start, startres) != YES)
     {
-        free(*start);
         free(startres);
         return NO;
     }
@@ -162,14 +155,12 @@ int test_deletion_neg(float **start, float **end)
     delete_elements(*start, *end);
     if (*end - *start != 5)
     {
-        free(*start);
         free(startres);
         return YES;
     }
 
     if (compare_arrays(*start, startres) != YES)
     {
-        free(*start);
         free(startres);
         return YES;
     }
@@ -198,5 +189,5 @@ int main()
     free(start);
 
     printf("Result: %d of 6", result);
-    return YES;
+    return OK;
 }
