@@ -1,7 +1,7 @@
-app.exe: lab.o func.o test.exe
-	gcc -o $@ $^ -O0 -g3
+app.exe: lab.o func.o
+	gcc -o $@ $^ -O0 -g3 -pedantic -Wall -Werror
 test.exe: test.o func.o
-	gcc -o $@ $^ -O0 -g3
+	gcc -o $@ $^ -O0 -g3 -pedantic -Wall -Werror
 
 %.o: %.c
 	gcc -c $^ -o $@ -O0 -g3
