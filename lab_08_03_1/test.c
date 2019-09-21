@@ -83,7 +83,7 @@ int fill_test_array(float **start, float **end, int n, int case_number)
 int test_calc_cubic_ord(float **start, float **end)
 {
     fill_test_array(start, end, 5, 1);
-    if (3.556893 - EPS < calculate_cubic(*start, *end) < 3.556893 + EPS)
+    if (3.556893 - EPS < calculate_cubic(*start, *end) && calculate_cubic(*start, *end) < 3.556893 + EPS)
         return YES;
     return NO;
 }
@@ -91,7 +91,7 @@ int test_calc_cubic_ord(float **start, float **end)
 int test_calc_cubic_same(float **start, float **end)
 {
     fill_test_array(start, end, 5, 2);
-    if (1.0 - EPS < calculate_cubic(*start, *end) < 1.0 + EPS)
+    if (1.0 - EPS < calculate_cubic(*start, *end) && calculate_cubic(*start, *end) < 1.0 + EPS)
         return YES;
     return NO;
 }
@@ -99,7 +99,7 @@ int test_calc_cubic_same(float **start, float **end)
 int test_calc_cubic_neg(float **start, float **end)
 {
     fill_test_array(start, end, 5, 3);
-    if (-3.556893 - EPS < calculate_cubic(*start, *end) < -3.556893 + EPS)
+    if (-3.556893 - EPS < calculate_cubic(*start, *end) && calculate_cubic(*start, *end) < -3.556893 + EPS)
         return YES;
     return YES;
 }
@@ -172,7 +172,7 @@ int test_deletion_neg(float **start, float **end)
 int test_find_min_ord(float **start, float **end)
 {
     fill_test_array(start, end, 5, 1);
-    if (1 - EPS < find_min(*start, *end) < 1 + EPS)
+    if (1 - EPS < find_min(*start, *end) && find_min(*start, *end) < 1 + EPS)
         return YES;
     return NO;
 }
@@ -180,7 +180,7 @@ int test_find_min_ord(float **start, float **end)
 int test_find_min_same(float **start, float **end)
 {
     fill_test_array(start, end, 5, 2);
-    if (1 - EPS < find_min(*start, *end) < 1 + EPS)
+    if (1 - EPS < find_min(*start, *end) && find_min(*start, *end) < 1 + EPS)
         return YES;
     return NO;
 }
@@ -188,7 +188,7 @@ int test_find_min_same(float **start, float **end)
 int test_find_min_neg(float **start, float **end)
 {
     fill_test_array(start, end, 5, 3);
-    if (-5 - EPS < find_min(*start, *end) < -5 + EPS)
+    if (-5 - EPS < find_min(*start, *end) && find_min(*start, *end) < -5 + EPS)
         return YES;
     return YES;
 }
