@@ -1,5 +1,10 @@
 #ifndef MAIN_H
 #define MAIN_H
+#define EPS 1e-6
+#define OK 0
+#define ERROR 221
+#define YES 1
+#define NO 0
 int make_array(float **start, float **end, int n);
 int compare_arrays(const float *start, const float *startres);
 int fill_test_array(float **start, float **end, int n, int case_number);

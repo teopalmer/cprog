@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define OK 0
-#define EPS 1e-6
-#define ERROR 221
+#include "func.h"
 
 void print_array(float *start, float *end)
 {

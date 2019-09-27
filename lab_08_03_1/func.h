@@ -1,5 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
+#define OK 0
+#define EPS 1e-6
+#define ERROR 221
 int read_array(float **start, float **end, int *count);
 void print_array(float *start, float *end);
 float calculate_cubic(float *start, float *end);
