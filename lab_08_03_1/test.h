@@ -1,5 +1,3 @@
-#ifndef MAIN_H
-#define MAIN_H
 #define EPS 1e-6
 #define OK 0
 #define ERROR 221
@@ -14,5 +12,3 @@ int test_calc_cubic_neg(float **start, float **end);
 int test_deletion_ord(float **start, float **end);
 int test_deletion_same(float **start, float **end);
 int test_deletion_neg(float **start, float **end);
-#endif
-
