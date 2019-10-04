@@ -1,24 +1,24 @@
 #include "calculating_matrix.h"
 #include "resizing_matrix.h"
 
-int create_matrix(matrix *A)
+int create_matrix(matrix *a_m)
 {
-    A->p = malloc(A->n * A->m * sizeof(int));
-    if (!A->p)
+    a_m->p = malloc(a_m->n * a_m->m * sizeof(int));
+    if (!a_m->p)
     {
         puts("Create array error");
-        free(A->p);
+        free(a_m->p);
         return ERROR;
     }
     return OK;
 }
 
-int resize_matrix(matrix *A, int fin)
+int resize_matrix(matrix *a_m, int fin)
 {
-    int *pnew = (int*)realloc(A->p, sizeof(pnew) * fin);
+    int *pnew = (int*)realloc(a_m->p, sizeof(pnew) * fin);
     if (pnew)
     {
-        A->p = pnew;
+        a_m->p = pnew;
         pnew = NULL;
     }
     else
@@ -28,110 +28,110 @@ int resize_matrix(matrix *A, int fin)
     return OK;
 }
 
-void delete_column(matrix *A, int col) //столбец
+void delete_column(matrix *a_m, int col) //столбец
 {
-    for (int i = col + 1; i < A->n * A->m; i += A->m)
+    for (int i = col + 1; i < a_m->n * a_m->m; i += a_m->m)
     {
-        for (int *j = ((A->p) + i); j < MAT_END; j++)
+        for (int *j = ((a_m->p) + i); j < MAT_END; j++)
         {
             *(j - 1) = *j;
         }
         i--;
     }
-    (A->m)--;
+    (a_m->m)--;
 }
 
-void delete_row(matrix *A, int row) //строка
+void delete_row(matrix *a_m, int row) //строка
 {
-    int i = row * A->m + 1;
-    for (int n = 0; n < A->m; n++)
+    int i = row * a_m->m + 1;
+    for (int n = 0; n < a_m->m; n++)
     {
-        for (int *j = ((A->p) + i); j < MAT_END; j++)
+        for (int *j = ((a_m->p) + i); j < MAT_END; j++)
         {
             *(j - 1) = *j;
         }
     }
-    (A->n)--;
+    (a_m->n)--;
 }
 
-int normalize_matrix(matrix *A)
+int normalize_matrix(matrix *a_m)
 {
     int maxn = 0;
     int maxm = 0;
-    find_max(*A, &maxn, &maxm);
-    int diff = abs(A->n - A->m);
-    int fin = A->n * A->m;
+    find_max(*a_m, &maxn, &maxm);
+    int diff = abs(a_m->n - a_m->m);
+    int fin = a_m->n * a_m->m;
 
     for (int i = 0; i < diff; i++)
     {
-        if (A->n > A->m)
+        if (a_m->n > a_m->m)
         {
-            delete_row(A, maxn);
-            fin -= A->n;
+            delete_row(a_m, maxn);
+            fin -= a_m->n;
         }
-        else if (A->m > A->n)
+        else if (a_m->m > a_m->n)
         {
-            delete_column(A, maxm);
-            fin -= A->m;
+            delete_column(a_m, maxm);
+            fin -= a_m->m;
         }
-        find_max(*A, &maxn, &maxm);
+        find_max(*a_m, &maxn, &maxm);
     }
-    if (!resize_matrix(A, fin))
+    if (!resize_matrix(a_m, fin))
         return ERROR;
     return OK;
 }
 
-void add_column(matrix *A)
+void add_column(matrix *a_m)
 {
-    int newfin = A->m * A->n + A->n;
+    int newfin = a_m->m * a_m->n + a_m->n;
     int n = 0;
-    resize_matrix(A, newfin);
-    A->m ++;
-    for (int *i = A->p + A->m - 1; i < MAT_END; i += A->m) {
+    resize_matrix(a_m, newfin);
+    a_m->m ++;
+    for (int *i = a_m->p + a_m->m - 1; i < MAT_END; i += a_m->m) {
         for (int *c = MAT_END; c > i; c--) {
             *c = *(c - 1);
         }
-        *i = find_max_row(*A, n);
+        *i = find_max_row(*a_m, n);
         n++;
     }
 }
 
-void add_row(matrix *A)
+void add_row(matrix *a_m)
 {
-    int newf = A->m * A->n + A->m;
-    resize_matrix(A, newf);
-    A->n ++;
+    int newf = a_m->m * a_m->n + a_m->m;
+    resize_matrix(a_m, newf);
+    a_m->n ++;
     int n = 0;
 
-    for (int *j = MAT_END - A->m; j < MAT_END; j++)
+    for (int *j = MAT_END - a_m->m; j < MAT_END; j++)
     {
-        *j = calc_mean_column(*A, n);
+        *j = calc_mean_column(*a_m, n);
         n++;
     }
 }
 
-void equate_matrix(matrix *A, matrix *B)
+void equate_matrix(matrix *a_m, matrix *b_m)
 {
-    while (A->m != B->m)
+    while (a_m->m != b_m->m)
     {
-        if (A->m > B->m)
+        if (a_m->m > b_m->m)
         {
-            add_row(B);
+            add_row(b_m);
         }
         else
         {
-            add_row(A);
+            add_row(a_m);
         }
     }
-    while (A->n != B->n)
+    while (a_m->n != b_m->n)
     {
-        if (A->n > B->n)
+        if (a_m->n > b_m->n)
         {
-            add_column(B);
+            add_column(b_m);
         }
         else
         {
-            add_column(A);
+            add_column(a_m);
         }
     }
 }

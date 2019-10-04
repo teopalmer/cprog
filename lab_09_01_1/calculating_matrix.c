@@ -2,21 +2,21 @@
 #include "resizing_matrix.h"
 #include "user_interface.h"
 
-int calc_mean_column(matrix A, int col)
+int calc_mean_column(matrix a_m, int col)
 {
     double mean = 0;
-    for (int i = col; i < A.n * A.m - A.m; i += A.m)
+    for (int i = col; i < a_m.n * a_m.m - a_m.m; i += a_m.m)
         {
-            mean += *(A.p + i);
+            mean += *(a_m.p + i);
         }
     mean /= AN;
     return (int)floor(mean);
 }
 
-int find_max_row(matrix A, int row)
+int find_max_row(matrix a_m, int row)
 {
-    int max_el = *((A.p) + row * A.m);
-    for (int *n = (A.p) + row * A.m; n < A.p + row * A.m + AM; n++)
+    int max_el = *((a_m.p) + row * a_m.m);
+    for (int *n = (a_m.p) + row * a_m.m; n < a_m.p + row * a_m.m + AM; n++)
     {
         if ((max_el) < *n)
         {
@@ -26,12 +26,12 @@ int find_max_row(matrix A, int row)
     return max_el;
 }
 
-int find_max(matrix A, int *maxn, int *maxm)
+int find_max(matrix a_m, int *maxn, int *maxm)
 {
-    int max = *A.p;
-    for (int i = 0; i < A.n; i++)
+    int max = *a_m.p;
+    for (int i = 0; i < a_m.n; i++)
     {
-        for (int j = 0; j < A.m; j++)
+        for (int j = 0; j < a_m.m; j++)
         {
             if (CUR_ELEMENT > max)
             {
@@ -44,15 +44,15 @@ int find_max(matrix A, int *maxn, int *maxm)
     return OK;
 }
 
-int multiply_matrix(matrix A, matrix B, matrix *M)
+int multiply_matrix(matrix a_m, matrix b_m, matrix *M)
 {
-    for (int i = 0; i < A.n; i++)
+    for (int i = 0; i < a_m.n; i++)
     {
-        for (int j = 0; j < A.m; j++)
+        for (int j = 0; j < a_m.m; j++)
         {
-            *((M->p) + j + i * (A.m)) = 0;
-            for (int k = 0; k < A.m; k++)
-                *((M->p) + j + i * (A.m)) += *((A.p) + k + i * (A.m)) * *((B.p) + j + k * (B.m));
+            *((M->p) + j + i * (a_m.m)) = 0;
+            for (int k = 0; k < a_m.m; k++)
+                *((M->p) + j + i * (a_m.m)) += *((a_m.p) + k + i * (a_m.m)) * *((b_m.p) + j + k * (b_m.m));
         }
     }
     return OK;
@@ -67,10 +67,10 @@ int copy_matrix(matrix Old, matrix *New)
     return OK;
 }
 
-void create_ematrix(matrix A, matrix *E)
+void create_ematrix(matrix a_m, matrix *E)
 {
-    E->m = A.m;
-    E->n = A.n;
+    E->m = a_m.m;
+    E->n = a_m.n;
     for (int i = 0; i < E->m * E->n; i++)
     {
         *(E->p + i) = 0;
@@ -82,44 +82,44 @@ void create_ematrix(matrix A, matrix *E)
     }
 }
 
-int expo_matrix(matrix *A, int power)
+int expo_matrix(matrix *a_m, int power)
 {
-    matrix AP;
-    AP.m = A->m;
-    AP.n = A->n;
+    matrix ap_m;
+    ap_m.m = a_m->m;
+    ap_m.n = a_m->n;
 
-    matrix R;
-    R.m = A->m;
-    R.n = A->n;
+    matrix R_m;
+    R_m.m = a_m->m;
+    R_m.n = a_m->n;
 
-    if (create_matrix(&AP) != OK)
+    if (create_matrix(&ap_m) != OK)
     {
-        free(&AP);
+        free(&ap_m);
         return ERROR;
     }
 
-    copy_matrix(*A, &AP);
-    if (create_matrix(&R) != OK)
+    copy_matrix(*a_m, &ap_m);
+    if (create_matrix(&R_m) != OK)
     {
-        free(&AP);
+        free(&ap_m);
         return ERROR;
     }
-    copy_matrix(*A, &R);
+    copy_matrix(*a_m, &R_m);
 
     if (power == 0)
     {
-        create_ematrix(*A, &R);
+        create_ematrix(*a_m, &R_m);
     }
 
     for (int i = 0; i < power - 1; i++)
     {
-        multiply_matrix(*A, AP, &R);
-        copy_matrix(R, &AP);
+        multiply_matrix(*a_m, ap_m, &R_m);
+        copy_matrix(R_m, &ap_m);
     }
-    copy_matrix(R, A);
+    copy_matrix(R_m, a_m);
 
-    free(AP.p);
-    free(R.p);
+    free(ap_m.p);
+    free(R_m.p);
     return OK;
 }
 

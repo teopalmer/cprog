@@ -2,22 +2,22 @@
 #include "resizing_matrix.h"
 #include "user_interface.h"
 
-int read_matrix(matrix *A)
+int read_matrix(matrix *a_m)
 {
     puts("Input n, m: ");
-    int ch = scanf("%d %d", &A->n, &A->m);
+    int ch = scanf("%d %d", &a_m->n, &a_m->m);
     if (ch != 2)
     {
         return ERROR;
     }
 
     puts("Input matrix: ");
-    if (create_matrix(A) != OK)
+    if (create_matrix(a_m) != OK)
         return ERROR;
 
-    for (int i = 0; i < A->n * A->m; i++)
+    for (int i = 0; i < a_m->n * a_m->m; i++)
     {
-        ch = scanf("%d", &(*((A->p) + i)));
+        ch = scanf("%d", &(*((a_m->p) + i)));
         if (ch != 1)
             return ERROR;
     }
@@ -25,11 +25,11 @@ int read_matrix(matrix *A)
     return OK;
 }
 
-int print_matrix(matrix A)
+int print_matrix(matrix a_m)
 {
-    for (int i = 0; i < A.n; i++)
+    for (int i = 0; i < a_m.n; i++)
     {
-        for (int j = 0; j < A.m; j++)
+        for (int j = 0; j < a_m.m; j++)
         {
             printf("%d ", CUR_ELEMENT);
         }
