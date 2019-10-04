@@ -164,7 +164,8 @@ int test_delete_column(matrix *t, matrix *tres)
     return compare_matrices(*t, *tres);
 }
 
-int main() {
+int main()
+{
     matrix t;
     matrix tres;
     int c = 0;

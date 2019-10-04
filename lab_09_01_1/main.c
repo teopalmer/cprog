@@ -4,10 +4,11 @@
 #include "resizing_matrix.h"
 #include "user_interface.h"
 
-int main() {
+int main()
+{
     matrix a_m;
     matrix b_m;
-    matrix M;
+    matrix m_m;
     int pheta = 0;
     int gamma = 0;
 
@@ -20,19 +21,19 @@ int main() {
     normalize_matrix(&b_m);
     equate_matrix(&a_m, &b_m);
 
-    M.m = a_m.m;
-    M.n = a_m.n;
-    create_matrix(&M);
+    m_m.m = a_m.m;
+    m_m.n = a_m.n;
+    create_matrix(&m_m);
 
     read_exp(&pheta, &gamma);
     expo_matrix(&a_m, pheta);
     expo_matrix(&b_m, gamma);
 
-    multiply_matrix(a_m, b_m, &M);
-    print_matrix(M);
+    multiply_matrix(a_m, b_m, &m_m);
+    print_matrix(m_m);
 
     free(a_m.p);
     free(b_m.p);
-    free(M.p);
+    free(m_m.p);
     return 0;
 }

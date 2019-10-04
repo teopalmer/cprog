@@ -6,9 +6,9 @@ int calc_mean_column(matrix a_m, int col)
 {
     double mean = 0;
     for (int i = col; i < a_m.n * a_m.m - a_m.m; i += a_m.m)
-        {
-            mean += *(a_m.p + i);
-        }
+    {
+        mean += *(a_m.p + i);
+    }
     mean /= AN;
     return (int)floor(mean);
 }
@@ -16,7 +16,7 @@ int calc_mean_column(matrix a_m, int col)
 int find_max_row(matrix a_m, int row)
 {
     int max_el = *((a_m.p) + row * a_m.m);
-    for (int *n = (a_m.p) + row * a_m.m; n < a_m.p + row * a_m.m + AM; n++)
+    for (int *n = (a_m.p) + row * a_m.m; n < a_m.p + row * a_m.m + Am_m; n++)
     {
         if ((max_el) < *n)
         {
@@ -44,41 +44,41 @@ int find_max(matrix a_m, int *maxn, int *maxm)
     return OK;
 }
 
-int multiply_matrix(matrix a_m, matrix b_m, matrix *M)
+int multiply_matrix(matrix a_m, matrix b_m, matrix *m_m)
 {
     for (int i = 0; i < a_m.n; i++)
     {
         for (int j = 0; j < a_m.m; j++)
         {
-            *((M->p) + j + i * (a_m.m)) = 0;
+            *((m_m->p) + j + i * (a_m.m)) = 0;
             for (int k = 0; k < a_m.m; k++)
-                *((M->p) + j + i * (a_m.m)) += *((a_m.p) + k + i * (a_m.m)) * *((b_m.p) + j + k * (b_m.m));
+                *((m_m->p) + j + i * (a_m.m)) += *((a_m.p) + k + i * (a_m.m)) * *((b_m.p) + j + k * (b_m.m));
         }
     }
     return OK;
 }
 
-int copy_matrix(matrix Old, matrix *New)
+int copy_matrix(matrix old, matrix *newm)
 {
-    for (int i = 0; i < New->m * New->n; i++)
+    for (int i = 0; i < newm->m * newm->n; i++)
     {
-        *(New->p + i) = *(Old.p + i);
+        *(newm->p + i) = *(old.p + i);
     }
     return OK;
 }
 
-void create_ematrix(matrix a_m, matrix *E)
+void create_ematrix(matrix a_m, matrix *e_m)
 {
-    E->m = a_m.m;
-    E->n = a_m.n;
-    for (int i = 0; i < E->m * E->n; i++)
+    e_m->m = a_m.m;
+    e_m->n = a_m.n;
+    for (int i = 0; i < e_m->m * e_m->n; i++)
     {
-        *(E->p + i) = 0;
+        *(e_m->p + i) = 0;
     }
 
-    for (int i = 0; i < E->m * E->n; i+=i)
+    for (int i = 0; i < e_m->m * e_m->n; i+=i)
     {
-        *(E->p + i) = 1;
+        *(e_m->p + i) = 1;
     }
 }
 
