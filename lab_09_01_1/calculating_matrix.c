@@ -76,9 +76,10 @@ void create_ematrix(matrix a_m, matrix *e_m)
         *(e_m->p + i) = 0;
     }
 
-    for (int i = 0; i < e_m->m * e_m->n; i+=i)
+    for (int i = 0; i < e_m->m * e_m->n; i += i)
     {
         *(e_m->p + i) = 1;
+        i++;
     }
 }
 
@@ -97,14 +98,14 @@ int expo_matrix(matrix *a_m, int power)
 
     if (create_matrix(&ap_m) != OK)
     {
-        free(&ap_m);
+        free(ap_m.p);
         return ERROR;
     }
 
     copy_matrix(*a_m, &ap_m);
     if (create_matrix(&R_m) != OK)
     {
-        free(&ap_m);
+        free(ap_m.p);
         return ERROR;
     }
     copy_matrix(*a_m, &R_m);

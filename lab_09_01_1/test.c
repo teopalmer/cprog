@@ -4,66 +4,22 @@
 #include "resizing_matrix.h"
 #include "user_interface.h"
 
-void fill_square_matrix(matrix *t, int case_num)
+void fill_square_matrix(matrix *t, int x1, int x2, int x3, int x4)
 {
-    switch (case_num)
-    {
-        default:
-            break;
-        case 1:
-            *t->p = 1;
-            *(t->p + 1) = 2;
-            *(t->p + 2) = 3;
-            *(t->p + 3) = 4;
-            break;
-        case 2:
-            *t->p = 1;
-            *(t->p + 1) = 1;
-            *(t->p + 2) = 1;
-            *(t->p + 3) = 1;
-            break;
-        case 3:
-            *t->p = -1;
-            *(t->p + 1) = -2;
-            *(t->p + 2) = -3;
-            *(t->p + 3) = -4;
-            break;
-        case 11:
-            *t->p = 1;
-            *(t->p + 1) = 0;
-            *(t->p + 2) = 0;
-            *(t->p + 3) = 1;
-            break;
-        case 22:
-            *t->p = 1;
-            *(t->p + 1) = 1;
-            *(t->p + 2) = 1;
-            *(t->p + 3) = 1;
-            break;
-        case 33:
-            *t->p = 7;
-            *(t->p + 1) = 10;
-            *(t->p + 2) = 15;
-            *(t->p + 3) = 22;
-            break;
-    }
+    *t->p = x1;
+    *(t->p + 1) = x2;
+    *(t->p + 2) = x3;
+    *(t->p + 3) = x4;
 }
 
-void fill_matrix(matrix *t, int case_num)
+void fill_2x3_matrix(matrix *t, int x1, int x2, int x3, int x4, int x5, int x6)
 {
-    switch (case_num)
-    {
-        default:
-            break;
-        case 1:
-            *t->p = 1;
-            *(t->p + 1) = 2;
-            *(t->p + 2) = 3;
-            *(t->p + 3) = 4;
-            *(t->p + 4) = 5;
-            *(t->p + 5) = 6;
-            break;
-    }
+    *t->p = x1;
+    *(t->p + 1) = x2;
+    *(t->p + 2) = x3;
+    *(t->p + 3) = x4;
+    *(t->p + 4) = x5;
+    *(t->p + 5) = x6;
 }
 
 int compare_matrices(matrix a, matrix b)
@@ -80,87 +36,58 @@ int compare_matrices(matrix a, matrix b)
     return PASSED;
 }
 
+int test_normalize_ord_col(matrix *t, matrix *tres)
+{
+    t->m = 3;
+    fill_square_matrix(tres, 1, 2, 4, 5);
+    fill_2x3_matrix(t, 1, 2, 3, 4, 5, 6);
+    normalize_matrix(t);
+    int log = compare_matrices(*t, *tres);
+    t->m = 2;
+    return log;
+}
+
+int test_normalize_ord_row(matrix *t, matrix *tres)
+{
+    t->n = 3;
+    fill_square_matrix(tres, 1, 2, 3, 4);
+    fill_2x3_matrix(t, 1, 2, 3, 4, 5, 6);
+    normalize_matrix(t);
+    int log = compare_matrices(*t, *tres);
+    t->n = 2;
+    return log;
+}
+
+int test_normalize_same(matrix *t, matrix *tres)
+{
+    fill_square_matrix(tres, 1, 2, 3, 4);
+    fill_square_matrix(t, 1, 2, 3, 4);
+    normalize_matrix(t);
+    int log = compare_matrices(*t, *tres);
+    return log;
+}
+
 int test_expo_zero(matrix *t, matrix *tres)
 {
-    fill_square_matrix(t, 1);
-    fill_square_matrix(tres, 11);
+    fill_square_matrix(tres, 1, 0, 0, 1);
+    fill_square_matrix(t, 1, 2, 3, 4);
     expo_matrix(t, 0);
-    return (compare_matrices(*t, *tres));
+    return compare_matrices(*t, *tres);
 }
 
 int test_expo_one(matrix *t, matrix *tres)
 {
-    fill_square_matrix(t, 2);
-    fill_square_matrix(tres, 22);
+    fill_square_matrix(tres, 1, 2, 3, 4);
+    fill_square_matrix(t, 1, 2, 3, 4);
     expo_matrix(t, 1);
-    return (compare_matrices(*t, *tres));
+    return compare_matrices(*t, *tres);
 }
 
-int test_expo_ord(matrix *t, matrix *tres)
+int test_expo_more(matrix *t, matrix *tres)
 {
-    fill_square_matrix(t, 3);
-    fill_square_matrix(tres, 33);
+    fill_square_matrix(tres, 7, 10, 15, 22);
+    fill_square_matrix(t, 1, 2, 3, 4);
     expo_matrix(t, 2);
-    return (compare_matrices(*t, *tres));
-}
-
-int test_find_max_ord(matrix *t)
-{
-    int maxn, maxm;
-    fill_square_matrix(t, 1);
-    find_max(*t, &maxn, &maxm);
-    if (maxn != 0 || maxm != 1)
-        return FAILED;
-    return PASSED;
-}
-
-int test_find_max_same(matrix *t)
-{
-    int maxn, maxm;
-    fill_square_matrix(t, 2);
-    find_max(*t, &maxn, &maxm);
-    if (maxn != 0 || maxm != 0)
-        return FAILED;
-    return PASSED;
-}
-
-int test_calc_mean(matrix *t)
-{
-    fill_square_matrix(t, 1);
-    int c = calc_mean_column(*t, 0);
-    if (c != 2)
-        return FAILED;
-    return PASSED;
-}
-
-int test_find_max_row(matrix *t)
-{
-    fill_square_matrix(t, 3);
-    int c = find_max_row(*t, 0);
-    if (c != 2)
-        return FAILED;
-    return PASSED;
-}
-
-int test_multiply_ord(matrix *a, matrix *b)
-{
-    matrix m;
-    m.n = 2;
-    m.m = 2;
-    create_matrix(&m);
-    fill_square_matrix(a, 1);
-    fill_square_matrix(b, 11);
-    multiply_matrix(*a, *b, &m);
-
-    return compare_matrices(*b, m);
-}
-
-int test_delete_column(matrix *t, matrix *tres)
-{
-    t->m = 3;
-    fill_matrix(t, 1);
-    fill_square_matrix(tres, 1);
-    delete_column(t, 2);
     return compare_matrices(*t, *tres);
 }
 
@@ -178,15 +105,14 @@ int main()
     create_matrix(&t);
     create_matrix(&tres);
 
-    c += test_find_max_same(&t);
-    c += test_find_max_same(&t);
-    //c += test_find_max_same(&t);
-    //c += test_multiply_ord(&t, &tres);
-    //c += test_find_max_row(&t);
-    //c += test_find_max_ord(&t);
-    //c += test_expo_zero(&t, &tres);
-    //c += test_expo_ord(&t, &tres);
-    //c += test_expo_one(&t, &tres);
+    c += test_normalize_ord_col(&t, &tres);
+    c += test_normalize_ord_row(&t, &tres);
+    c += test_normalize_same(&t, &tres);
+    c += test_expo_zero(&t, &tres);
+    c += test_expo_one(&t, &tres);
+    c += test_expo_more(&t, &tres);
+
+    printf("c = %d\n", c);
 
     free(t.p);
     free(tres.p);
