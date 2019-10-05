@@ -3,7 +3,7 @@
 
 int create_matrix(matrix *a_m)
 {
-    a_m->p = malloc(a_m->n * a_m->m * sizeof(int));
+    a_m->p = malloc((a_m->n) * (a_m->m) * sizeof(int));
     if (!a_m->p)
     {
         puts("Create array error");
@@ -76,16 +76,17 @@ int normalize_matrix(matrix *a_m)
         }
         find_max(*a_m, &maxn, &maxm);
     }
-    if (!resize_matrix(a_m, fin))
+    if (resize_matrix(a_m, fin) != OK)
         return ERROR;
     return OK;
 }
 
-void add_column(matrix *a_m)
+int add_column(matrix *a_m)
 {
     int newfin = a_m->m * a_m->n + a_m->n;
     int n = 0;
-    resize_matrix(a_m, newfin);
+    if (resize_matrix(a_m, newfin) != OK)
+        return ERROR;
     a_m->m ++;
     for (int *i = a_m->p + a_m->m - 1; i < MAT_END; i += a_m->m) {
         for (int *c = MAT_END; c > i; c--) {
@@ -94,12 +95,15 @@ void add_column(matrix *a_m)
         *i = find_max_row(*a_m, n);
         n++;
     }
+    return OK;
 }
 
-void add_row(matrix *a_m)
+int add_row(matrix *a_m)
 {
     int newf = a_m->m * a_m->n + a_m->m;
-    resize_matrix(a_m, newf);
+    if (resize_matrix(a_m, newf) != OK)
+        return ERROR;
+    
     a_m->n ++;
     int n = 0;
 
@@ -108,6 +112,7 @@ void add_row(matrix *a_m)
         *j = calc_mean_column(*a_m, n);
         n++;
     }
+    return OK;
 }
 
 void equate_matrix(matrix *a_m, matrix *b_m)
@@ -116,22 +121,25 @@ void equate_matrix(matrix *a_m, matrix *b_m)
     {
         if (a_m->m > b_m->m)
         {
-            add_row(b_m);
+            add_column(b_m);
         }
         else
-        {
-            add_row(a_m);
-        }
+            if (a_m->m < b_m->m)
+            {
+                add_row(a_m);
+            }
+        
     }
     while (a_m->n != b_m->n)
     {
         if (a_m->n > b_m->n)
         {
-            add_column(b_m);
+            add_row(b_m);
         }
         else
-        {
-            add_column(a_m);
-        }
+            if (a_m->n < b_m->n)
+            {
+                add_column(a_m);
+            }
     }
 }

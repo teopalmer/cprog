@@ -15,19 +15,61 @@ int main()
     if (read_matrix(&a_m) != OK)
         return ERROR;
     if (read_matrix(&b_m) != OK)
+    {
+        free(a_m.p);
         return ERROR;
+    }
+        
 
-    normalize_matrix(&a_m);
-    normalize_matrix(&b_m);
+    if (normalize_matrix(&a_m) != OK)
+    {
+        free(a_m.p);
+        free(b_m.p);
+        return ERROR;
+    }
+    if (normalize_matrix(&b_m) != OK)
+    {
+        free(a_m.p);
+        free(b_m.p);
+        return ERROR;
+    }
+    
     equate_matrix(&a_m, &b_m);
 
     m_m.m = a_m.m;
     m_m.n = a_m.n;
-    create_matrix(&m_m);
+    
+    if (create_matrix(&m_m) != OK)
+    {
+        free(a_m.p);
+        free(b_m.p);
+        free(m_m.p);
+        return ERROR;
+    }
 
-    read_exp(&pheta, &gamma);
-    expo_matrix(&a_m, pheta);
-    expo_matrix(&b_m, gamma);
+    if (read_exp(&pheta, &gamma) != OK)
+    {
+        free(a_m.p);
+        free(b_m.p);
+        free(m_m.p);
+        return ERROR;
+    }
+    
+    if (expo_matrix(&a_m, pheta) != OK)
+    {
+        free(a_m.p);
+        free(b_m.p);
+        free(m_m.p);
+        return ERROR;
+    }
+    
+    if (expo_matrix(&b_m, gamma) != OK)
+    {
+        free(a_m.p);
+        free(b_m.p);
+        free(m_m.p);
+        return ERROR;
+    }
 
     multiply_matrix(a_m, b_m, &m_m);
     print_matrix(m_m);

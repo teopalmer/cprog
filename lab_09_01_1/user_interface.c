@@ -6,7 +6,7 @@ int read_matrix(matrix *a_m)
 {
     puts("Input n, m: ");
     int ch = scanf("%d %d", &a_m->n, &a_m->m);
-    if (ch != 2)
+    if (ch != 2 || a_m->m <= 0 || a_m->n <= 0)
     {
         return ERROR;
     }
@@ -19,7 +19,10 @@ int read_matrix(matrix *a_m)
     {
         ch = scanf("%d", &(*((a_m->p) + i)));
         if (ch != 1)
+        {
+            free(a_m->p);
             return ERROR;
+        }
     }
 
     return OK;

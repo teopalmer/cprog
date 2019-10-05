@@ -91,6 +91,9 @@ int expo_matrix(matrix *a_m, int power)
     matrix R_m;
     R_m.m = a_m->m;
     R_m.n = a_m->n;
+    
+    if (power < 0)
+        return ERROR;
 
     if (create_matrix(&ap_m) != OK)
     {
