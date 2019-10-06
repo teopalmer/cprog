@@ -22,6 +22,19 @@ void fill_2x3_matrix(matrix *t, int x1, int x2, int x3, int x4, int x5, int x6)
     *(t->p + 5) = x6;
 }
 
+void fill_3x3_matrix(matrix *t, int x1, int x2, int x3, int x4, int x5, int x6, int x7, int x8, int x9)
+{
+    *t->p = x1;
+    *(t->p + 1) = x2;
+    *(t->p + 2) = x3;
+    *(t->p + 3) = x4;
+    *(t->p + 4) = x5;
+    *(t->p + 5) = x6;
+    *(t->p + 6) = x7;
+    *(t->p + 7) = x8;
+    *(t->p + 8) = x9;
+}
+
 int compare_matrices(matrix a, matrix b)
 {
     if (a.n != b.n || a.m != b.m)
@@ -91,6 +104,46 @@ int test_expo_more(matrix *t, matrix *tres)
     return compare_matrices(*t, *tres);
 }
 
+int test_equate_same(matrix *t, matrix *tres)
+{
+    fill_square_matrix(t, 1, 2, 3, 4);
+    fill_square_matrix(tres, 1, 2, 3, 4);
+    equate_matrix(t, tres);
+    return compare_matrices(*t, *tres);
+}
+
+int test_equate_ord(matrix *t, matrix *tres)
+{
+    t->n = 3;
+    matrix sup;
+    sup.m = 2;
+    sup.n = 3;
+    create_matrix(&sup);
+    fill_square_matrix(tres, 1, 2, 3, 4);
+    fill_2x3_matrix(t, 1, 2, 3, 4, 5, 6);
+    fill_2x3_matrix(&sup, 1, 2, 3, 4, 2, 3);
+    equate_matrix(t, tres);
+    int log = compare_matrices(sup, *tres);
+    free(sup.p);
+    return log;
+}
+
+int test_equate_new(matrix *t, matrix *tres)
+{
+    t->m = 3;
+    matrix sup;
+    sup.m = 3;
+    sup.n = 3;
+    create_matrix(&sup);
+    fill_square_matrix(tres, 1, 2, 3, 4);
+    fill_2x3_matrix(t, 1, 2, 3, 4, 5, 6);
+    fill_3x3_matrix(&sup, 1, 2, 2, 3, 4, 4, 2, 3, 3);
+    equate_matrix(t, tres);
+    int log = compare_matrices(sup, *tres);
+    free(sup.p);
+    return log;
+}
+
 int main()
 {
     matrix t;
@@ -111,11 +164,17 @@ int main()
     c += test_expo_zero(&t, &tres);
     c += test_expo_one(&t, &tres);
     c += test_expo_more(&t, &tres);
+    c += test_equate_same(&t, &tres);
+    c += test_equate_ord(&t, &tres);
+    c += test_equate_new(&t, &tres);
 
-    printf("c = %d\n", c);
+    printf("c = %d out of 8", c);
 
     free(t.p);
     free(tres.p);
+
+    if (c != 8)
+        return ERROR;
 
     return OK;
 }

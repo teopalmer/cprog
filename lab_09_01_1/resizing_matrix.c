@@ -78,6 +78,7 @@ int normalize_matrix(matrix *a_m)
     }
     if (resize_matrix(a_m, fin) != OK)
         return ERROR;
+
     return OK;
 }
 
@@ -117,19 +118,6 @@ int add_row(matrix *a_m)
 
 void equate_matrix(matrix *a_m, matrix *b_m)
 {
-    while (a_m->m != b_m->m)
-    {
-        if (a_m->m > b_m->m)
-        {
-            add_column(b_m);
-        }
-        else
-            if (a_m->m < b_m->m)
-            {
-                add_row(a_m);
-            }
-        
-    }
     while (a_m->n != b_m->n)
     {
         if (a_m->n > b_m->n)
@@ -139,7 +127,21 @@ void equate_matrix(matrix *a_m, matrix *b_m)
         else
             if (a_m->n < b_m->n)
             {
+                add_row(a_m);
+            }
+    }
+    
+    while (a_m->m != b_m->m)
+    {
+        if (a_m->m > b_m->m)
+        {
+            add_column(b_m);
+        }
+        else
+            if (a_m->m < b_m->m)
+            {
                 add_column(a_m);
             }
+        
     }
 }

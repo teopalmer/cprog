@@ -19,7 +19,7 @@ int main()
         free(a_m.p);
         return ERROR;
     }
-        
+    int al = 0;
 
     if (normalize_matrix(&a_m) != OK)
     {
@@ -27,6 +27,7 @@ int main()
         free(b_m.p);
         return ERROR;
     }
+    
     if (normalize_matrix(&b_m) != OK)
     {
         free(a_m.p);
@@ -46,6 +47,9 @@ int main()
         free(m_m.p);
         return ERROR;
     }
+    
+    print_matrix(a_m);
+    
 
     if (read_exp(&pheta, &gamma) != OK)
     {

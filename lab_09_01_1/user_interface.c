@@ -13,11 +13,13 @@ int read_matrix(matrix *a_m)
 
     puts("Input matrix: ");
     if (create_matrix(a_m) != OK)
+    {
         return ERROR;
-
+    }
+    
     for (int i = 0; i < a_m->n * a_m->m; i++)
     {
-        ch = scanf("%d", &(*((a_m->p) + i)));
+        ch = scanf("%d", a_m->p + i);
         if (ch != 1)
         {
             free(a_m->p);
