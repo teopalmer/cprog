@@ -50,26 +50,26 @@ int compare_matrices(matrix a, matrix b)
 int test_normalize_ord_col(matrix *t, matrix *tres)
 {
     t->m = 3;
-    resize_matrix(t, t->m *t->n);
+    resize_matrix(t, t->m * t->n);
     fill_square_matrix(tres, 1, 2, 4, 5);
     fill_2x3_matrix(t, 1, 2, 3, 4, 5, 6);
     normalize_matrix(t);
     int log = compare_matrices(*t, *tres);
     t->m = 2;
-    resize_matrix(t, t->m *t->n);
+    resize_matrix(t, t->m * t->n);
     return log;
 }
 
 int test_normalize_ord_row(matrix *t, matrix *tres)
 {
     t->n = 3;
-    resize_matrix(t, t->m *t->n);
+    resize_matrix(t, t->m * t->n);
     fill_square_matrix(tres, 1, 2, 3, 4);
     fill_2x3_matrix(t, 1, 2, 3, 4, 5, 6);
     normalize_matrix(t);
     int log = compare_matrices(*t, *tres);
     t->n = 2;
-    resize_matrix(t, t->m *t->n);
+    resize_matrix(t, t->m * t->n);
     return log;
 }
 
@@ -117,7 +117,7 @@ int test_equate_same(matrix *t, matrix *tres)
 int test_equate_ord(matrix *t, matrix *tres)
 {
     t->n = 3;
-    resize_matrix(t, t->m *t->n);
+    resize_matrix(t, t->m * t->n);
     matrix sup;
     sup.m = 2;
     sup.n = 3;
@@ -128,7 +128,7 @@ int test_equate_ord(matrix *t, matrix *tres)
     equate_matrix(t, tres);
     int log = compare_matrices(sup, *tres);
     t->n = 2;
-    resize_matrix(t, t->m *t->n);
+    resize_matrix(t, t->m * t->n);
     free(sup.p);
     return log;
 }
@@ -136,7 +136,7 @@ int test_equate_ord(matrix *t, matrix *tres)
 int test_equate_new(matrix *t, matrix *tres)
 {
     t->m = 3;
-    resize_matrix(t, t->m *t->n);
+    resize_matrix(t, t->m * t->n);
     matrix sup;
     sup.m = 3;
     sup.n = 3;
@@ -147,7 +147,7 @@ int test_equate_new(matrix *t, matrix *tres)
     equate_matrix(t, tres);
     int log = compare_matrices(sup, *tres);
     t->m = 2;
-    resize_matrix(t, t->m *t->n);
+    resize_matrix(t, t->m * t->n);
     free(sup.p);
     return log;
 }
@@ -176,12 +176,12 @@ int main()
     c += test_equate_ord(&t, &tres);
     c += test_equate_new(&t, &tres);
 
-    printf("c = %d out of 8", c);
+    printf("c = %d out of 9", c);
 
     free(t.p);
     free(tres.p);
 
-    if (c != 8)
+    if (c != 9)
         return ERROR;
 
     return OK;
