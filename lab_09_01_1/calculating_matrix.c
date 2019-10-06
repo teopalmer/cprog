@@ -16,7 +16,7 @@ int calc_mean_column(matrix a_m, int col)
 int find_max_row(matrix a_m, int row)
 {
     int max_el = *((a_m.p) + row * a_m.m);
-    for (int *n = (a_m.p) + row * a_m.m; n < a_m.p + row * a_m.m + Am_m; n++)
+    for (int *n = (a_m.p) + row * a_m.m; n < a_m.p + row * a_m.m + AM; n++)
     {
         if ((max_el) < *n)
         {
