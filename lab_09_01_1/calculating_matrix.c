@@ -67,19 +67,16 @@ int copy_matrix(matrix old, matrix *newm)
     return OK;
 }
 
-void create_ematrix(matrix a_m, matrix *e_m)
+void create_ematrix(matrix *e_m)
 {
-    e_m->m = a_m.m;
-    e_m->n = a_m.n;
     for (int i = 0; i < e_m->m * e_m->n; i++)
     {
         *(e_m->p + i) = 0;
     }
 
-    for (int i = 0; i < e_m->m * e_m->n; i += i)
+    for (int i = 0; i < e_m->m * e_m->n; i += e_m->m + 1)
     {
         *(e_m->p + i) = 1;
-        i++;
     }
 }
 
@@ -89,9 +86,9 @@ int expo_matrix(matrix *a_m, int power)
     ap_m.m = a_m->m;
     ap_m.n = a_m->n;
 
-    matrix R_m;
-    R_m.m = a_m->m;
-    R_m.n = a_m->n;
+    matrix r_m;
+    r_m.m = a_m->m;
+    r_m.n = a_m->n;
     
     if (power < 0)
         return ERROR;
@@ -103,27 +100,27 @@ int expo_matrix(matrix *a_m, int power)
     }
 
     copy_matrix(*a_m, &ap_m);
-    if (create_matrix(&R_m) != OK)
+    if (create_matrix(&r_m) != OK)
     {
         free(ap_m.p);
         return ERROR;
     }
-    copy_matrix(*a_m, &R_m);
+    copy_matrix(*a_m, &r_m);
 
     if (power == 0)
     {
-        create_ematrix(*a_m, &R_m);
+        create_ematrix(&r_m);
     }
 
     for (int i = 0; i < power - 1; i++)
     {
-        multiply_matrix(*a_m, ap_m, &R_m);
-        copy_matrix(R_m, &ap_m);
+        multiply_matrix(*a_m, ap_m, &r_m);
+        copy_matrix(r_m, &ap_m);
     }
-    copy_matrix(R_m, a_m);
+    copy_matrix(r_m, a_m);
 
     free(ap_m.p);
-    free(R_m.p);
+    free(r_m.p);
     return OK;
 }
 

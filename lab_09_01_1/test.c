@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "calculating_matrix.h"
 #include "resizing_matrix.h"
 #include "user_interface.h"
@@ -52,22 +50,26 @@ int compare_matrices(matrix a, matrix b)
 int test_normalize_ord_col(matrix *t, matrix *tres)
 {
     t->m = 3;
+    resize_matrix(t, t->m *t->n);
     fill_square_matrix(tres, 1, 2, 4, 5);
     fill_2x3_matrix(t, 1, 2, 3, 4, 5, 6);
     normalize_matrix(t);
     int log = compare_matrices(*t, *tres);
     t->m = 2;
+    resize_matrix(t, t->m *t->n);
     return log;
 }
 
 int test_normalize_ord_row(matrix *t, matrix *tres)
 {
     t->n = 3;
+    resize_matrix(t, t->m *t->n);
     fill_square_matrix(tres, 1, 2, 3, 4);
     fill_2x3_matrix(t, 1, 2, 3, 4, 5, 6);
     normalize_matrix(t);
     int log = compare_matrices(*t, *tres);
     t->n = 2;
+    resize_matrix(t, t->m *t->n);
     return log;
 }
 
@@ -115,6 +117,7 @@ int test_equate_same(matrix *t, matrix *tres)
 int test_equate_ord(matrix *t, matrix *tres)
 {
     t->n = 3;
+    resize_matrix(t, t->m *t->n);
     matrix sup;
     sup.m = 2;
     sup.n = 3;
@@ -124,6 +127,8 @@ int test_equate_ord(matrix *t, matrix *tres)
     fill_2x3_matrix(&sup, 1, 2, 3, 4, 2, 3);
     equate_matrix(t, tres);
     int log = compare_matrices(sup, *tres);
+    t->n = 2;
+    resize_matrix(t, t->m *t->n);
     free(sup.p);
     return log;
 }
@@ -131,6 +136,7 @@ int test_equate_ord(matrix *t, matrix *tres)
 int test_equate_new(matrix *t, matrix *tres)
 {
     t->m = 3;
+    resize_matrix(t, t->m *t->n);
     matrix sup;
     sup.m = 3;
     sup.n = 3;
@@ -140,6 +146,8 @@ int test_equate_new(matrix *t, matrix *tres)
     fill_3x3_matrix(&sup, 1, 2, 2, 3, 4, 4, 2, 3, 3);
     equate_matrix(t, tres);
     int log = compare_matrices(sup, *tres);
+    t->m = 2;
+    resize_matrix(t, t->m *t->n);
     free(sup.p);
     return log;
 }

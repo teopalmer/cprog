@@ -28,7 +28,7 @@ int resize_matrix(matrix *a_m, int fin)
     return OK;
 }
 
-void delete_column(matrix *a_m, int col) //столбец
+void delete_column(matrix *a_m, int col)
 {
     for (int i = col + 1; i < a_m->n * a_m->m; i += a_m->m)
     {
@@ -41,7 +41,7 @@ void delete_column(matrix *a_m, int col) //столбец
     (a_m->m)--;
 }
 
-void delete_row(matrix *a_m, int row) //строка
+void delete_row(matrix *a_m, int row)
 {
     int i = row * a_m->m + 1;
     for (int n = 0; n < a_m->m; n++)
@@ -87,8 +87,10 @@ int add_column(matrix *a_m)
     if (resize_matrix(a_m, newfin) != OK)
         return ERROR;
     a_m->m ++;
-    for (int *i = a_m->p + a_m->m - 1; i < MAT_END; i += a_m->m) {
-        for (int *c = MAT_END; c > i; c--) {
+    for (int *i = a_m->p + a_m->m - 1; i < MAT_END; i += a_m->m)
+    {
+        for (int *c = MAT_END; c > i; c--)
+        {
             *c = *(c - 1);
         }
         *i = find_max_row(*a_m, n);
