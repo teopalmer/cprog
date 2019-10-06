@@ -8,7 +8,7 @@
 #define PASSED 1
 #define CUR_ELEMENT *((a_m.p) + j + i * (a_m.m))
 #define MAT_END (a_m->p + a_m->n * a_m->m)
-#define Am_m a_m.m - 1
+#define AM a_m.m - 1
 #define AN a_m.n - 1
 
 #ifndef LAB_09_FUNC_H

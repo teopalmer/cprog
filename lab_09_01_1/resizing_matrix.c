@@ -59,23 +59,21 @@ int normalize_matrix(matrix *a_m)
     int maxn = 0;
     int maxm = 0;
     find_max(*a_m, &maxn, &maxm);
-    int diff = abs(a_m->n - a_m->m);
-    int fin = a_m->n * a_m->m;
-
-    for (int i = 0; i < diff; i++)
+    int fin = 0;
+ 
+    while (a_m->n != a_m->m)
     {
         if (a_m->n > a_m->m)
         {
             delete_row(a_m, maxn);
-            fin -= a_m->n;
         }
         else if (a_m->m > a_m->n)
         {
             delete_column(a_m, maxm);
-            fin -= a_m->m;
         }
         find_max(*a_m, &maxn, &maxm);
     }
+    fin = a_m->n * a_m->m;
     if (resize_matrix(a_m, fin) != OK)
         return ERROR;
 
@@ -125,10 +123,7 @@ void equate_matrix(matrix *a_m, matrix *b_m)
             add_row(b_m);
         }
         else
-            if (a_m->n < b_m->n)
-            {
-                add_row(a_m);
-            }
+            add_row(a_m);
     }
     
     while (a_m->m != b_m->m)
@@ -138,10 +133,6 @@ void equate_matrix(matrix *a_m, matrix *b_m)
             add_column(b_m);
         }
         else
-            if (a_m->m < b_m->m)
-            {
-                add_column(a_m);
-            }
-        
+            add_column(a_m);
     }
 }

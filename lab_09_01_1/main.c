@@ -19,7 +19,6 @@ int main()
         free(a_m.p);
         return ERROR;
     }
-    int al = 0;
 
     if (normalize_matrix(&a_m) != OK)
     {
