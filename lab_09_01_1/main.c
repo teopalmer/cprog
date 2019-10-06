@@ -48,9 +48,6 @@ int main()
         return ERROR;
     }
     
-    print_matrix(a_m);
-    
-
     if (read_exp(&pheta, &gamma) != OK)
     {
         free(a_m.p);
