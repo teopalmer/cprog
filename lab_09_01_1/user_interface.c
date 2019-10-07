@@ -2,10 +2,10 @@
 #include "resizing_matrix.h"
 #include "user_interface.h"
 
-int64_t read_matrix(matrix *a_m)
+int read_matrix(matrix *a_m)
 {
     puts("Input n, m: ");
-    int64_t ch = scanf("%lld %lld", &a_m->n, &a_m->m);
+    int ch = scanf("%d %d", &a_m->n, &a_m->m);
     if (ch != 2 || a_m->m <= 0 || a_m->n <= 0)
     {
         return ERROR;
@@ -17,9 +17,9 @@ int64_t read_matrix(matrix *a_m)
         return ERROR;
     }
     
-    for (int64_t i = 0; i < a_m->n * a_m->m; i++)
+    for (int i = 0; i < a_m->n * a_m->m; i++)
     {
-        ch = scanf("%lld", ((a_m->p) + i));
+        ch = scanf("%d", ((a_m->p) + i));
         if (ch != 1)
         {
             free(a_m->p);
@@ -30,23 +30,23 @@ int64_t read_matrix(matrix *a_m)
     return OK;
 }
 
-int64_t print_matrix(matrix a_m)
+int print_matrix(matrix a_m)
 {
-    for (int64_t i = 0; i < a_m.n; i++)
+    for (int i = 0; i < a_m.n; i++)
     {
-        for (int64_t j = 0; j < a_m.m; j++)
+        for (int j = 0; j < a_m.m; j++)
         {
-            printf("%lld ", CUR_ELEMENT);
+            printf("%d ", CUR_ELEMENT);
         }
         puts("");
     }
     return OK;
 }
 
-int64_t read_exp(int64_t *pheta, int64_t *gamma)
+int read_exp(int *pheta, int *gamma)
 {
     puts("Enter pheta & gamma:");
-    int64_t ch = scanf("%lld %lld", pheta, gamma);
+    int ch = scanf("%d %d", pheta, gamma);
     if (ch != 2)
     {
         return ERROR;
