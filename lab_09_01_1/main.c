@@ -9,8 +9,8 @@ int main()
     matrix a_m;
     matrix b_m;
     matrix m_m;
-    int pheta = 0;
-    int gamma = 0;
+    int64_t pheta = 0;
+    int64_t gamma = 0;
 
     if (read_matrix(&a_m) != OK)
         return ERROR;
