@@ -64,5 +64,5 @@ int main()
     free(a_m.p);
     free(b_m.p);
     free(m_m.p);
-    return 0;
+    return flag;
 }
