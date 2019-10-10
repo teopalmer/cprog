@@ -11,28 +11,19 @@ int main()
     matrix m_m;
     int pheta = 0;
     int gamma = 0;
+    int flag = OK;
 
     if (read_matrix(&a_m) != OK)
         return ERROR;
+    
     if (read_matrix(&b_m) != OK)
     {
         free(a_m.p);
         return ERROR;
     }
 
-    if (normalize_matrix(&a_m) != OK)
-    {
-        free(a_m.p);
-        free(b_m.p);
-        return ERROR;
-    }
-    
-    if (normalize_matrix(&b_m) != OK)
-    {
-        free(a_m.p);
-        free(b_m.p);
-        return ERROR;
-    }
+    if (normalize_matrix(&a_m) != OK || normalize_matrix(&b_m) != OK)
+        flag = ERROR;
     
     equate_matrix(&a_m, &b_m);
 
@@ -40,36 +31,16 @@ int main()
     m_m.n = a_m.n;
     
     if (create_matrix(&m_m) != OK)
-    {
-        free(a_m.p);
-        free(b_m.p);
-        free(m_m.p);
-        return ERROR;
-    }
+        flag = ERROR;
     
     if (read_exp(&pheta, &gamma) != OK)
-    {
-        free(a_m.p);
-        free(b_m.p);
-        free(m_m.p);
-        return ERROR;
-    }
+        flag = ERROR;
     
     if (expo_matrix(&a_m, pheta) != OK)
-    {
-        free(a_m.p);
-        free(b_m.p);
-        free(m_m.p);
-        return ERROR;
-    }
+        flag = ERROR;
     
     if (expo_matrix(&b_m, gamma) != OK)
-    {
-        free(a_m.p);
-        free(b_m.p);
-        free(m_m.p);
-        return ERROR;
-    }
+        flag = ERROR;
 
     multiply_matrix(a_m, b_m, &m_m);
     print_matrix(m_m);
@@ -77,5 +48,5 @@ int main()
     free(a_m.p);
     free(b_m.p);
     free(m_m.p);
-    return 0;
+    return flag;
 }

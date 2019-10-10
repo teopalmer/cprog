@@ -52,7 +52,7 @@ int multiply_matrix(matrix a_m, matrix b_m, matrix *m_m)
         {
             *((m_m->p) + j + i * (a_m.m)) = 0;
             for (int k = 0; k < a_m.m; k++)
-                *((m_m->p) + j + i * (a_m.m)) += *((a_m.p) + k + i * (a_m.m)) * *((b_m.p) + j + k * (b_m.m));
+                *(MCUR_ELEMENT) += *(ROW_ELEMENT) * *(COL_ELEMENT);
         }
     }
     return OK;
