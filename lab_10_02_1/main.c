@@ -9,10 +9,10 @@ int main()
     str_t key;
     int array_size = 0;
     int i = 0;
-    int input_out = OK;
-    int full_out = OK;
+    int input_out = ok;
+    int full_out = ok;
 
-    while (input_out == OK && full_out == OK)
+    while (input_out == ok && full_out == ok)
     {
         full_out = resize_items_array(&p, &array_size, ADD);
         input_out = fill_input(&p[i]);
@@ -21,7 +21,7 @@ int main()
 
     array_size--;
 
-    if (array_size < 0 || input_out != ARTICLE_NOTHING)
+    if (array_size < 0 || input_out != article_nothing)
     {
         for (int in = 0; in < array_size; in++)
         {
@@ -29,7 +29,7 @@ int main()
             free(p[in].name);
         }
         free(p);
-        return INPUT_ERROR;
+        return input_error;
     }
 
     full_out = delete_lipstick(p, &array_size);
@@ -45,10 +45,10 @@ int main()
     }
     free(p);
 
-    if (input_out == OK && full_out == OK)
-        return OK;
+    if (input_out == ok && full_out == ok)
+        return ok;
     else
     {
-        return max(input_out, full_out);
+        return MAX(input_out, full_out);
     }
 }

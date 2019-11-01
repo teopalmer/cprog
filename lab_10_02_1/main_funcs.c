@@ -36,32 +36,32 @@ int delete_lipstick(item_t *p, int *arraysize)
         }
     }
 
-    return OK;
+    return ok;
 }
 
 int sort_array(item_t *p, int arraysize, str_t key)
 {
     if (arraysize == 0)
-        return DELETION_ERROR;
+        return deletion_error;
 
     if (strcmp(key, "ARTICLE") == 0)
     {
         qsort(p, (size_t)arraysize, sizeof(item_t), compare_articles);
-        return OK;
+        return ok;
     }
 
     if (strcmp(key, "NAME") == 0)
     {
         qsort(p, (size_t)arraysize, sizeof(item_t), compare_names);
-        return OK;
+        return ok;
     }
 
     if (strcmp(key, "COUNT") == 0)
     {
         qsort(p, (size_t)arraysize, sizeof(item_t), compare_count);
-        return OK;
+        return ok;
     }
 
     puts("NO!");
-    return INPUT_ERROR;
+    return input_error;
 }

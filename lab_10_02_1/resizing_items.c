@@ -2,14 +2,14 @@
 #include "user_interface.h"
 #include "defines.h"
 
-int create_fields(item_t *item, long int sizeA, long int sizeN, int c)
+int create_fields(item_t *item, long int size_a, long int size_n, int c)
 {
-    char *newA = malloc((sizeA + sizeN) * sizeof(char));
-    char *newN = malloc(sizeN * sizeof(char));
+    char *newA = malloc((size_a + size_n) * sizeof(char));
+    char *newN = malloc(size_n * sizeof(char));
 
     if (!newA || !newN)
     {
-        return MEMORY_ERROR;
+        return memory_error;
     }
     else
     {
@@ -17,7 +17,7 @@ int create_fields(item_t *item, long int sizeA, long int sizeN, int c)
         item->name = newN;
         item->count = c;
     }
-    return OK;
+    return ok;
 }
 
 void remove_item(item_t *p, int n, int fullsize)
@@ -36,15 +36,15 @@ int resize_items_array(item_t **p, int *num, int flag)
     *num += flag;
 
     if (*num < 0)
-        return DELETION_ERROR;
+        return deletion_error;
 
     item_t *pnew = (item_t*)realloc(*p, (*num) * sizeof(item_t));
 
     if (pnew == NULL)
-        return MEMORY_ERROR;
+        return memory_error;
 
     *p = pnew;
-    return OK;
+    return ok;
 }
 
 void clean(item_t **p, int arraysize)

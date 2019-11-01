@@ -7,15 +7,15 @@
 #define N 256
 #define ADD 1
 #define DELETE -1
-#define max(X, Y)  ((X) > (Y) ? (X) : (Y))
+#define MAX(X, Y)  ((X) > (Y) ? (X) : (Y))
 
 enum error_codes
 {
-    OK = 0,
-    INPUT_ERROR,
-    DELETION_ERROR,
-    MEMORY_ERROR,
-    ARTICLE_NOTHING,
+    ok = 0,
+    input_error,
+    deletion_error,
+    memory_error,
+    article_nothing,
 };
 
 typedef char str_t[N];
@@ -23,9 +23,9 @@ typedef char str_t[N];
 typedef struct
 {
     char *article;
-    long int sizeA;
+    long int size_a;
     char *name;
-    long int sizeN;
+    long int size_n;
     int count;
 } item_t;
 
