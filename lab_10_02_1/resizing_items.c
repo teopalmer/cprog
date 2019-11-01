@@ -4,17 +4,17 @@
 
 int create_fields(item_t *item, long int size_a, long int size_n, int c)
 {
-    char *newA = malloc((size_a + size_n) * sizeof(char));
-    char *newN = malloc(size_n * sizeof(char));
+    char *newa = calloc((size_a + size_n), sizeof(char));
+    char *newn = calloc(size_n, sizeof(char));
 
-    if (!newA || !newN)
+    if (!newa || !newn)
     {
         return memory_error;
     }
     else
     {
-        item->article = newA;
-        item->name = newN;
+        item->article = newa;
+        item->name = newn;
         item->count = c;
     }
     return ok;
@@ -28,7 +28,6 @@ void remove_item(item_t *p, int n, int fullsize)
     {
         p[i] = p[i + 1];
     }
-
 }
 
 int resize_items_array(item_t **p, int *num, int flag)
