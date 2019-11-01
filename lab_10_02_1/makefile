@@ -7,5 +7,5 @@ app.exe: main.o main_funcs.o resizing_items.o user_interface.o
 	gcc -c $^ -o $@ -O0 -g3
 
 clean:
-	rm *.o *.exe
+	rm *.o *.exe stockpile.txt
 
