@@ -1,4 +1,4 @@
-app.exe: main.o resizing_matrix.o calculating_matrix.o user_interface.o
+app.exe: main.o resize_matrix.o user_interface.o
 	gcc -o $@ $^ -O0 -g3 -pedantic -Wall -Werror
 
 %.o: %.c
