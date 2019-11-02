@@ -19,53 +19,11 @@ int main() {
     fill_newmatrix(&new, a);
     print_newmatrix(new);
 
-    /*p = calloc((size_t)m, sizeof(int *));
-    for (int i = 0; i < m; i++)
+    for (int i = 0; i < a.m; i++)
     {
-        p[i] = calloc((size_t)n, sizeof(int));
+        free(a.p[i]);
     }
-
-    for (int i = 0; i < m; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            scanf("%d", &p[i][j]);
-        }
-    //puts("");
-    }
-
-    for (int i = 0; i < m; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            printf("%d ", p[i][j]);
-        }
-        puts("");
-    }
-
-    int nk = 0;
-
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = n - 1; j > i; j--)
-        {
-            if (p[nk][j - 1] > p[nk][j])
-            {
-                int temp = p[nk][j];
-                p[nk][j] = p[nk][j - 1];
-                p[nk][j - 1] = temp;
-            }
-        }
-    }
-
-    for (int i = 0; i < m; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            printf("%d ", p[i][j]);
-        }
-        puts("");
-    }*/
+    free(a.p);
 
     return 0;
 }
