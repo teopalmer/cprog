@@ -84,7 +84,7 @@ int scan_input(item_t *item, str_t article, str_t name, int *c)
     if (scan_string(&item->size_a, article) != ok)
         return input_error;
 
-    if (strcmp("nothing", article) == 0)
+    if (strcmp("nothing", article) == 0 || strcmp("NOTHING", article) == 0)
         return article_nothing;
 
     puts("Enter name:");
@@ -121,6 +121,11 @@ int fill_input(item_t *item)
 
     if (fill_name(item, name) != ok)
         return input_error;
+    
+    item->size_a += item->size_n;
+    
+    for (int i = 0; i < item->size_a; i++)
+    item->article[i] = toupper(item->article[i]);
 
     item->count = c;
 

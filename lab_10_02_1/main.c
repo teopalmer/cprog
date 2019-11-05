@@ -23,7 +23,7 @@ int main()
 
     if (array_size < 0 || input_out != article_nothing)
     {
-        for (int in = 0; in < array_size; in++)
+        for (int in = 0; in < i; in++)
         {
             free(p[in].article);
             free(p[in].name);
