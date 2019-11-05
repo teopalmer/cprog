@@ -125,7 +125,7 @@ int fill_input(item_t *item)
     item->size_a += item->size_n;
     
     for (int i = 0; i < item->size_a; i++)
-    item->article[i] = toupper(item->article[i]);
+        item->article[i] = toupper(item->article[i]);
 
     item->count = c;
 

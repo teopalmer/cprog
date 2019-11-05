@@ -35,7 +35,6 @@ int delete_lipstick(item_t *p, int *arraysize)
             i--;
         }
     }
-
     return ok;
 }
 

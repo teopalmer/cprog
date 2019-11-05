@@ -45,10 +45,11 @@ int main()
     }
     free(p);
 
-    if (input_out == ok && full_out == ok)
+    if (input_out == ok && full_out == ok && array_size > 0)
         return ok;
     else
     {
+        puts("NO");
         return MAX(input_out, full_out);
     }
 }
