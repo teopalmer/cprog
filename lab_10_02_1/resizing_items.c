@@ -9,6 +9,8 @@ int create_fields(item_t *item, long int size_a, long int size_n, int c)
 
     if (!newa || !newn)
     {
+        free(newa);
+        free(newn);
         return memory_error;
     }
     else

@@ -9,32 +9,14 @@ int main()
     str_t key;
     int array_size = 0;
     int i = 0;
-    int input_out = ok;
-    int full_out = ok;
+    int err_flag = ok;
 
-    while (input_out == ok && full_out == ok)
-    {
-        full_out = resize_items_array(&p, &array_size, ADD);
-        input_out = fill_input(&p[i]);
-        i++;
-    }
-
-    array_size--;
-
-    if (array_size < 0 || input_out != article_nothing)
-    {
-        for (int in = 0; in < i; in++)
-        {
-            free(p[in].article);
-            free(p[in].name);
-        }
-        free(p);
+    if (full_input(&array_size, &p) != ok)
         return input_error;
-    }
 
-    full_out = delete_lipstick(p, &array_size);
-    input_out = get_key(key);
-    full_out += sort_array(p, array_size, key);
+    err_flag += delete_lipstick(p, &array_size);
+    err_flag += get_key(key);
+    err_flag += sort_array(p, array_size, key);
 
     file_print_input(p, array_size);
 
@@ -45,11 +27,11 @@ int main()
     }
     free(p);
 
-    if (input_out == ok && full_out == ok && array_size > 0)
+    if (err_flag == ok && array_size > 0)
         return ok;
     else
     {
         puts("NO");
-        return MAX(input_out, full_out);
+        return memory_error;
     }
 }

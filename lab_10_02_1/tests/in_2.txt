@@ -1,4 +1,23 @@
-2 3 0 0 0 0 0 0
-3 3 9 9 9 9 9 9 9 9 9 9
-0 1
+LIP
+STICK
+0
+MARY
+JABE
+2
+KAJD
+LSD
+0
+LIP
+Stick
+13
+L
+ipSTIck
+32
+KATIE
+WINSEY
+13
+LIP
+STICK
+0
+Count
 

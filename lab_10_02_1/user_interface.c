@@ -44,7 +44,7 @@ int get_key(str_t key)
     return ok;
 }
 
-int fill_article(item_t *item, str_t article)
+static int fill_article(item_t *item, str_t article)
 {
     long int len = strlen(article);
 
@@ -61,7 +61,7 @@ int fill_article(item_t *item, str_t article)
     return ok;
 }
 
-int fill_name(item_t *item, str_t name)
+static int fill_name(item_t *item, str_t name)
 {
     long int len = strlen(name);
 
@@ -78,7 +78,7 @@ int fill_name(item_t *item, str_t name)
     return ok;
 }
 
-int scan_input(item_t *item, str_t article, str_t name, int *c)
+static int scan_input(item_t *item, str_t article, str_t name, int *c)
 {
     puts("\nEnter article:");
     if (scan_string(&item->size_a, article) != ok)
@@ -102,7 +102,7 @@ int scan_input(item_t *item, str_t article, str_t name, int *c)
     return ok;
 }
 
-int fill_input(item_t *item)
+static int fill_input(item_t *item)
 {
     str_t article;
     str_t name;
@@ -132,7 +132,37 @@ int fill_input(item_t *item)
     return ok;
 }
 
-void print_input(item_t item)
+int full_input(int *array_size, item_t **p)
+{
+    int i = 0;
+    int input_out = ok;
+    int full_out = ok;
+
+    while (input_out == ok && full_out == ok)
+    {
+        full_out = resize_items_array(p, array_size, ADD);
+        input_out = fill_input(&(*p)[i]);
+        i++;
+    }
+
+    (*array_size)--;
+
+    if (array_size < 0 || input_out != article_nothing)
+    {
+        for (int in = 0; in < i; in++)
+        {
+            free((*p)[in].article);
+            free((*p)[in].name);
+        }
+        free(*p);
+        return input_error;
+    }
+
+
+    return ok;
+}
+
+static void print_input(item_t item)
 {
     puts("\nArticle: ");
     printf("%s", item.article);
