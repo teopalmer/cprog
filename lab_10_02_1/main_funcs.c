@@ -73,7 +73,5 @@ int sort_array(item_t *p, int arraysize, str_t key)
         qsort(p, (size_t)arraysize, sizeof(item_t), compare_count);
         return ok;
     }
-
-    puts("NO!");
     return input_error;
 }
