@@ -29,6 +29,13 @@ static int check_if_upper(char c)
     return ok;
 }
 
+static int check_if_char(char c)
+{
+    if ((c <= 'Z' && c >= 'A') || (c <= 'z' && c >= 'a'))
+        return ok;
+    return input_error;
+}
+
 static int check_if_int(char c)
 {
     if (c <= '9' && c >= '0')
@@ -71,6 +78,9 @@ static int fill_name(item_t *item, str_t name)
         if (check_if_int(name[i]) != ok)
             return input_error;
 
+        if (check_if_char(name[i]) != ok)
+            return input_error;
+
         item->name[i] = name[i];
     }
 
@@ -110,6 +120,9 @@ static int scan_input(item_t *item, str_t article, str_t name, int *c)
     for (int i = 0; i < len; i++)
     {
         if (check_if_int(name[i]) != ok)
+            return input_error;
+
+        if (check_if_char(name[i]) != ok)
             return input_error;
     }
 
@@ -166,7 +179,7 @@ int full_input(int *array_size, item_t **p)
     }
     (*array_size)--;
 
-    if (array_size < 0 || input_out != article_nothing)
+    if (*array_size < 0 || input_out != article_nothing)
     {
         /*for (int in = 0; in < *array_size; in++)
         {
