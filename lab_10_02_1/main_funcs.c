@@ -56,19 +56,19 @@ int sort_array(item_t *p, int arraysize, str_t key)
     if (arraysize == 0)
         return deletion_error;
 
-    if (stricmp(key, "ARTICLE") == 0)
+    if (strcmp(key, "ARTICLE") == 0)
     {
         qsort(p, (size_t)arraysize, sizeof(item_t), compare_articles);
         return ok;
     }
 
-    if (stricmp(key, "NAME") == 0)
+    if (strcmp(key, "NAME") == 0)
     {
         qsort(p, (size_t)arraysize, sizeof(item_t), compare_names);
         return ok;
     }
 
-    if (stricmp(key, "COUNT") == 0)
+    if (strcmp(key, "COUNT") == 0)
     {
         qsort(p, (size_t)arraysize, sizeof(item_t), compare_count);
         return ok;
