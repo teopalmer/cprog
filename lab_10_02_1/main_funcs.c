@@ -6,7 +6,8 @@
 int stricmp(const char *a, const char *b)
 {
     int ca, cb;
-    do {
+    do
+    {
         ca = (unsigned char) *a++;
         cb = (unsigned char) *b++;
         ca = tolower(toupper(ca));

@@ -8,7 +8,6 @@ int main()
     item_t *p = NULL;
     str_t key;
     int array_size = 0;
-    int err_flag = ok;
 
     if (full_input(&array_size, &p) != ok)
     {
