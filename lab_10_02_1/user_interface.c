@@ -1,6 +1,7 @@
 #include "user_interface.h"
 #include "defines.h"
 #include "resizing_items.h"
+#include "main_funcs.h"
 
 static int scan_string(long int *len, str_t s)
 {
@@ -84,7 +85,7 @@ static int scan_input(item_t *item, str_t article, str_t name, int *c)
     if (scan_string(&item->size_a, article) != ok)
         return input_error;
 
-    if (strcmp("nothing", article) == 0 || strcmp("NOTHING", article) == 0)
+    if (stricmp("nothing", article) == 0)
         return article_nothing;
 
     long int len = strlen(article);
