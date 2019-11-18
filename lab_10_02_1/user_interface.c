@@ -12,16 +12,6 @@ static int scan_string(long int *len, str_t s)
     return ok;
 }
 
-static int scan_number(int *d)
-{
-    int ch = scanf("%d", d);
-    if (ch != 1)
-        return input_error;
-    if (*d < 0)
-        return input_error;
-    return ok;
-}
-
 static int check_if_upper(char c)
 {
     if (c > 'Z' || c < 'A')
@@ -49,6 +39,22 @@ int get_key(str_t key)
     int ch = scanf("%s", key);
     if (ch != 1)
         return input_error;
+    return ok;
+}
+
+static int scan_number(int *d)
+{
+    str_t s;
+    int ch = scanf("%s", s);
+    int len = strlen(s);
+    if (ch != 1)
+        return input_error;
+    for (int i = 0; i < len; i++)
+    {
+        if (check_if_int(s[i]) == ok)
+            return input_error;
+    }
+    *d = atoi(s);
     return ok;
 }
 
