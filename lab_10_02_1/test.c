@@ -55,9 +55,7 @@ void fill_items_array(item_t **p, int num)
 
 int main()
 {
-    item_t a;
     item_t *p = NULL;
-    int c = 0;
     int arraysize = 0;
     fill_items_array(&p, 1);
     sort_array(p, arraysize, "count");

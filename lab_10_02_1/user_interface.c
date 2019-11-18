@@ -87,10 +87,29 @@ static int scan_input(item_t *item, str_t article, str_t name, int *c)
     if (strcmp("nothing", article) == 0 || strcmp("NOTHING", article) == 0)
         return article_nothing;
 
+    long int len = strlen(article);
+
+    for (int i = 0; i < len; i++)
+    {
+        if (check_if_int(article[i]) != ok)
+            return input_error;
+
+        if (check_if_upper(article[i]) != ok)
+            return input_error;
+    }
+
     puts("Enter name:");
     if (scan_string(&item->size_n, name) != ok)
     {
         return input_error;
+    }
+
+    len = strlen(name);
+
+    for (int i = 0; i < len; i++)
+    {
+        if (check_if_int(name[i]) != ok)
+            return input_error;
     }
 
     puts("Enter quantity:");
@@ -144,25 +163,26 @@ int full_input(int *array_size, item_t **p)
         input_out = fill_input(&(*p)[i]);
         i++;
     }
-
     (*array_size)--;
 
     if (array_size < 0 || input_out != article_nothing)
     {
-        for (int in = 0; in < i; in++)
+        /*for (int in = 0; in < *array_size; in++)
         {
             free((*p)[in].article);
             free((*p)[in].name);
         }
-        free(*p);
+        free(*p);*/
+        //(*array_size)--;
         return input_error;
     }
 
+    //(*array_size)--;
 
     return ok;
 }
 
-static void print_input(item_t item)
+void print_input(item_t item)
 {
     puts("\nArticle: ");
     printf("%s", item.article);

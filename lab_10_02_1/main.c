@@ -8,30 +8,36 @@ int main()
     item_t *p = NULL;
     str_t key;
     int array_size = 0;
-    int i = 0;
     int err_flag = ok;
 
     if (full_input(&array_size, &p) != ok)
+    {
+        clear(&p, array_size);
         return input_error;
+    }
 
-    err_flag += delete_lipstick(p, &array_size);
-    err_flag += get_key(key);
-    err_flag += sort_array(p, array_size, key);
+    if (delete_lipstick(p, &array_size) != ok || array_size == 0)
+    {
+        clear(&p, array_size);
+        return memory_error;
+    }
+
+    if (get_key(key) != ok)
+    {
+        clear(&p, array_size);
+        return input_error;
+    }
+
+    if (sort_array(p, array_size, key) != ok)
+    {
+        clear(&p, array_size);
+        return memory_error;
+    }
 
     file_print_input(p, array_size);
 
-    for (int in = 0; in < array_size; in++)
-    {
-        free(p[in].article);
-        free(p[in].name);
-    }
-    free(p);
+    clear(&p, array_size);
 
-    if (err_flag == ok && array_size > 0)
+    if (array_size > 0)
         return ok;
-    else
-    {
-        puts("NO");
-        return memory_error;
-    }
 }

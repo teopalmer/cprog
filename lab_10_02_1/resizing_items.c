@@ -48,12 +48,12 @@ int resize_items_array(item_t **p, int *num, int flag)
     return ok;
 }
 
-void clean(item_t **p, int arraysize)
+void clear(item_t **p, int size)
 {
-    for (int i = 0; i < arraysize; i++)
+    for (int in = 0; in < size; in++)
     {
-        free(p[i]->article);
-        free(p[i]->name);
+        free((*p)[in].article);
+        free((*p)[in].name);
     }
-    free(p);
+    free(*p);
 }
