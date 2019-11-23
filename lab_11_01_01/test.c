@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "defines.h"
 #include "snprintf.h"
 #include "str_funcs.h"
 

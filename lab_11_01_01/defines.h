@@ -1,5 +1,3 @@
-
-
 #ifndef UNTITLED_DEFINES_H
 
 #include <stdio.h>

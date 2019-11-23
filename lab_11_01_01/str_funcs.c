@@ -15,7 +15,8 @@ int my_strlen(str_t const s)
 int convert(char* s, int n)
 {
     unsigned int x = 0;
-    for (char *p = s; *p; p++) {
+    for (char *p = s; *p; p++)
+    {
         x *= 10;
         x += (int)(*p - '0');
         x %= n;
@@ -46,42 +47,38 @@ void reverse(char *str)
     }
 }
 
-char* fromDeci(str_t res, int inputNum)
+char *from_deci(str_t res, int input_num)
 {
     int index = 0;
-    while (inputNum > 0)
+    while (input_num > 0)
     {
-        res[index++] = (inputNum % 8) + '0';
-        inputNum /= 8;
+        res[index++] = (input_num % 8) + '0';
+        input_num /= 8;
     }
     res[index] = '\0';
-
     reverse(res);
-
     return res;
 }
 
-char* hd_to_str(str_t res, int inputNum)
+char *hd_to_str(str_t res, int input_num)
 {
     int index = 0;
-    while (inputNum > 0)
+    while (input_num > 0)
     {
-        res[index++] = (inputNum % 10) + '0';
-        inputNum /= 10;
+        res[index++] = (input_num % 10) + '0';
+        input_num /= 10;
     }
     res[index] = '\0';
-
     reverse(res);
-
     return res;
 }
 
 void merge_str(char *a, char *b)
 {
-    while(*a)
+    while (*a)
         a++;
 
-    while(*b)
+    while (*b)
     {
         *a = *b;
         b++;
@@ -92,7 +89,7 @@ void merge_str(char *a, char *b)
 
 void merge_char(char *a, char b)
 {
-    while(*a)
+    while (*a)
         a++;
     *a = b;
     a++;

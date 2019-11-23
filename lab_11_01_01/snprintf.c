@@ -27,48 +27,44 @@ int my_sprintf(char *str, size_t size, const char *format, ...)
     if (size == 0)
         return ok;
 
-    while(format[i] && size + buf > i + 1)
+    while (format[i] && size + buf > i + 1)
     {
+        int len = 0;
+        char *s = NULL;
+        unsigned int o = 0;
+        short int d = 0;
         if (format[i] != '%')
         {
             merge_char(res_str, format[i]);
         }
         else
-
         {
             switch (format[i + 1])
             {
                 case('%'):
-                {
                     merge_str(res_str, "%");
                     i ++;
                     break;
-                }
                 case ('s'):
-                {
-                    char *s = va_arg(args, char*);
-                    int len = my_strlen(s);
+                    s = va_arg(args, char*);
+                    len = my_strlen(s);
                     merge_str(res_str, s);
                     buf += len;
                     i ++;
                     break;
-                }
                 case ('o'):
-                {
-                    unsigned int o = va_arg(args, unsigned int);
+                    o = va_arg(args, unsigned int);
                     str_t s;
-                    fromDeci(s, o);
-                    int len = my_strlen(s);
+                    from_deci(s, o);
+                    len = my_strlen(s);
                     merge_str(res_str, s);
                     buf += len;
                     i ++;
                     break;
-                }
                 case ('h'):
-                {
                     if (format[i + 2] == 'd')
                     {
-                        short int d = (short)va_arg(args, int);
+                        d = (short)va_arg(args, int);
                         str_t s;
                         hd_to_str(s, d);
                         int len = my_strlen(s);
@@ -77,7 +73,6 @@ int my_sprintf(char *str, size_t size, const char *format, ...)
                         i += 2;
                     }
                     break;
-                }
                 default:
                     break;
 
