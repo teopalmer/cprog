@@ -1,7 +1,6 @@
 #include "defines.h"
 #include "str_funcs.h"
 
-
 int my_strlen(str_t const s)
 {
     int i = 0;
