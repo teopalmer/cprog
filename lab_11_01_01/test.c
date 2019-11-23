@@ -199,12 +199,37 @@ int test_all_another()
     int a = 0;
     int b = 0;
 
-    str_t f = "%%%%%%%?%";
+    str_t f = "%% %o %s dfs %% %o ss";
 
-    a = my_snprintf(buf, 256, f);
-    b = snprintf(check, 256, f);
+    a = my_snprintf(buf, 256, f, 12, "Mary", 2);
+    b = snprintf(check, 256, f, 12, "Mary", 2);
 
     if (strcmp(buf, check) == 0 && a == b)
+    {
+        free(buf);
+        free(check);
+        return ok;
+    }
+    free(buf);
+    free(check);
+    return ERROR;
+}
+
+int test_null()
+{
+    char *buf = NULL;
+    char *check = NULL;
+    int a = 0;
+    int b = 0;
+
+    str_t f = "%% %o %s dfs %% %o ss";
+
+    a = my_snprintf(buf, 0, f, 12, "Mary", 2);
+    b = snprintf(check, 0, f, 12, "Mary", 2);
+
+    printf("%d %d\n", a, b);
+
+    if (a == b)
     {
         free(buf);
         free(check);
@@ -227,10 +252,11 @@ int main()
     flag += test_percent();
     flag += test_all_random();
     flag += test_all_another();
-    printf("tests: %d out of 9", 9 - flag);
-    /*if (flag > 0)
+    flag += test_null();
+    printf("tests: %d out of 10", 10 - flag);
+    if (10 - flag != 10)
     {
         return size_error;
-    }*/
+    }
     return 0;
 }

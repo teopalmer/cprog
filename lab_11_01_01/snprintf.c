@@ -2,17 +2,6 @@
 #include "defines.h"
 #include "str_funcs.h"
 
-int resize_p(char *p, int n)
-{
-    char *pnew = realloc(p, (size_t)n);
-
-    if (pnew == NULL)
-        return memory_error;
-
-    p = pnew;
-    return ok;
-}
-
 int my_snprintf(char *str, size_t size, char *format, ...)
 {
     str_t res_str = "";
@@ -25,7 +14,7 @@ int my_snprintf(char *str, size_t size, char *format, ...)
     if (str == NULL && size != 0)
         return -1;
 
-    if (size == 0)
+    if (size == 0 && str != NULL)
         return my_strlen(format) + 1;
 
     while (format[i])
@@ -81,9 +70,12 @@ int my_snprintf(char *str, size_t size, char *format, ...)
         i++;
     }
 
-    strcpy(str, res_str);
     qlen = my_strlen(res_str);
-    str[size - 1] = '\0';
+    if (str != NULL)
+    {
+        strcpy(str, res_str);
+        str[size - 1] = '\0';
+    }
     /*if (size < qlen)
         qlen = (int)size - 1;*/
     va_end(args);
