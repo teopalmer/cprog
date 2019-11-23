@@ -15,7 +15,31 @@ int test_buf_0()
     a = my_snprintf(buf, 0, f, 1, 2, 13, 10394);
     b = snprintf(check, 0, f, 1, 2, 13, 10394);
 
-    if (strcmp(buf, check) == 0 || a != b)
+    if (strcmp(buf, check) == 0 && a == b)
+    {
+        free(buf);
+        free(check);
+        return ok;
+    }
+    
+    free(buf);
+    free(check);
+    return ERROR;
+}
+
+int test_percent()
+{
+    char *buf = calloc(300, sizeof(char));
+    char *check = calloc(300, sizeof(char));
+    int a = 0;
+    int b = 0;
+
+    str_t f = "Honehak akdjak %% akshbak %% aksdj";
+
+    a = my_snprintf(buf, 256, f, 1);
+    b = snprintf(check, 256, f, 1);
+
+    if (strcmp(buf, check) == 0 && a == b)
     {
         free(buf);
         free(check);
@@ -39,7 +63,10 @@ int test_buf_o()
     a = my_snprintf(buf, 12, f, 1, 2, 13, 109);
     b = snprintf(check, 12, f, 1, 2, 13, 109);
 
-    if (strcmp(buf, check) == 0 || a != b)
+    printf("%d %d\n", a, b);
+    printf("%s\n%s\n", buf, check);
+
+    if (strcmp(buf, check) == 0 && a == b)
     {
         free(buf);
         free(check);
@@ -62,7 +89,7 @@ int test_buf_s()
     a = my_snprintf(buf, 12, f, "one", "two", "three", "four");
     b = snprintf(check, 12, f, "one", "two", "three", "four");
 
-    if (strcmp(buf, check) == 0 || a != b)
+    if (strcmp(buf, check) == 0 && a == b)
     {
         free(buf);
         free(check);
@@ -85,7 +112,7 @@ int test_o()
     a = my_snprintf(buf, 256, f, 1, 2, 13, 109);
     b = snprintf(check, 256, f, 1, 2, 13, 109);
 
-    if (strcmp(buf, check) == 0 || a != b)
+    if (strcmp(buf, check) == 0 && a == b)
     {
         free(buf);
         free(check);
@@ -108,7 +135,7 @@ int test_hd()
     a = my_snprintf(buf, 256, f, 1, 2, 13, 10334);
     b = snprintf(check, 256, f, 1, 2, 13, 10334);
 
-    if (strcmp(buf, check) == 0 || a != b)
+    if (strcmp(buf, check) == 0 && a == b)
     {
         free(buf);
         free(check);
@@ -131,7 +158,7 @@ int test_s()
     a = my_snprintf(buf, 256, f, "one", "two", "three", "four");
     b = snprintf(check, 256, f, "one", "two", "three", "four");
 
-    if (strcmp(buf, check) == 0 || a != b)
+    if (strcmp(buf, check) == 0 && a == b)
     {
         free(buf);
         free(check);
@@ -151,7 +178,8 @@ int main()
     flag += test_hd();
     flag += test_o();
     flag += test_s();
-    printf("tests: %d out of 6", 6 - flag);
+    flag += test_percent();
+    printf("tests: %d out of 7", 7 - flag);
     if (flag > 0)
     {
         return size_error;

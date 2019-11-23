@@ -18,6 +18,7 @@ int my_snprintf(char *str, size_t size, char *format, ...)
     str_t res_str = "";
     int i = 0;
     int buf = 0;
+    int qlen = 0;
     va_list(args);
     va_start(args, format);
 
@@ -25,9 +26,9 @@ int my_snprintf(char *str, size_t size, char *format, ...)
         return -1;
 
     if (size == 0)
-        return ok;
+        return my_strlen(format) + 1;
 
-    while (format[i] && size + buf > i + 1)
+    while (format[i])
     {
         int len = 0;
         char *s = NULL;
@@ -64,7 +65,7 @@ int my_snprintf(char *str, size_t size, char *format, ...)
                 case ('h'):
                     if (format[i + 2] == 'd')
                     {
-                        d = (short) va_arg(args, int);
+                        d = va_arg(args, int);
                         str_t s;
                         hd_to_str(s, d);
                         int len = my_strlen(s);
@@ -81,7 +82,10 @@ int my_snprintf(char *str, size_t size, char *format, ...)
     }
 
     strcpy(str, res_str);
+    qlen = my_strlen(res_str);
     str[size - 1] = '\0';
+    /*if (size < qlen)
+        qlen = (int)size - 1;*/
     va_end(args);
-    return ok;
+    return qlen;
 }
