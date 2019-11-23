@@ -46,26 +46,26 @@ void reverse(char *str)
     }
 }
 
-char *from_deci(str_t res, int input_num)
+char *from_deci(str_t res, int inum)
 {
     int index = 0;
-    while (input_num > 0)
+    while (inum > 0)
     {
-        res[index++] = (input_num % 8) + '0';
-        input_num /= 8;
+        res[index++] = (inum % 8) + '0';
+        inum /= 8;
     }
     res[index] = '\0';
     reverse(res);
     return res;
 }
 
-char *hd_to_str(str_t res, int input_num)
+char *hd_to_str(str_t res, int inum)
 {
     int index = 0;
-    while (input_num > 0)
+    while (inum > 0)
     {
-        res[index++] = (input_num % 10) + '0';
-        input_num /= 10;
+        res[index++] = (inum % 10) + '0';
+        inum /= 10;
     }
     res[index] = '\0';
     reverse(res);
