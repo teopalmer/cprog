@@ -4,6 +4,7 @@
 int my_strlen(str_t const s)
 {
     int i = 0;
+
     while (s[i])
     {
         i++;

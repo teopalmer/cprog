@@ -63,9 +63,6 @@ int test_buf_o()
     a = my_snprintf(buf, 12, f, 1, 2, 13, 109);
     b = snprintf(check, 12, f, 1, 2, 13, 109);
 
-    printf("%d %d\n", a, b);
-    printf("%s\n%s\n", buf, check);
-
     if (strcmp(buf, check) == 0 && a == b)
     {
         free(buf);
@@ -169,6 +166,55 @@ int test_s()
     return ERROR;
 }
 
+int test_all_random()
+{
+    char *buf = malloc(256 * sizeof(char));
+    char *check = malloc(256 * sizeof(char));
+    int a = 0;
+    int b = 0;
+
+    str_t f = "%s: %o %hd,\n      %o, %hd, %s";
+
+    a = my_snprintf(buf, 256, f, "Mary", 12, 32, 3, 23, "Kane");
+    b = snprintf(check, 256, f, "Mary", 12, 32, 3, 23, "Kane");
+
+    //printf("%d %d\n", a, b);
+    //printf("%s\n%s\n", buf, check);
+
+    if (strcmp(buf, check) == 0 && a == b)
+    {
+        free(buf);
+        free(check);
+        return ok;
+    }
+    free(buf);
+    free(check);
+    return ERROR;
+}
+
+int test_all_another()
+{
+    char *buf = malloc(256 * sizeof(char));
+    char *check = malloc(256 * sizeof(char));
+    int a = 0;
+    int b = 0;
+
+    str_t f = "%%%%%%%?%";
+
+    a = my_snprintf(buf, 256, f);
+    b = snprintf(check, 256, f);
+
+    if (strcmp(buf, check) == 0 && a == b)
+    {
+        free(buf);
+        free(check);
+        return ok;
+    }
+    free(buf);
+    free(check);
+    return ERROR;
+}
+
 int main()
 {
     int flag = 0;
@@ -179,7 +225,9 @@ int main()
     flag += test_o();
     flag += test_s();
     flag += test_percent();
-    printf("tests: %d out of 7", 7 - flag);
+    flag += test_all_random();
+    flag += test_all_another();
+    printf("tests: %d out of 9", 9 - flag);
     if (flag > 0)
     {
         return size_error;
