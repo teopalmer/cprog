@@ -10,7 +10,7 @@ int test_buf_0()
 
     str_t f = "%o Honey %o %ohno khd%o";
 
-    my_sprintf(buf, 0, f, 1, 2, 13, 10394);
+    my_snprintf(buf, 0, f, 1, 2, 13, 10394);
     snprintf(check, 0, f, 1, 2, 13, 10394);
 
     if (strcmp(buf, check) == 0)
@@ -31,7 +31,7 @@ int test_buf_o()
 
     str_t f = "%o Honey %o %ohno khd%o";
 
-    my_sprintf(buf, 12, f, 1, 2, 13, 109);
+    my_snprintf(buf, 12, f, 1, 2, 13, 109);
     snprintf(check, 12, f, 1, 2, 13, 109);
 
     if (strcmp(buf, check) == 0)
@@ -52,7 +52,7 @@ int test_buf_s()
 
     str_t f = "%s Honey %s %shno khd%s";
 
-    my_sprintf(buf, 12, f, "one", "two", "three", "four");
+    my_snprintf(buf, 12, f, "one", "two", "three", "four");
     snprintf(check, 12, f, "one", "two", "three", "four");
 
     if (strcmp(buf, check) == 0)
@@ -73,7 +73,7 @@ int test_o()
 
     str_t f = "%o Honey %o %ohno khd%o";
 
-    my_sprintf(buf, 256, f, 1, 2, 13, 109);
+    my_snprintf(buf, 256, f, 1, 2, 13, 109);
     snprintf(check, 256, f, 1, 2, 13, 109);
 
     if (strcmp(buf, check) == 0)
@@ -94,7 +94,7 @@ int test_hd()
 
     str_t f = "%o Honey %o %ohno khd%o";
 
-    my_sprintf(buf, 256, f, 1, 2, 13, 10334);
+    my_snprintf(buf, 256, f, 1, 2, 13, 10334);
     snprintf(check, 256, f, 1, 2, 13, 10334);
 
     if (strcmp(buf, check) == 0)
@@ -115,7 +115,7 @@ int test_s()
 
     str_t f = "%s Honey %s %shno khd%s";
 
-    my_sprintf(buf, 256, f, "one", "two", "three", "four");
+    my_snprintf(buf, 256, f, "one", "two", "three", "four");
     snprintf(check, 256, f, "one", "two", "three", "four");
 
     if (strcmp(buf, check) == 0)
@@ -129,7 +129,8 @@ int test_s()
     return ERROR;
 }
 
-int main() {
+int main()
+{
     int flag = 0;
     flag += test_buf_0();
     flag += test_buf_o();

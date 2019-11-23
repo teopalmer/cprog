@@ -11,7 +11,7 @@ int my_strlen(str_t const s)
     return i;
 }
 
-int convert(char* s, int n)
+int convert(char *s, int n)
 {
     unsigned int x = 0;
     for (char *p = s; *p; p++)

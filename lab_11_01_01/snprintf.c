@@ -13,7 +13,7 @@ int resize_p(char *p, int n)
     return ok;
 }
 
-int my_sprintf(char *str, size_t size, const char *format, ...)
+int my_snprintf(char *str, size_t size, char *format, ...)
 {
     str_t res_str = "";
     int i = 0;
@@ -41,7 +41,7 @@ int my_sprintf(char *str, size_t size, const char *format, ...)
         {
             switch (format[i + 1])
             {
-                case('%'):
+                case ('%'):
                     merge_str(res_str, "%");
                     i ++;
                     break;
@@ -64,7 +64,7 @@ int my_sprintf(char *str, size_t size, const char *format, ...)
                 case ('h'):
                     if (format[i + 2] == 'd')
                     {
-                        d = (short)va_arg(args, int);
+                        d = (short) va_arg(args, int);
                         str_t s;
                         hd_to_str(s, d);
                         int len = my_strlen(s);
@@ -75,7 +75,6 @@ int my_sprintf(char *str, size_t size, const char *format, ...)
                     break;
                 default:
                     break;
-
             }
         }
         i++;
