@@ -2,6 +2,7 @@
 #include "defines.h"
 #include "str_funcs.h"
 
+
 int my_snprintf(char *str, size_t size, char *format, ...)
 {
     str_t res_str = "";
@@ -35,6 +36,7 @@ int my_snprintf(char *str, size_t size, char *format, ...)
                     merge_str(res_str, "%");
                     i ++;
                     break;
+
                 case ('s'):
                     s = va_arg(args, char*);
                     len = my_strlen(s);
@@ -42,6 +44,7 @@ int my_snprintf(char *str, size_t size, char *format, ...)
                     buf += len;
                     i ++;
                     break;
+
                 case ('o'):
                     o = va_arg(args, unsigned int);
                     str_t s;
@@ -54,10 +57,18 @@ int my_snprintf(char *str, size_t size, char *format, ...)
                 case ('h'):
                     if (format[i + 2] == 'd')
                     {
-                        d = va_arg(args, int);
+                        int dx = va_arg(args, int);
+                        if (dx <= INT16_MIN || dx >= INT16_MAX)
+                        {
+                            puts("*");
+                            qlen = 2;
+                            strcpy(str, "-1");
+                            return size_error;
+                        }
                         str_t s;
+                        d = dx;
                         hd_to_str(s, d);
-                        int len = my_strlen(s);
+                        len = my_strlen(s);
                         merge_str(res_str, s);
                         buf += len;
                         i += 2;

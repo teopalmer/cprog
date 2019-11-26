@@ -240,6 +240,47 @@ int test_null()
     return ERROR;
 }
 
+/*int only_d()
+{
+    int i = 0;
+    i++;
+
+    i++;
+
+    const int n = 11;
+    short a = -1;
+
+    char res[N] = { 0 }, exp_res[N] = { 0 };
+
+    int needed_size = my_snprintf(res, n, "%hd", a);
+
+    int exp_needed_size = snprintf(exp_res, n, "%hd", a);
+
+    printf("Test %i: ", i);
+
+    if (!strcmp(res, exp_res) && needed_size == exp_needed_size)
+
+        printf("OK\n");
+
+    else
+
+    {
+
+        printf("ERROR\n");
+
+        printf("needed_size: %i\n", needed_size);
+
+        printf("exp_needed_size: %i\n", exp_needed_size);
+
+        printf("res: [%s]\n", res);
+
+        printf("exp_res: [%s]\n", exp_res);
+    }
+
+    return ok;
+
+}*/
+
 int main()
 {
     int flag = 0;
@@ -253,6 +294,7 @@ int main()
     flag += test_all_random();
     flag += test_all_another();
     flag += test_null();
+    //flag += only_d();
     printf("tests: %d out of 10", 10 - flag);
     if (10 - flag != 10)
     {
