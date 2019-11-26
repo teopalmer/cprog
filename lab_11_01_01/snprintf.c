@@ -36,7 +36,6 @@ int my_snprintf(char *str, size_t size, char *format, ...)
                     merge_str(res_str, "%");
                     i ++;
                     break;
-
                 case ('s'):
                     s = va_arg(args, char*);
                     len = my_strlen(s);
@@ -44,7 +43,6 @@ int my_snprintf(char *str, size_t size, char *format, ...)
                     buf += len;
                     i ++;
                     break;
-
                 case ('o'):
                     o = va_arg(args, unsigned int);
                     str_t s;
@@ -58,7 +56,7 @@ int my_snprintf(char *str, size_t size, char *format, ...)
                     if (format[i + 2] == 'd')
                     {
                         int dx = va_arg(args, int);
-                        if (dx <= INT16_MIN || dx >= INT16_MAX)
+                        if (dx <= -32768 || dx >= 32767)
                         {
                             puts("*");
                             qlen = 2;
