@@ -26,6 +26,7 @@ int convert(char *s, int n)
 
 void convert_to_str(char *s, unsigned int n)
 {
+
     while (n > 0)
     {
         *s = (n % 10);
@@ -50,11 +51,20 @@ void reverse(char *str)
 char *from_deci(str_t res, int inum)
 {
     int index = 0;
+
+    if (inum == 0)
+    {
+        res[index++] = '0';
+        res[index] = '\0';
+        return res;
+    }
+
     while (inum > 0)
     {
         res[index++] = (inum % 8) + '0';
         inum /= 8;
     }
+
     res[index] = '\0';
     reverse(res);
     return res;
@@ -64,13 +74,23 @@ char *hd_to_str(str_t res, int inum)
 {
     int index = 0;
     int flag = 0;
+
+    if (inum == 0)
+    {
+        res[index++] = '0';
+        res[index] = '\0';
+        return res;
+    }
+
     if (inum < 0)
         flag = 1;
+
     while (abs(inum) > 0)
     {
         res[index++] = abs(inum % 10) + '0';
         inum /= 10;
     }
+
     if (flag == 1)
         res[index++] = '-';
 

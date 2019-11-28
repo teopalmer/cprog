@@ -247,17 +247,17 @@ int only_d()
 
     i++;
 
-    const int n = 11;
+    const int n = 15;
 
-    //short a = 12348;
+    short a = 0;
 
-    char *a = "evfergjkckmhgko";
+    //char *a = "evfergjkckmhgko";
 
     char res[N] = { 0 }, exp_res[N] = { 0 };
 
-    int needed_size = my_snprintf(res, n, "Evening M%s", a);
+    int needed_size = my_snprintf(res, n, "Evening M%o", a);
 
-    int exp_needed_size = snprintf(exp_res, n, "Evening M%s", a);
+    int exp_needed_size = snprintf(exp_res, n, "Evening M%o", a);
 
     printf("Test %i: ", i);
 
