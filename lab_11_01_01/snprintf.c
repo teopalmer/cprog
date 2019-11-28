@@ -2,7 +2,6 @@
 #include "defines.h"
 #include "str_funcs.h"
 
-
 int my_snprintf(char *str, size_t size, char *format, ...)
 {
     str_t res_str = "";
@@ -30,8 +29,11 @@ int my_snprintf(char *str, size_t size, char *format, ...)
             switch (format[i + 1])
             {
                 case ('%'):
-                    merge_str(res_str, "%");
-                    i ++;
+                    if (format[i])
+                    {
+                        merge_char(res_str, '%');
+                        i ++;
+                    }
                     break;
                 case ('s'):
                     s = va_arg(args, char*);
@@ -42,10 +44,10 @@ int my_snprintf(char *str, size_t size, char *format, ...)
                     break;
                 case ('o'):
                     o = va_arg(args, unsigned int);
-                    str_t s;
-                    from_deci(s, o);
-                    len = my_strlen(s);
-                    merge_str(res_str, s);
+                    str_t so;
+                    from_deci(so, o);
+                    len = my_strlen(so);
+                    merge_str(res_str, so);
                     buf += len;
                     i ++;
                     break;
@@ -53,18 +55,18 @@ int my_snprintf(char *str, size_t size, char *format, ...)
                     if (format[i + 2] == 'd')
                     {
                         int dx = va_arg(args, int);
-                        if (dx < -32768 || dx > 32767)
+                        if (dx < SHORTMIN || dx > SHORTMAX)
                         {
                             puts("*");
                             qlen = 2;
                             strcpy(str, "-1");
                             return size_error;
                         }
-                        str_t s;
+                        str_t sd;
                         d = dx;
-                        hd_to_str(s, d);
-                        len = my_strlen(s);
-                        merge_str(res_str, s);
+                        hd_to_str(sd, d);
+                        len = my_strlen(sd);
+                        merge_str(res_str, sd);
                         buf += len;
                         i += 2;
                     }
@@ -77,19 +79,18 @@ int my_snprintf(char *str, size_t size, char *format, ...)
     }
 
     qlen = my_strlen(res_str);
+
     if (size == 0 && str != NULL)
     {
         str[0] = '\0';
         return (int)(qlen);
     }
 
-    if (str != NULL)
+    if (str)
     {
-        strcpy(str, res_str);
-        str[size - 1] = '\0';
+        my_strcpy(str, res_str, (int)size);
     }
-    /*if (size < qlen)
-        qlen = (int)size - 1;*/
+
     va_end(args);
     return qlen;
 }

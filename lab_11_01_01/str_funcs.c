@@ -12,6 +12,17 @@ int my_strlen(str_t const s)
     return i;
 }
 
+void my_strcpy(char *s, char *r, int size)
+{
+    for (int i = 0; i < size - 1; i++)
+    {
+        *s = *r;
+        s++;
+        r++;
+    }
+    s[size - 1] = '\0';
+}
+
 int convert(char *s, int n)
 {
     unsigned int x = 0;
@@ -26,7 +37,6 @@ int convert(char *s, int n)
 
 void convert_to_str(char *s, unsigned int n)
 {
-
     while (n > 0)
     {
         *s = (n % 10);
@@ -117,6 +127,7 @@ void merge_char(char *a, char b)
 {
     while (*a)
         a++;
+
     *a = b;
     a++;
     *a = '\0';

@@ -53,8 +53,8 @@ int test_percent()
 
 int test_buf_o()
 {
-    char *buf = malloc(256 * sizeof(char));
-    char *check = malloc(256 * sizeof(char));
+    char *buf = calloc(256, sizeof(char));
+    char *check = calloc(256, sizeof(char));
     int a = 0;
     int b = 0;
 
@@ -76,8 +76,8 @@ int test_buf_o()
 
 int test_buf_s()
 {
-    char *buf = malloc(256 * sizeof(char));
-    char *check = malloc(256 * sizeof(char));
+    char *buf = calloc(256, sizeof(char));
+    char *check = calloc(256, sizeof(char));
     int a = 0;
     int b = 0;
 
@@ -99,8 +99,8 @@ int test_buf_s()
 
 int test_o()
 {
-    char *buf = malloc(256 * sizeof(char));
-    char *check = malloc(256 * sizeof(char));
+    char *buf = calloc(256, sizeof(char));
+    char *check = calloc(256, sizeof(char));
     int a = 0;
     int b = 0;
 
@@ -122,8 +122,8 @@ int test_o()
 
 int test_hd()
 {
-    char *buf = malloc(256 * sizeof(char));
-    char *check = malloc(256 * sizeof(char));
+    char *buf = calloc(256, sizeof(char));
+    char *check = calloc(256, sizeof(char));
     int a = 0;
     int b = 0;
 
@@ -145,8 +145,8 @@ int test_hd()
 
 int test_s()
 {
-    char *buf = malloc(256 * sizeof(char));
-    char *check = malloc(256 * sizeof(char));
+    char *buf = calloc(256, sizeof(char));
+    char *check = calloc(256, sizeof(char));
     int a = 0;
     int b = 0;
 
@@ -168,8 +168,8 @@ int test_s()
 
 int test_all_random()
 {
-    char *buf = malloc(256 * sizeof(char));
-    char *check = malloc(256 * sizeof(char));
+    char *buf = calloc(256, sizeof(char));
+    char *check = calloc(256, sizeof(char));
     int a = 0;
     int b = 0;
 
@@ -187,6 +187,7 @@ int test_all_random()
         free(check);
         return ok;
     }
+
     free(buf);
     free(check);
     return ERROR;
@@ -194,8 +195,8 @@ int test_all_random()
 
 int test_all_another()
 {
-    char *buf = malloc(256 * sizeof(char));
-    char *check = malloc(256 * sizeof(char));
+    char *buf = calloc(256, sizeof(char));
+    char *check = calloc(256, sizeof(char));
     int a = 0;
     int b = 0;
 
@@ -240,49 +241,31 @@ int test_null()
     return ERROR;
 }
 
-int only_d()
+/*int only_d()
 {
     int i = 0;
     i++;
-
-    i++;
-
-    const int n = 15;
-
-    short a = 0;
-
-    //char *a = "evfergjkckmhgko";
-
+    const int n = 12;
     char res[N] = { 0 }, exp_res[N] = { 0 };
-
-    int needed_size = my_snprintf(res, n, "Evening M%o", a);
-
-    int exp_needed_size = snprintf(exp_res, n, "Evening M%o", a);
+    int needed_size = my_snprintf(res, n, "My name is '%s'. I was born in %o.", "Kostadin", 1997);
+    int exp_needed_size = snprintf(exp_res, n, "My name is '%s'. I was born in %o.", "Kostadin", 1997);
 
     printf("Test %i: ", i);
-
     if (!strcmp(res, exp_res) && needed_size == exp_needed_size)
-
         printf("OK\n");
-
     else
-
     {
-
         printf("ERROR\n");
-
         printf("needed_size: %i\n", needed_size);
-
         printf("exp_needed_size: %i\n", exp_needed_size);
-
         printf("res: [%s]\n", res);
-
         printf("exp_res: [%s]\n", exp_res);
+
     }
 
     return ok;
 
-}
+}*/
 
 int main()
 {
@@ -297,7 +280,7 @@ int main()
     flag += test_all_random();
     flag += test_all_another();
     flag += test_null();
-    flag += only_d();
+    //flag += only_d();
     printf("tests: %d out of 10", 10 - flag);
     if (10 - flag != 10)
     {

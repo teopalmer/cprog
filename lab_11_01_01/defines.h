@@ -9,6 +9,8 @@
 
 #define N 256
 #define ERROR 1
+#define SHORTMIN -32768
+#define SHORTMAX 32767
 
 typedef char str_t[N];
 
