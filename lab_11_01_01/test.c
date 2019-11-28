@@ -240,7 +240,7 @@ int test_null()
     return ERROR;
 }
 
-/*int only_d()
+int only_d()
 {
     int i = 0;
     i++;
@@ -248,13 +248,16 @@ int test_null()
     i++;
 
     const int n = 11;
-    short a = -1;
+
+    //short a = 12348;
+
+    char *a = "evfergjkckmhgko";
 
     char res[N] = { 0 }, exp_res[N] = { 0 };
 
-    int needed_size = my_snprintf(res, n, "%hd", a);
+    int needed_size = my_snprintf(res, n, "Evening M%s", a);
 
-    int exp_needed_size = snprintf(exp_res, n, "%hd", a);
+    int exp_needed_size = snprintf(exp_res, n, "Evening M%s", a);
 
     printf("Test %i: ", i);
 
@@ -279,7 +282,7 @@ int test_null()
 
     return ok;
 
-}*/
+}
 
 int main()
 {
@@ -294,7 +297,7 @@ int main()
     flag += test_all_random();
     flag += test_all_another();
     flag += test_null();
-    //flag += only_d();
+    flag += only_d();
     printf("tests: %d out of 10", 10 - flag);
     if (10 - flag != 10)
     {

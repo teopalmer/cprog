@@ -15,9 +15,6 @@ int my_snprintf(char *str, size_t size, char *format, ...)
     if (str == NULL && size != 0)
         return -1;
 
-    if (size == 0 && str != NULL)
-        return my_strlen(format) + 1;
-
     while (format[i])
     {
         int len = 0;
@@ -56,7 +53,7 @@ int my_snprintf(char *str, size_t size, char *format, ...)
                     if (format[i + 2] == 'd')
                     {
                         int dx = va_arg(args, int);
-                        if (dx <= -32768 || dx >= 32767)
+                        if (dx < -32768 || dx > 32767)
                         {
                             puts("*");
                             qlen = 2;
@@ -84,6 +81,12 @@ int my_snprintf(char *str, size_t size, char *format, ...)
     {
         strcpy(str, res_str);
         str[size - 1] = '\0';
+    }
+
+    if (size == 0 && str != NULL)
+    {
+        str[0] = '\0';
+        return (int)(qlen);
     }
     /*if (size < qlen)
         qlen = (int)size - 1;*/

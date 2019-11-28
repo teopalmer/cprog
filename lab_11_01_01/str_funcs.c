@@ -63,11 +63,17 @@ char *from_deci(str_t res, int inum)
 char *hd_to_str(str_t res, int inum)
 {
     int index = 0;
-    while (inum > 0)
+    int flag = 0;
+    if (inum < 0)
+        flag = 1;
+    while (abs(inum) > 0)
     {
-        res[index++] = (inum % 10) + '0';
+        res[index++] = abs(inum % 10) + '0';
         inum /= 10;
     }
+    if (flag == 1)
+        res[index++] = '-';
+
     res[index] = '\0';
     reverse(res);
     return res;
