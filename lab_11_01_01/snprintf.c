@@ -77,16 +77,16 @@ int my_snprintf(char *str, size_t size, char *format, ...)
     }
 
     qlen = my_strlen(res_str);
-    if (str != NULL)
-    {
-        strcpy(str, res_str);
-        str[size - 1] = '\0';
-    }
-
     if (size == 0 && str != NULL)
     {
         str[0] = '\0';
         return (int)(qlen);
+    }
+
+    if (str != NULL)
+    {
+        strcpy(str, res_str);
+        str[size - 1] = '\0';
     }
     /*if (size < qlen)
         qlen = (int)size - 1;*/
