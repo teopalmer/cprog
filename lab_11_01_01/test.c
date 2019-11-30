@@ -245,10 +245,11 @@ int test_null()
 {
     int i = 0;
     i++;
-    const int n = 12;
+    int nc = 12;
+    unsigned int n = 0x0;
     char res[N] = { 0 }, exp_res[N] = { 0 };
-    int needed_size = my_snprintf(res, n, "My name is '%s'. I was born in %o.", "Kostadin", 1997);
-    int exp_needed_size = snprintf(exp_res, n, "My name is '%s'. I was born in %o.", "Kostadin", 1997);
+    int needed_size = my_snprintf(res, nc, "%o", n);
+    int exp_needed_size = snprintf(exp_res, nc, "%o", n);
 
     printf("Test %i: ", i);
     if (!strcmp(res, exp_res) && needed_size == exp_needed_size)

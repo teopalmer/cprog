@@ -58,7 +58,7 @@ void reverse(char *str)
     }
 }
 
-char *from_deci(str_t res, int inum)
+char *from_deci(str_t res, unsigned int inum)
 {
     int index = 0;
 
