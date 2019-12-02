@@ -1,12 +1,15 @@
 #include "defines.h"
 #include "user_interface.h"
+#include "main_funcs.h"
 
-int main() {
+int main()
+{
 
     switch(get_command())
     {
         case (1):
             puts("OUT");
+            out();
             break;
         case (2):
             puts("CAT");
@@ -21,6 +24,5 @@ int main() {
             return input_error;
     }
 
-
-    return 0;
+    return ok;
 }

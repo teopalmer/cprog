@@ -15,9 +15,9 @@ enum error_codes
 
 typedef char str_t[N];
 
-typedef struct node
+typedef struct nodey
 {
     str_t s;
-    struct node *head;
-    struct node *next;
+    struct nodey *head;
+    struct nodey *next;
 } node_t;
