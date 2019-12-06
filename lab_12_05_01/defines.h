@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define N 4
+#define N 5
 
 enum error_codes
 {
