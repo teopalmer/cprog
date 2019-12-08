@@ -1,32 +1,87 @@
 #include "main_funcs.h"
 #include "list_funcs.h"
 
+void print_str(str_t s)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        if (s[i] != 0)
+            printf("%c", s[i]);
+    }
+}
+
+void clean_str(str_t s)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        s[i] = 0;
+    }
+}
+
 node_t *get_str_raw()
 {
     int i = 0;
     int ch = 0;
+    char st[256];
     node_t *h = NULL;
-    str_t s = { 'a' };
-    ch = scanf("%c", &s[i]);
+    str_t s = { 0 };
+    ch = scanf("%s", st);
 
-    do
+    while (ch == 1 && st[i])
     {
-        ch = scanf("%c", &s[i]);
+        //ch = scanf("%c", &s[i]);
+        s[i % 4] = st[i];
         i++;
 
-        if (i == 4)
+        if (i % 4 == 0)
         {
-            //puts("*");
-            printf("%s %d", s, i);
+            //printf("s: %s\n", s);
             h = push(h, s);
-            i = 0;
+            clean_str(s);
+        }
+    }
+
+    if (i % 4!= 0)
+    {
+        h = push(h, s);
+    }
+
+    return h->head;
+}
+
+node_t *get_str_sps()
+{
+    int i = 0;
+    int ch = 0;
+    char st[256];
+    int flag = 0;
+    node_t *h = NULL;
+    str_t s = { 0 };
+    ch = scanf("%s", st);
+
+    while (ch == 1 && st[i])
+    {
+        if ((flag == 0 && st[i] == ' ') || st[i] != ' ')
+        {
+            s[i % 4] = st[i];
+            if (st[i] == ' ')
+                flag = 1;
+            else
+                flag = 0;
         }
 
-    } while (ch == 1 && );
+        i++;
 
-    if (i != 0)
+        if (i % 4 == 0)
+        {
+            //printf("s: %s\n", s);
+            h = push(h, s);
+            clean_str(s);
+        }
+    }
+
+    if (i % 4!= 0)
     {
-        printf("%s %d", s, i);
         h = push(h, s);
     }
 
@@ -36,10 +91,27 @@ node_t *get_str_raw()
 void out()
 {
     node_t *n = get_str_raw();
-    do
+    puts("STRING: ");
+    while (n != NULL)
     {
-        printf("THE STRING: %s", n->s);
+        print_str(n->s);
         n = n->next;
-    } while (n != NULL);
+    }
 
+}
+
+void cat()
+{
+    node_t *n1 = get_str_raw();
+    node_t *n2 = get_str_raw();
+    while (n1 != NULL)
+    {
+        print_str(n1->s);
+        n1 = n1->next;
+    }
+    while (n2 != NULL)
+    {
+        print_str(n2->s);
+        n2 = n2->next;
+    }
 }
