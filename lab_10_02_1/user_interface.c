@@ -1,6 +1,7 @@
 #include "user_interface.h"
 #include "defines.h"
 #include "resizing_items.h"
+#include "main_funcs.h"
 
 static int scan_string(long int *len, str_t s)
 {
@@ -11,21 +12,18 @@ static int scan_string(long int *len, str_t s)
     return ok;
 }
 
-static int scan_number(int *d)
-{
-    int ch = scanf("%d", d);
-    if (ch != 1)
-        return input_error;
-    if (*d < 0)
-        return input_error;
-    return ok;
-}
-
 static int check_if_upper(char c)
 {
     if (c > 'Z' || c < 'A')
         return input_error;
     return ok;
+}
+
+static int check_if_char(char c)
+{
+    if ((c <= 'Z' && c >= 'A') || (c <= 'z' && c >= 'a'))
+        return ok;
+    return input_error;
 }
 
 static int check_if_int(char c)
@@ -44,7 +42,23 @@ int get_key(str_t key)
     return ok;
 }
 
-int fill_article(item_t *item, str_t article)
+static int scan_number(int *d)
+{
+    str_t s;
+    int ch = scanf("%s", s);
+    int len = strlen(s);
+    if (ch != 1)
+        return input_error;
+    for (int i = 0; i < len; i++)
+    {
+        if (check_if_int(s[i]) == ok)
+            return input_error;
+    }
+    *d = atoi(s);
+    return ok;
+}
+
+static int fill_article(item_t *item, str_t article)
 {
     long int len = strlen(article);
 
@@ -61,13 +75,16 @@ int fill_article(item_t *item, str_t article)
     return ok;
 }
 
-int fill_name(item_t *item, str_t name)
+static int fill_name(item_t *item, str_t name)
 {
     long int len = strlen(name);
 
     for (int i = 0; i < len; i++)
     {
         if (check_if_int(name[i]) != ok)
+            return input_error;
+
+        if (check_if_char(name[i]) != ok)
             return input_error;
 
         item->name[i] = name[i];
@@ -78,19 +95,41 @@ int fill_name(item_t *item, str_t name)
     return ok;
 }
 
-int scan_input(item_t *item, str_t article, str_t name, int *c)
+static int scan_input(item_t *item, str_t article, str_t name, int *c)
 {
     puts("\nEnter article:");
     if (scan_string(&item->size_a, article) != ok)
         return input_error;
 
-    if (strcmp("nothing", article) == 0)
+    if (stricmp("nothing", article) == 0)
         return article_nothing;
+
+    long int len = strlen(article);
+
+    for (int i = 0; i < len; i++)
+    {
+        if (check_if_int(article[i]) != ok)
+            return input_error;
+
+        if (check_if_upper(article[i]) != ok)
+            return input_error;
+    }
 
     puts("Enter name:");
     if (scan_string(&item->size_n, name) != ok)
     {
         return input_error;
+    }
+
+    len = strlen(name);
+
+    for (int i = 0; i < len; i++)
+    {
+        if (check_if_int(name[i]) != ok)
+            return input_error;
+
+        if (check_if_char(name[i]) != ok)
+            return input_error;
     }
 
     puts("Enter quantity:");
@@ -102,7 +141,7 @@ int scan_input(item_t *item, str_t article, str_t name, int *c)
     return ok;
 }
 
-int fill_input(item_t *item)
+static int fill_input(item_t *item)
 {
     str_t article;
     str_t name;
@@ -121,8 +160,44 @@ int fill_input(item_t *item)
 
     if (fill_name(item, name) != ok)
         return input_error;
+    
+    item->size_a += item->size_n;
+    
+    for (int i = 0; i < item->size_a; i++)
+        item->article[i] = toupper(item->article[i]);
 
     item->count = c;
+
+    return ok;
+}
+
+int full_input(int *array_size, item_t **p)
+{
+    int i = 0;
+    int input_out = ok;
+    int full_out = ok;
+
+    while (input_out == ok && full_out == ok)
+    {
+        full_out = resize_items_array(p, array_size, ADD);
+        input_out = fill_input(&(*p)[i]);
+        i++;
+    }
+    (*array_size)--;
+
+    if (*array_size < 0 || input_out != article_nothing)
+    {
+        /*for (int in = 0; in < *array_size; in++)
+        {
+            free((*p)[in].article);
+            free((*p)[in].name);
+        }
+        free(*p);*/
+        //(*array_size)--;
+        return input_error;
+    }
+
+    //(*array_size)--;
 
     return ok;
 }
