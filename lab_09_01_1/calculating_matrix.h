@@ -11,6 +11,9 @@
 #define MAT_END (a_m->p + a_m->n * a_m->m)
 #define AM a_m.m - 1
 #define AN a_m.n - 1
+#define MCUR_ELEMENT (m_m->p) + j + i * (a_m.m)
+#define ROW_ELEMENT (a_m.p) + k + i * (a_m.m)
+#define COL_ELEMENT (b_m.p) + j + k * (b_m.m)
 
 #ifndef LAB_09_FUNC_H
 
