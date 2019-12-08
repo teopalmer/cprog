@@ -1,6 +1,0 @@
-VALUE
-MALUE
-13
-nothing
-count
-
