@@ -3,6 +3,19 @@
 #include "resizing_items.h"
 #include "user_interface.h"
 
+int stricmp(const char *a, const char *b)
+{
+    int ca, cb;
+    do
+    {
+        ca = (unsigned char) *a++;
+        cb = (unsigned char) *b++;
+        ca = tolower(toupper(ca));
+        cb = tolower(toupper(cb));
+    } while (ca == cb && ca != '\0');
+    return ca - cb;
+}
+
 static int compare_articles(const void *a, const void *b)
 {
     item_t *ia = (item_t *)a;
@@ -35,7 +48,6 @@ int delete_lipstick(item_t *p, int *arraysize)
             i--;
         }
     }
-
     return ok;
 }
 
@@ -61,7 +73,5 @@ int sort_array(item_t *p, int arraysize, str_t key)
         qsort(p, (size_t)arraysize, sizeof(item_t), compare_count);
         return ok;
     }
-
-    puts("NO!");
     return input_error;
 }

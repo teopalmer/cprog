@@ -1,3 +1,12 @@
-
-
+LIP
+STICK
+0
+L
+IPSTICK
+0
+LI
+Stick
+0
+nothing
+COUNT
 
