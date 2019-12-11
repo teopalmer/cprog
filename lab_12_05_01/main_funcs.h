@@ -2,5 +2,7 @@
 
 #include "defines.h"
 
-void out();
-void print_str(str_t s);
+int out();
+int cat();
+int sps();
+int pos();

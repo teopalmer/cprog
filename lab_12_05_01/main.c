@@ -4,25 +4,17 @@
 
 int main()
 {
-
     switch(get_command())
     {
         case (1):
-            puts("OUT");
-            out();
-            break;
+            return out();
         case (2):
-            puts("CAT");
-            break;
+            return cat();
         case (3):
-            puts("SPS");
-            break;
+            return sps();
         case (4):
-            puts("POS");
-            break;
+            return pos();
         default:
             return input_error;
     }
-
-    return ok;
 }

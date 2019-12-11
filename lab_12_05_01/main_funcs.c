@@ -1,115 +1,90 @@
 #include "main_funcs.h"
 #include "list_funcs.h"
+#include "str_funcs.h"
+#include "string.h"
 
-void print_str(str_t s)
-{
-    for (int i = 0; i < 4; i++)
-    {
-        if (s[i] != 0)
-            printf("%c", s[i]);
-    }
-}
-
-void clean_str(str_t s)
-{
-    for (int i = 0; i < 4; i++)
-    {
-        s[i] = 0;
-    }
-}
-
-node_t *get_str_raw()
-{
-    int i = 0;
-    int ch = 0;
-    char st[256];
-    node_t *h = NULL;
-    str_t s = { 0 };
-    ch = scanf("\n%[^\n]", st);
-
-    while (ch == 1 && st[i])
-    {
-        s[i % 4] = st[i];
-        i++;
-
-        if (i % 4 == 0)
-        {
-            //printf("s: %s\n", s);
-            h = push(h, s);
-            clean_str(s);
-        }
-    }
-
-    if (i % 4!= 0)
-    {
-        h = push(h, s);
-    }
-
-    return h->head;
-}
-
-node_t *get_str_sps()
-{
-    int i = 0;
-    int ch = 0;
-    char st[256];
-    int flag = 0;
-    node_t *h = NULL;
-    str_t s = { 0 };
-    ch = scanf("\n%[^\n]", st);
-
-    while (ch == 1 && st[i])
-    {
-        if ((flag == 0 && st[i] == ' ') || st[i] != ' ')
-        {
-            s[i % 4] = st[i];
-            if (st[i] == ' ')
-                flag = 1;
-            else
-                flag = 0;
-        }
-
-        i++;
-
-        if (i % 4 == 0)
-        {
-            //printf("s: %s\n", s);
-            h = push(h, s);
-            clean_str(s);
-        }
-    }
-
-    if (i % 4!= 0)
-    {
-        h = push(h, s);
-    }
-
-    return h->head;
-}
-
-void out()
+int out()
 {
     node_t *n = get_str_raw();
+
+    if (n == NULL)
+        return input_error;
+
     while (n != NULL)
     {
         print_str(n->s);
         n = n->next;
     }
 
+    return ok;
+
 }
 
-void cat()
+int cat()
 {
     node_t *n1 = get_str_raw();
     node_t *n2 = get_str_raw();
+
+    if (!n1 || !n2)
+        return memory_error;
+
     while (n1 != NULL)
     {
         print_str(n1->s);
         n1 = n1->next;
     }
+
     while (n2 != NULL)
     {
         print_str(n2->s);
         n2 = n2->next;
     }
+    return ok;
+}
+
+int sps()
+{
+    node_t *n = get_str_sps();
+
+    if (n == NULL)
+        return memory_error;
+
+    while (n != NULL)
+    {
+        print_str(n->s);
+        n = n->next;
+    }
+
+    return ok;
+}
+
+int pos()
+{
+    node_t *n1 = get_str_raw();
+    node_t *n2 = get_str_raw();
+    int in1 = 0;
+    int in2 = 0;
+    int iter = 0;
+
+    while (n1 != NULL)
+    {
+        if (n1->s[in1] == n2->s[in2])
+        {
+            if ((compare_str(n1, n2, in1)) == 0)
+            {
+                printf("%d", in1 + iter);
+                return ok;
+            }
+        }
+
+        in1++;
+
+        if (in1 > 3)
+        {
+            in1 = 0;
+            n1 = n1->next;
+            iter += 4;
+        }
+    }
+    return input_error;
 }
