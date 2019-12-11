@@ -25,11 +25,10 @@ node_t *get_str_raw()
     char st[256];
     node_t *h = NULL;
     str_t s = { 0 };
-    ch = scanf("%s", st);
+    ch = scanf("\n%[^\n]", st);
 
     while (ch == 1 && st[i])
     {
-        //ch = scanf("%c", &s[i]);
         s[i % 4] = st[i];
         i++;
 
@@ -57,7 +56,7 @@ node_t *get_str_sps()
     int flag = 0;
     node_t *h = NULL;
     str_t s = { 0 };
-    ch = scanf("%s", st);
+    ch = scanf("\n%[^\n]", st);
 
     while (ch == 1 && st[i])
     {
@@ -91,7 +90,6 @@ node_t *get_str_sps()
 void out()
 {
     node_t *n = get_str_raw();
-    puts("STRING: ");
     while (n != NULL)
     {
         print_str(n->s);
