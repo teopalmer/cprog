@@ -7,12 +7,15 @@ node_t *push(node_t *tail, str_t s)
     strcpy(node->s, s);
     //print_str(node->s);
 
-    if (tail != NULL)
-    {
+    if (tail != NULL) {
 
         node->head = tail->head;
         tail->next = node;
-
+    }
+    else
+    {
+        node->head = node;
+    }
     node->next = NULL;
     return node;
 }
@@ -22,7 +25,7 @@ void delete_list(node_t *n)
     node_t *p = NULL;
     while (n != NULL)
     {
-        node_t *p = n->next;
+        p = n->next;
         free(n);
         n = p;
     }

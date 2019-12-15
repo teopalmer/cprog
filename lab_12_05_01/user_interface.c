@@ -4,6 +4,8 @@ int get_command()
 {
     char s[256];
     int ch = scanf("%s", s);
+    if (ch != 1)
+        return 0;
     if (!strcmp("out", s))
         return 1;
     if (!strcmp("cat", s))

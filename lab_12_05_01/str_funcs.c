@@ -18,7 +18,6 @@ int compare_str(node_t *n1, node_t *n2, int n)
     {
         if (n1->s[in1] != n2->s[in2] && (n2->s[in2]) && (n1->s[in1]))
         {
-            //printf("now: %c %c\n", n1->s[in1], n2->s[in2]);
             return 1;
         }
         else
@@ -75,6 +74,9 @@ node_t *get_str_raw()
         h = push(h, s);
     }
 
+    if (h == NULL)
+        return NULL;
+
     return h->head;
 }
 
@@ -116,6 +118,9 @@ node_t *get_str_sps()
     {
         h = push(h, s);
     }
+
+    if (h == NULL)
+        return NULL;
 
     return h->head;
 }

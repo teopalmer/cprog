@@ -8,10 +8,6 @@ int out()
     node_t *n = get_str_raw();
     node_t *head = n->head;
 
-    if (n == NULL)
-        return input_error;
-
-
     while (n != NULL)
     {
         print_str(n->s);
@@ -26,10 +22,9 @@ int out()
 int cat()
 {
     node_t *n1 = get_str_raw();
+    node_t *head1 = n1->head;
     node_t *n2 = get_str_raw();
-
-    if (!n1 || !n2)
-        return memory_error;
+    node_t *head2 = n2->head;
 
     while (n1 != NULL)
     {
@@ -42,24 +37,22 @@ int cat()
         print_str(n2->s);
         n2 = n2->next;
     }
-    delete_list(n1->head);
-    delete_list(n2->head);
+    delete_list(head1);
+    delete_list(head2);
     return ok;
 }
 
 int sps()
 {
     node_t *n = get_str_sps();
-
-    if (n == NULL)
-        return memory_error;
+    node_t *h = n->head;
 
     while (n != NULL)
     {
         print_str(n->s);
         n = n->next;
     }
-    delete_list(n->head);
+    delete_list(h);
     return ok;
 }
 
@@ -72,9 +65,6 @@ int pos()
     int in1 = 0;
     int in2 = 0;
     int iter = 0;
-
-    if (n1 == NULL || n2 == NULL)
-        return input_error;
 
     while (n1 != NULL)
     {
