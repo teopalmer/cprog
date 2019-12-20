@@ -52,14 +52,17 @@ node_t *get_str_raw()
 {
     int i = 0;
     int ch = 0;
-    char st[256];
+    char st = 0;
     node_t *h = NULL;
     str_t s = { 0 };
-    ch = 1;//scanf("\n%[^\n]", st);
-    fgets(st, 256, stdin);
-    while (ch == 1 && st[i] != '\n')
+    ch = scanf("%c", &st);
+
+    if (st == '\n')
+        return NULL;
+
+    while (ch == 1 && st != '\n')
     {
-        s[i % 4] = st[i];
+        s[i % 4] = st;
         i++;
 
         if (i % 4 == 0)
@@ -67,6 +70,7 @@ node_t *get_str_raw()
             h = push(h, s);
             clean_str(s);
         }
+        ch = scanf("%c", &st);
     }
 
     if (i % 4 != 0)

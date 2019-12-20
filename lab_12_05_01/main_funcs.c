@@ -7,6 +7,10 @@ int out()
 {
     while (fgetc(stdin) != '\n');
     node_t *n = get_str_raw();
+
+    if (n == NULL)
+        return input_error;
+
     node_t *head = n->head;
 
     while (n != NULL)
@@ -15,7 +19,9 @@ int out()
         n = n->next;
     }
 
-    delete_list(head);
+    if (head != NULL)
+        delete_list(head);
+
     return ok;
 }
 
@@ -23,8 +29,16 @@ int cat()
 {
     while (fgetc(stdin) != '\n');
     node_t *n1 = get_str_raw();
+
+    if (n1 == NULL)
+        return input_error;
+
     node_t *head1 = n1->head;
     node_t *n2 = get_str_raw();
+
+    if (n2 == NULL)
+        return input_error;
+
     node_t *head2 = n2->head;
 
     while (n1 != NULL)
@@ -61,8 +75,16 @@ int pos()
 {
     while (fgetc(stdin) != '\n');
     node_t *n1 = get_str_raw();
+
+    if (n1 == NULL)
+        return input_error;
+
     node_t *head1 = n1->head;
     node_t *n2 = get_str_raw();
+
+    if (n2 == NULL)
+        return input_error;
+
     node_t *head2 = n2->head;
     int in1 = 0;
     int in2 = 0;
