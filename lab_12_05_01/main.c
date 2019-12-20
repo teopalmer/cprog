@@ -4,7 +4,7 @@
 
 int main()
 {
-    switch(get_command())
+    switch (get_command())
     {
         case (1):
             return out();

@@ -56,10 +56,8 @@ node_t *get_str_raw()
     node_t *h = NULL;
     str_t s = { 0 };
     ch = 1;//scanf("\n%[^\n]", st);
-    while (getchar() != '\n');
     fgets(st, 256, stdin);
-
-    while (ch == 1 && st[i])
+    while (ch == 1 && st[i] != '\n')
     {
         s[i % 4] = st[i];
         i++;
