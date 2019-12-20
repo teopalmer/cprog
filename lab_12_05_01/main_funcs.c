@@ -9,7 +9,10 @@ int out()
     node_t *n = get_str_raw();
 
     if (n == NULL)
+    {
         return input_error;
+    }
+
 
     node_t *head = n->head;
 

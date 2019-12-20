@@ -58,7 +58,11 @@ node_t *get_str_raw()
     ch = scanf("%c", &st);
 
     if (st == '\n')
+    {
+        delete_list(h);
         return NULL;
+    }
+
 
     while (ch == 1 && st != '\n')
     {
@@ -99,7 +103,8 @@ node_t *get_str_sps()
     {
         if ((flag == 0 && st[i] == ' ') || st[i] != ' ')
         {
-            s[k] = st[i];
+            if (!(!st[i] && st[i - 1] == ' '))
+                s[k] = st[i];
             if (st[i] == ' ')
                 flag = 1;
             else
@@ -108,6 +113,8 @@ node_t *get_str_sps()
         }
 
         i++;
+        if (!st[i] && st[i - 1] == ' ')
+            s[k - 1] = '\0';
 
         if (i % 4 == 0)
         {
