@@ -93,3 +93,4 @@ int pos()
     delete_list(head2);
     return input_error;
 }
+
