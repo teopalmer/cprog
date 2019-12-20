@@ -88,12 +88,24 @@ node_t *get_str_raw()
     return h->head;
 }
 
+int check_word(const char s[256], int a)
+{
+    for (int i = a; i < 256; i++)
+    {
+        if (s[i] != ' ' && s[i])
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 node_t *get_str_sps()
 {
     int i = 0;
     int k = 0;
     int ch = 0;
-    char st[256];
+    char st[256] = { 0 };
     int flag = 0;
     node_t *h = NULL;
     str_t s = { 0 };
@@ -103,7 +115,7 @@ node_t *get_str_sps()
     {
         if ((flag == 0 && st[i] == ' ') || st[i] != ' ')
         {
-            if (!(!st[i] && st[i - 1] == ' '))
+            if ((st[i] != ' ') || (check_word(st, i + 1)))
                 s[k] = st[i];
             if (st[i] == ' ')
                 flag = 1;
@@ -113,12 +125,11 @@ node_t *get_str_sps()
         }
 
         i++;
-        if (!st[i] && st[i - 1] == ' ')
-            s[k - 1] = '\0';
 
         if (i % 4 == 0)
         {
             //printf("s: %s\n", s);
+
             h = push(h, s);
             clean_str(s);
             k = 0;

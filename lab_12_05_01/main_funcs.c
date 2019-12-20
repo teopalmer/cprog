@@ -10,6 +10,7 @@ int out()
 
     if (n == NULL)
     {
+        delete_list(n);
         return input_error;
     }
 
@@ -34,7 +35,10 @@ int cat()
     node_t *n1 = get_str_raw();
 
     if (n1 == NULL)
+    {
+        delete_list(n1);
         return input_error;
+    }
 
     node_t *head1 = n1->head;
     node_t *n2 = get_str_raw();
@@ -80,13 +84,19 @@ int pos()
     node_t *n1 = get_str_raw();
 
     if (n1 == NULL)
+    {
+        delete_list(n1);
         return input_error;
+    }
 
     node_t *head1 = n1->head;
     node_t *n2 = get_str_raw();
 
     if (n2 == NULL)
+    {
+        delete_list(n2);
         return input_error;
+    }
 
     node_t *head2 = n2->head;
     int in1 = 0;
