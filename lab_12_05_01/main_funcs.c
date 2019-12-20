@@ -16,7 +16,6 @@ int out()
 
     delete_list(head);
     return ok;
-
 }
 
 int cat()

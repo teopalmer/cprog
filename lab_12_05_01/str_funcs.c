@@ -55,7 +55,9 @@ node_t *get_str_raw()
     char st[256];
     node_t *h = NULL;
     str_t s = { 0 };
-    ch = scanf("\n%[^\n]", st);
+    ch = 1;//scanf("\n%[^\n]", st);
+    while (getchar() != '\n');
+    fgets(st, 256, stdin);
 
     while (ch == 1 && st[i])
     {
