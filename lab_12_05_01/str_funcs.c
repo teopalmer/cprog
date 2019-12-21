@@ -59,10 +59,9 @@ node_t *get_str_raw()
 
     if (st == '\n')
     {
-        delete_list(h);
+        free(h);
         return NULL;
     }
-
 
     while (ch == 1 && st != '\n')
     {
