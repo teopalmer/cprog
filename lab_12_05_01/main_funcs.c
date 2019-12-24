@@ -23,8 +23,7 @@ int out()
         n = n->next;
     }
 
-    if (head != NULL)
-        delete_list(head);
+    delete_list(head);
 
     return ok;
 }
@@ -68,6 +67,13 @@ int sps()
 {
     while (fgetc(stdin) != '\n');
     node_t *n = get_str_raw();
+
+    if (n == NULL)
+    {
+        return input_error;
+    }
+
+
     node_t *h = n->head;
     int flag = 0;
 
