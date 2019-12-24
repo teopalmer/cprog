@@ -10,6 +10,25 @@ void print_str(str_t s)
     }
 }
 
+int print_str_sps(str_t s, int flag)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        if (s[i] != 0)
+        {
+            if (s[i] != ' ' || flag == 0)
+            {
+                printf("%c", s[i]);
+                if (s[i] == ' ')
+                    flag = 1;
+                else
+                    flag = 0;
+            }
+        }
+    }
+    return flag;
+}
+
 int compare_str(node_t *n1, node_t *n2, int n)
 {
     int in1 = n;
@@ -87,52 +106,46 @@ node_t *get_str_raw()
     return h->head;
 }
 
-int check_word(const char s[256], int a)
-{
-    for (int i = a; i < 256; i++)
-    {
-        if (s[i] != ' ' && s[i])
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
 node_t *get_str_sps()
 {
     int i = 0;
-    int k = 0;
     int ch = 0;
-    char st[256] = { 0 };
+    int k = 0;
     int flag = 0;
+    char st = 0;
     node_t *h = NULL;
     str_t s = { 0 };
-    ch = scanf("\n%[^\n]", st);
+    ch = scanf("%c", &st);
 
-    while (ch == 1 && st[i])
+    if (st == '\n')
     {
-        if ((flag == 0 && st[i] == ' ') || st[i] != ' ')
+        free(h);
+        return NULL;
+    }
+
+    puts("*");
+
+    while (ch == 1 && st != '\n')
+    {
+        if ((flag == 0 && st == ' ') || st != ' ')
         {
-            if ((st[i] != ' ') || (check_word(st, i + 1)))
-                s[k] = st[i];
-            if (st[i] == ' ')
+            s[k] = st;
+            if (st == ' ')
                 flag = 1;
             else
                 flag = 0;
             k++;
         }
 
+        s[i % 4] = st;
         i++;
 
         if (i % 4 == 0)
         {
-            //printf("s: %s\n", s);
-
             h = push(h, s);
             clean_str(s);
-            k = 0;
         }
+        ch = scanf("%c", &st);
     }
 
     if (i % 4 != 0)
@@ -145,3 +158,49 @@ node_t *get_str_sps()
 
     return h->head;
 }
+
+/*node_t *get_str_sps()
+{
+    int i = 0;
+    int k = 0;
+    int ch = 0;
+    char c = 0;
+    int flag = 0;
+    node_t *h = NULL;
+    str_t s = { 0 };
+    ch = scanf("%c", &c);
+
+    while (ch == 1 && c != '\n')
+    {
+        if ((flag == 0 && c == ' ') || c != ' ')
+        {
+            if ((c != ' ') || (check_word(c, i + 1)))
+                s[k] = c;
+            if (c == ' ')
+                flag = 1;
+            else
+                flag = 0;
+            k++;
+        }
+
+        if (i % 4 == 0)
+        {
+            //printf("s: %s\n", s);
+
+            h = push(h, s);
+            clean_str(s);
+            k = 0;
+        }
+        ch = scanf("c", &c);
+    }
+
+    if (i % 4 != 0)
+    {
+        h = push(h, s);
+    }
+
+    if (h == NULL)
+        return NULL;
+
+    return h->head;
+}*/

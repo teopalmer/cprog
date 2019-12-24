@@ -66,12 +66,14 @@ int cat()
 
 int sps()
 {
-    node_t *n = get_str_sps();
+    while (fgetc(stdin) != '\n');
+    node_t *n = get_str_raw();
     node_t *h = n->head;
+    int flag = 0;
 
     while (n != NULL)
     {
-        print_str(n->s);
+        flag = print_str_sps(n->s, flag);
         n = n->next;
     }
     delete_list(h);
