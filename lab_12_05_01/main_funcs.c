@@ -107,7 +107,7 @@ int pos()
 
     node_t *head = n1->head;
     char n2[256];
-    scanf("%s", n2);
+    scanf("%[^\n]", n2);
     int in1 = 0;
     int iter = 0;
 

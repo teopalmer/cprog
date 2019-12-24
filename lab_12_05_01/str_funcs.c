@@ -76,7 +76,7 @@ node_t *get_str_raw()
 
     if (st == '\n')
     {
-        free(h);
+        delete_list(h);
         return NULL;
     }
 

@@ -31,4 +31,3 @@ void delete_list(node_t *n)
     }
     free(p);
 }
-
