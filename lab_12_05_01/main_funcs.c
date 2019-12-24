@@ -92,28 +92,19 @@ int pos()
     }
 
     node_t *head1 = n1->head;
-    node_t *n2 = get_str_raw();
-
-    if (n2 == NULL)
-    {
-        delete_list(n2);
-        return input_error;
-    }
-
-    node_t *head2 = n2->head;
+    char n2[256];
+    scanf("%s", n2);
     int in1 = 0;
-    int in2 = 0;
     int iter = 0;
 
     while (n1 != NULL)
     {
-        if (n1->s[in1] == n2->s[in2])
+        if (n1->s[in1] == n2[0])
         {
             if ((compare_str(n1, n2, in1)) == 0)
             {
                 printf("%d", in1 + iter);
                 delete_list(head1);
-                delete_list(head2);
                 return ok;
             }
         }
@@ -129,7 +120,7 @@ int pos()
     }
 
     delete_list(head1);
-    delete_list(head2);
-    return input_error;
+    printf("-1");
+    return ok;
 }
 
