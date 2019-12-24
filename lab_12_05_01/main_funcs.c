@@ -23,7 +23,8 @@ int out()
         n = n->next;
     }
 
-    delete_list(head);
+    if (head != NULL)
+        delete_list(head);
 
     return ok;
 }
@@ -58,8 +59,12 @@ int cat()
         print_str(n2->s);
         n2 = n2->next;
     }
-    delete_list(head1);
-    delete_list(head2);
+
+    if (head1 != NULL)
+        delete_list(head1);
+
+    if (head2 != NULL)
+        delete_list(head2);
     return ok;
 }
 
@@ -74,7 +79,7 @@ int sps()
     }
 
 
-    node_t *h = n->head;
+    node_t *head = n->head;
     int flag = 0;
 
     while (n != NULL)
@@ -82,7 +87,10 @@ int sps()
         flag = print_str_sps(n->s, flag);
         n = n->next;
     }
-    delete_list(h);
+
+    if (head != NULL)
+        delete_list(head);
+
     return ok;
 }
 
@@ -97,7 +105,7 @@ int pos()
         return input_error;
     }
 
-    node_t *head1 = n1->head;
+    node_t *head = n1->head;
     char n2[256];
     scanf("%s", n2);
     int in1 = 0;
@@ -110,7 +118,7 @@ int pos()
             if ((compare_str(n1, n2, in1)) == 0)
             {
                 printf("%d", in1 + iter);
-                delete_list(head1);
+                delete_list(head);
                 return ok;
             }
         }
@@ -125,8 +133,10 @@ int pos()
         }
     }
 
-    delete_list(head1);
-    printf("-1");
-    return ok;
+    if (head != NULL)
+        delete_list(head);
+
+    //printf("-1");
+    return input_error;
 }
 
