@@ -89,7 +89,9 @@ int sps()
     }
 
     if (head != NULL)
+    {
         delete_list(head);
+    }
 
     return ok;
 }
@@ -108,6 +110,12 @@ int pos()
     node_t *head = n1->head;
     char n2[256];
     scanf("%[^\n]", n2);
+    if (strcmp("pos", n2) == 0)
+    {
+        delete_list(head);
+        return input_error;
+    }
+
     int in1 = 0;
     int iter = 0;
 
@@ -134,9 +142,12 @@ int pos()
     }
 
     if (head != NULL)
+    {
         delete_list(head);
+    }
 
-    //printf("-1");
-    return input_error;
+
+    printf("-1");
+    return ok;
 }
 
