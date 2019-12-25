@@ -112,7 +112,7 @@ int pos()
 
     if (n2 == NULL)
     {
-        delete_list(n1);
+        delete_list(head);
         delete_list(n2);
         return input_error;
     }
