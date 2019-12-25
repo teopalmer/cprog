@@ -108,20 +108,23 @@ int pos()
     }
 
     node_t *head = n1->head;
-    char n2[256];
-    scanf("%[^\n]", n2);
-    if (strcmp("pos", n2) == 0)
+    node_t *n2 = get_str_raw();
+
+    if (n2 == NULL)
     {
-        delete_list(head);
+        delete_list(n1);
+        delete_list(n2);
         return input_error;
     }
+
+    node_t *head2 = n2->head;
 
     int in1 = 0;
     int iter = 0;
 
     while (n1 != NULL)
     {
-        if (n1->s[in1] == n2[0])
+        if (n1->s[in1] == n2->s[0])
         {
             if ((compare_str(n1, n2, in1)) == 0)
             {
@@ -145,7 +148,6 @@ int pos()
     {
         delete_list(head);
     }
-
 
     printf("-1");
     return ok;

@@ -10,6 +10,20 @@ void print_str(str_t s)
     }
 }
 
+void get_str(char s[256])
+{
+    char c;
+    for (int i = 0; i < 255; i++)
+    {
+        scanf("%c", &c);
+        if (!c)
+            break;
+        if (c != '\n')
+            s[i] = c;
+    }
+
+}
+
 int print_str_sps(str_t s, int flag)
 {
     for (int i = 0; i < 4; i++)
@@ -29,16 +43,16 @@ int print_str_sps(str_t s, int flag)
     return flag;
 }
 
-int compare_str(node_t *n1, str_t n2, int n)
+int compare_str(node_t *n1, node_t *n2, int n)
 {
     int in1 = n;
     int in2 = 0;
-    int lmax = strlen(n2);
+    node_t *head = n2->head;
     while (n1 != NULL && n2 != NULL)
     {
-        if (n1->s[in1] != n2[in2] && (in2 < lmax) && (n1->s[in1]))
+        if (n1->s[in1] != n2->s[in2] && (n2->s[in2]) && (n1->s[in1]))
         {
-            //printf("f: %c %c\n", n1->s[in1], n2[in2]);
+            n2 = head;
             return 1;
         }
         else
@@ -48,6 +62,11 @@ int compare_str(node_t *n1, str_t n2, int n)
             {
                 in1 = -1;
                 n1 = n1->next;
+            }
+            if (in2 == 3)
+            {
+                in2 = -1;
+                n2 = n2->next;
             }
             in1++;
             in2++;
