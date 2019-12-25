@@ -147,6 +147,7 @@ int pos()
     if (head != NULL)
     {
         delete_list(head);
+        delete_list(head2);
     }
 
     printf("-1");
