@@ -130,6 +130,7 @@ int pos()
             {
                 printf("%d", in1 + iter);
                 delete_list(head);
+                delete_list(head2);
                 return ok;
             }
         }

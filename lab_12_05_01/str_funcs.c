@@ -10,20 +10,6 @@ void print_str(str_t s)
     }
 }
 
-void get_str(char s[256])
-{
-    char c;
-    for (int i = 0; i < 255; i++)
-    {
-        scanf("%c", &c);
-        if (!c)
-            break;
-        if (c != '\n')
-            s[i] = c;
-    }
-
-}
-
 int print_str_sps(str_t s, int flag)
 {
     for (int i = 0; i < 4; i++)
