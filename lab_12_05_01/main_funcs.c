@@ -45,7 +45,7 @@ int cat()
 
     if (n2 == NULL)
     {
-        delete_list(n1);
+        delete_list(n2);
         delete_list(head1);
         return input_error;
     }
