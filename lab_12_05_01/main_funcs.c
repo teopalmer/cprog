@@ -44,7 +44,11 @@ int cat()
     node_t *n2 = get_str_raw();
 
     if (n2 == NULL)
+    {
+        delete_list(n1);
+        delete_list(head1);
         return input_error;
+    }
 
     node_t *head2 = n2->head;
 
