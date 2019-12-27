@@ -1,20 +1,40 @@
-LIB_A=libfunc.a
-SRC=libfunc.c
+CC = gcc
+CFLAGS = -std=c99 -Wall -Werror 
 
-LIBFLAGS=-mmacosx-version-min=10.1
+app_static.exe: main.o libstat.a
+		$(CC) -o $@ main.o -L. -lstat
 
-TESTSRC=test.c
-TESTCFLAGS=-mmacosx-version-min=10.7
+app_dynamic_d.exe: main.o
+		$(CC) main.o -L. -ldyn -Wl,-rpath,. -o app_dynamic_d.exe
 
-$(LIB_A): libfunc.o
-	libtool -static -o $@ libfunc.o
+app_dynamic_l.exe:
+		$(CC) main_d.c -ldl -o app_dynamic_l.exe
 
-%.o: %.c
-	$(CC) -c -o $@ $<
+libstat.a: libstat.o
+	libtool -static -o $@ libstat.o
 
-test: $(LIB_A) test.c
-	$(CC) $(TESTCFLAGS) -o $@ test.c -L. -libfunc
-
+%o: %c %h 
+	$(CC) $(CFLAGS) -c $< 
 
 clean:
-	$(RM) test $(LIB_A) $(OBJ)
+	rm *.o *.exe *.a *.so *.out *.txt
+
+dynamic:
+	$(CC) -fPIC -c darray.c -o darray.o
+	$(CC) -shared -o darray.so darray.o
+
+static: libstat.o
+	ar rc libstat.a libstat.o
+	ranlib libstat.a
+
+sprog:
+	make static
+	make app_static.exe
+
+dprog:
+	make dynamic
+	make app_dynamic_d.exe
+
+lprog:
+	make dynamic
+	make app_dynamic_l.exe
