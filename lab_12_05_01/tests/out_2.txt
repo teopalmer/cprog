@@ -1,1 +1,2 @@
-Sfsf. d d
+Sfsf. d doutfile_2.txt
+outfile_2.txt
