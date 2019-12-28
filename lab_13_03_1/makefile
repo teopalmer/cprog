@@ -1,4 +1,3 @@
-
 apps.exe: main.o libstat.a
 		$(CC) -o $@ main.o -L. -lstat
 
